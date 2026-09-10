@@ -243,7 +243,12 @@ thead th.s0,thead th.s1,thead th.s2,thead th.s3{z-index:14!important;}
 .tr-task.dept-dim td{opacity:.12;pointer-events:none;}
 .td-task{padding:0;overflow:hidden;}
 .task-inner{display:flex;align-items:center;gap:3px;padding:0 6px;height:34px;}
-.task-name-btn{flex:1;background:none;border:none;text-align:left;font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0;cursor:pointer;}
+/* One line per task name. The frozen task column is sized wide enough for
+   the real names; anything longer clips with an ellipsis rather than
+   wrapping or pushing into the date grid. */
+.task-name-btn{flex:0 1 auto;min-width:0;background:none;border:none;text-align:left;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0;cursor:pointer;}
+.act-done{font-size:14px!important;}   /* the mark-done box now leads the row — make it easy to hit */
+.task-inner .act-more{margin-left:auto;}   /* keep the ⋯ menu pinned to the right edge */
 .task-name-btn:hover{color:var(--navy);}
 .dept-badge{display:inline-block;padding:1px 4px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.2px;color:#fff;flex-shrink:0;white-space:nowrap;}
 .act-btn{background:none;border:none;font-size:11px;padding:2px;border-radius:3px;color:var(--text-3);flex-shrink:0;min-width:22px;min-height:22px;display:flex;align-items:center;justify-content:center;}
@@ -429,7 +434,7 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
 /* Customer link button */
 #custLinkBtn{display:flex;}
 .cust-mode #custLinkBtn{display:none;}
-:root{--c-task:210px;--c-by:72px;--c-day:46px;--c-sort:40px;--c-date:30px;}
+:root{--c-task:250px;--c-by:72px;--c-day:46px;--c-sort:40px;--c-date:30px;}
 /* finished tasks */
 .tr-done td{opacity:.5;}
 .tr-done .task-name-btn{text-decoration:line-through;}
@@ -437,7 +442,7 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
 .act-btn.act-done:hover{background:rgba(46,139,80,.18);}
 /* mobile: narrower frozen columns, bigger touch targets, no sort arrows */
 @media(max-width:820px){
-  :root{--c-task:150px;--c-by:56px;--c-day:42px;--c-sort:0px;--c-date:28px;}
+  :root{--c-task:260px;--c-by:56px;--c-day:42px;--c-sort:0px;--c-date:28px;}
   .col-sort,.td-sort,th.s3{display:none!important;}
   .task-name-btn{font-size:12.5px;}
   .act-btn{min-width:26px;min-height:26px;font-size:12px;}
@@ -455,7 +460,7 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
   .pbox{max-height:94vh;}
 }
 @media(max-width:480px){
-  :root{--c-task:124px;--c-by:0px;--c-day:38px;--c-date:26px;}
+  :root{--c-task:245px;--c-by:0px;--c-day:38px;--c-date:26px;}
   .col-by,.td-by,th.s1{display:none!important;}
   .dept-badge{display:none;}
 }
@@ -498,17 +503,14 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
   .group-label-inner{padding:0 6px;gap:2px;overflow:hidden;}
   .group-label-inner a,.group-label-inner{font-size:10px;}
   .ga-btn{min-width:22px;min-height:22px;padding:1px 3px;}
-  :root{--c-task:138px;--c-by:0px;--c-day:0px;--c-sort:0px;--c-date:30px;}
+  :root{--c-task:260px;--c-by:0px;--c-day:0px;--c-sort:0px;--c-date:30px;}
   .col-by,.td-by,th.s1{display:none!important;}
   .legend-toggle{display:none;}
   .tl-stats{gap:7px;}
   .dur-badge{font-size:10.5px;padding:3px 9px;}
   .task-inner{gap:2px;padding:0 5px;}
-  .act-done,.task-inner>.act-btn.edit-only{display:none!important;}
+  .task-inner>.act-btn.edit-only{display:none!important;}   /* edit lives in the ⋯ menu on mobile; done stays visible */
   .task-name-btn{flex:1 1 auto;min-width:0;}
-  .tog{width:24px;height:14px;}
-  .tog-sl::before{width:10px;height:10px;}
-  .tog input:checked+.tog-sl::before{transform:translateX(10px);}
   .file-badge{display:none;}
   .act-menu{right:auto;left:0;}
 }
@@ -831,14 +833,11 @@ button,a,label,summary,input,select,.tog{touch-action:manipulation;}
   .dept-file-btn,.shop-tab,.btn-sm{min-height:40px;}
   .srt-btn{min-height:32px;min-width:32px;}
   .task-name-btn{min-height:34px;}
-  /* Inside the Gantt row the task-name column is only ~138px wide, so a
-     44px-WIDE control would starve the name (74px -> 56px, about six Thai
-     characters). Height is what makes a row target easy to hit, so keep the
-     full 44px vertically and give the width back to the label. */
+  /* Row action buttons: full-height tap target, kept narrow so the name
+     keeps its width. The mark-done box leads the row, so give it the full
+     44px width — it's the primary control now. */
   .task-inner .act-btn{min-width:32px;min-height:44px;}
-  /* Extend the switch's hit area to fill the 35px row without widening the
-     column or overlapping the adjacent name button (2px gap stays clear). */
-  .task-inner .tog::after{content:'';position:absolute;left:0;right:0;top:-10px;bottom:-10px;}
+  .task-inner .act-btn.act-done{min-width:44px;}
 }
 
 /* --- 4. Contrast -------------------------------------------------------
@@ -965,7 +964,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
    the active section's content, in ink-friendly colors, with the sticky
    table header repeating on each page instead of pinned mid-page. */
 @media print{
-  #topNav,#shopTabsBar,#navDrawer,.tl-toolbar,.legend-toggle,.legend-wrap,
+  #topNav,#shopTabsBar,#navDrawer,#bottomNav,.tl-toolbar,.legend-toggle,.legend-wrap,
   #roBanner,#rescueBar,.overlay,.skip-link,.act-more,.act-done,.edit-only,
   .srt-btn,.tog,.ga-btn,#dueCard .due-row .due-dot{display:none!important;}
   body{background:#fff;color:#000;}
@@ -975,6 +974,72 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
   #gantt thead tr th{position:static!important;}       /* repeat naturally per page instead of one pinned copy */
   .stat-card,.setup-card,.dept-card,.due-row,.activity-row{box-shadow:none!important;border:1px solid #999!important;}
   a[href]::after{content:'';}                           /* no URL clutter after links */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOBILE FRIENDLINESS — everything here is inside a mobile media query or
+   an added element hidden on desktop. Desktop renders the same DOM and
+   CSS it does now. Changes:
+   1. 16px form fields on phones so iOS Safari stops auto-zooming on focus
+   2. a bottom tab bar for the 5 sections (replaces the hamburger drawer on
+      phones — one thumb tap instead of reach-to-corner + two taps)
+   3. a fade on the timeline's right edge so it's obvious the dates scroll
+   4. a "today" marker line + jump-to-today button on the timeline
+   5. tighter chrome in phone landscape so more rows show
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* 1 — stop iOS focus-zoom: any focusable field must be >=16px on phones */
+@media(max-width:820px){
+  .finput,.sf-input,.cf-input,.cf-select,.cf-textarea,.uni-staff-input,.uni-size-sel,
+  .nav-branch,.ce-input,input[type="date"],input[type="tel"],input[type="email"],input[type="number"],select,textarea{
+    font-size:16px!important;
+  }
+  .day-inline-input{font-size:16px!important;width:44px;}
+}
+
+/* 2 — bottom tab bar (element added after #navDrawer; desktop hides it) */
+#bottomNav{display:none;}
+@media(max-width:820px){
+  #bottomNav{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:400;
+    background:var(--head-bg);border-top:2px solid var(--gold);
+    padding-bottom:env(safe-area-inset-bottom,0);
+    box-shadow:0 -3px 16px rgba(0,0,0,.28);
+  }
+  #bottomNav button{
+    flex:1;background:none;border:none;color:rgba(255,255,255,.55);
+    font-size:10px;font-weight:700;display:flex;flex-direction:column;align-items:center;
+    gap:2px;padding:8px 2px 7px;min-height:52px;cursor:pointer;line-height:1.1;
+  }
+  #bottomNav button .bn-ico{font-size:19px;line-height:1;}
+  #bottomNav button.active{color:#fff;}
+  #bottomNav button.active .bn-ico{filter:drop-shadow(0 0 6px rgba(201,168,0,.7));}
+  /* the drawer + hamburger are redundant once the bar exists */
+  #navHamburger,#navDrawer{display:none!important;}
+  /* keep the last bit of every section clear of the bar */
+  .sec-wrap{padding-bottom:80px;}
+  #tableOuter{max-height:calc(100vh - var(--gantt-top,170px) - 60px);}
+}
+
+/* 3 — right-edge fade on the timeline scroll box, phones only */
+@media(max-width:820px){
+  #tableOuter{
+    -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent);
+            mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent);
+  }
+}
+
+/* 4 — today marker (class added by markToday() after each render) */
+#gantt th.is-today{background:var(--gold)!important;color:#12200F!important;}
+#gantt td.is-today{box-shadow:inset 2px 0 0 var(--gold),inset -2px 0 0 var(--gold);}
+.tl-today-btn{white-space:nowrap;}
+
+/* 5 — phone landscape: claw back vertical space so more rows are visible */
+@media(max-width:900px) and (orientation:landscape){
+  .tl-toolbar{padding-top:5px;padding-bottom:5px;row-gap:5px;}
+  .tl-stats{padding:5px 12px;}
+  #tableOuter{max-height:calc(100vh - 150px);}
+  #bottomNav button{min-height:44px;padding:5px 2px;}
 }
 </style>
 
@@ -1014,7 +1079,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <button id="navHamburger" onclick="toggleDrawer()" aria-label="Menu">☰</button>
   </div>
   <!-- build stamp: lets anyone confirm at a glance which version they opened -->
-  <span id="buildStamp" title="เวอร์ชันของไฟล์นี้">v2026.09.08-a</span>
+  <span id="buildStamp" title="เวอร์ชันของไฟล์นี้">v2026.09.10-d</span>
 </nav>
 <div id="rescueBar" class="rescue-bar"></div>
 <div id="roBanner"><span id="roBannerText">👁 โหมดดูอย่างเดียว — ดูข้อมูลได้ทั้งหมด แก้ไขต้องใส่รหัส (กดไอคอนกุญแจมุมขวาบน)</span></div>
@@ -1026,6 +1091,15 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
   <button class="nav-drawer-link" data-sec="sec-files" onclick="showSection('sec-files');closeDrawer()">📁 Files</button>
   <button class="nav-drawer-link" data-sec="sec-finance" onclick="showSection('sec-finance');closeDrawer()">💰 Finance</button>
 </div>
+
+<!-- Phone bottom tab bar. Hidden on desktop via CSS; mirrors the drawer. -->
+<nav id="bottomNav" aria-label="เมนูหลัก">
+  <button data-sec="sec-overview" onclick="showSection('sec-overview')"><span class="bn-ico">📊</span>Overview</button>
+  <button data-sec="sec-timeline" onclick="showSection('sec-timeline')"><span class="bn-ico">📅</span>Timeline</button>
+  <button data-sec="sec-uniform" onclick="showSection('sec-uniform')"><span class="bn-ico">👕</span>Uniform</button>
+  <button data-sec="sec-files" onclick="showSection('sec-files')"><span class="bn-ico">📁</span>Files</button>
+  <button data-sec="sec-finance" onclick="showSection('sec-finance')"><span class="bn-ico">💰</span>Finance</button>
+</nav>
 
 <div id="shopTabsBar"></div>
 
@@ -1125,7 +1199,10 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
   <div class="dept-grid" id="ovDeptGrid"></div>
 
   <div class="setup-card edit-only" id="activityCard">
-    <div class="card-label">🕘 ประวัติการแก้ไข</div>
+    <div class="card-label" style="justify-content:space-between;">
+      <span>🕘 ประวัติการแก้ไข</span>
+      <button class="btn btn-ghost2 btn-sm" id="clearActivityBtn" onclick="clearActivityLog()" style="text-transform:none;letter-spacing:0;">🗑 ล้างประวัติ</button>
+    </div>
     <div id="activityList"></div>
   </div>
 </div>
@@ -1137,6 +1214,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <span class="tl-toolbar-label">Timeline</span>
     <div class="tb-sep"></div>
     <button class="btn btn-gold btn-sm" onclick="openMonthPicker()">📅 เดือน</button>
+    <button class="btn btn-ghost btn-sm tl-today-btn" onclick="scrollToToday(true)">📍 วันนี้</button>
     <button class="btn btn-ghost btn-sm" onclick="openByEditor()">🎨 By</button>
     <button class="btn btn-ghost btn-sm" onclick="openDeptEditor()">🏢 แผนก</button>
     <button class="btn btn-ghost btn-sm edit-only" onclick="addGroup()">＋ กลุ่ม</button>
@@ -1770,6 +1848,10 @@ function _migrateShops(){
     (DB.shops||[]).forEach(sh=>_reviseTaskList(sh));
     DB.shops.forEach(sh=>{
       _repairMonths(sh);
+      /* The enable/disable toggle was removed from the row UI in favour of
+         the done checkbox. Force every task enabled so nothing is left
+         stuck-off with no way to switch it back on. */
+      (sh.groups||[]).forEach(g=>(g.tasks||[]).forEach(t=>{t.enabled=true;}));
       if(!sh.finance)sh.finance=_defFinance();
       (sh.finance.payments||[]).forEach(p=>{if(!Array.isArray(p.files))p.files=[];});
       if(!sh.deptFiles)sh.deptFiles={};
@@ -2348,7 +2430,7 @@ function showSection(id){
   document.querySelectorAll('[data-sec]').forEach(l=>l.classList.toggle('active',l.dataset.sec===id));
   if(id==='sec-all'){_viewMode='all';renderShopTabs();renderAllShops();}
   if(id==='sec-overview'){_viewMode='shop';renderShopTabs();renderOverview();}
-  if(id==='sec-timeline'){_viewMode='shop';renderShopTabs();render();}
+  if(id==='sec-timeline'){_viewMode='shop';renderShopTabs();render();setTimeout(()=>scrollToToday(false),60);}
   if(id==='sec-uniform'){_viewMode='shop';renderShopTabs();renderUniformSection();}
   if(id==='sec-files'){_viewMode='shop';renderShopTabs();renderDeptListPanel();}
   renderRescueBar();
@@ -2625,6 +2707,23 @@ async function renderActivityLog(){
     box.innerHTML='<div style="color:var(--text-3);font-size:13px;padding:10px;">อ่านประวัติไม่ได้</div>';
   }
 }
+/* Clear the activity log. Admin wipes it all; a branch link wipes only its
+   own branch's rows — the RLS delete policy enforces that server-side, this
+   scope filter just avoids a pointless full-table DELETE attempt. */
+function clearActivityLog(){
+  if(!_sb||!_canEdit)return;
+  const scoped=!_adminMode&&_activeId;
+  _confirm(scoped?'ล้างประวัติการแก้ไขของสาขานี้ทั้งหมด?':'ล้างประวัติการแก้ไขทั้งหมด?\n(ทุกสาขา — กู้คืนไม่ได้)',async()=>{
+    try{
+      let q=_sb.from('jc_ops_activity').delete();
+      q=scoped?q.eq('branch_id',_activeId):q.gt('id',0);   /* PostgREST requires a filter on DELETE */
+      const{error}=await q;
+      if(error)throw error;
+      _toast('ล้างประวัติแล้ว');
+      renderActivityLog();
+    }catch(e){_toast('ล้างประวัติไม่สำเร็จ','err');}
+  });
+}
 
 /* RENDER */
 function render(){
@@ -2633,7 +2732,29 @@ function render(){
   autoExtendMonths();
   populateDeptSelect();renderLegend();renderDurBadge();renderDeptBadge();renderTable();
   renderTaskFilter();
-  updateGanttTop();lockUI();
+  updateGanttTop();lockUI();markToday();
+}
+/* Tint today's column so the current date is findable at a glance, and give
+   the toolbar button / section-entry something to scroll to. Pure DOM
+   decoration keyed off data-k added in renderTable — no layout change. */
+function _todayKey(){const d=new Date();return ds(d.getFullYear(),d.getMonth()+1,d.getDate());}
+function markToday(){
+  const k=_todayKey();
+  document.querySelectorAll('#gantt .is-today').forEach(el=>el.classList.remove('is-today'));
+  document.querySelectorAll('#gantt [data-k="'+k+'"]').forEach(el=>el.classList.add('is-today'));
+}
+function scrollToToday(smooth){
+  const box=document.getElementById('tableOuter');if(!box)return;
+  let cell=box.querySelector('#ganttBody td[data-k="'+_todayKey()+'"]')
+        || box.querySelector('#ganttHead th[data-k="'+_todayKey()+'"]');
+  if(!cell){                                  /* today is outside the plan window — go to the nearest edge */
+    const cells=box.querySelectorAll('#ganttHead tr:last-child th[data-k]');
+    if(!cells.length)return;
+    cell=(_todayKey()<cells[0].dataset.k)?cells[0]:cells[cells.length-1];
+  }
+  const frozen=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--c-task'))||0;
+  const left=cell.offsetLeft-frozen-40;
+  box.scrollTo({left:Math.max(0,left),behavior:smooth?'smooth':'auto'});
 }
 function populateDeptSelect(){const s=document.getElementById('deptSelect');s.innerHTML=S.departments.map(d=>`<option value="${d.code}">${d.code==='ALL'?'🏢 All Depts':d.name}</option>`).join('');s.value=S.deptFilter;}
 function setDeptFilter(c){S.deptFilter=c;render();}
@@ -2686,7 +2807,7 @@ function renderTable(){
   let h1=`<tr><th class="s0 col-task th-sticky-label" rowspan="3">Task</th><th class="s1 col-by th-sticky-label" rowspan="3">By</th><th class="s2 col-day th-sticky-label" rowspan="3">Day</th><th class="s3 col-sort" rowspan="3" style="font-size:9px;color:rgba(255,255,255,.4);">↕</th>`;
   h1+=mS.map(m=>`<th colspan="${m.count}" class="th-month">${MONTHS_EN[m.month-1]} ${m.year}</th>`).join('')+'</tr>';
   const edge=c=>c.isMonthEnd?' th-mo-end':(c.isWeekBorder?' th-wk-end':'');
-  document.getElementById('ganttHead').innerHTML=h1+'<tr>'+cols.map(c=>`<th class="th-dow${c.isWeekend?' th-wknd':''}${edge(c)}">${DOW[c.dow]}</th>`).join('')+'</tr><tr>'+cols.map(c=>`<th class="th-day${c.isWeekend?' th-wknd':''}${edge(c)}">${c.day}</th>`).join('')+'</tr>';
+  document.getElementById('ganttHead').innerHTML=h1+'<tr>'+cols.map(c=>`<th class="th-dow${c.isWeekend?' th-wknd':''}${edge(c)}" data-k="${c.key}">${DOW[c.dow]}</th>`).join('')+'</tr><tr>'+cols.map(c=>`<th class="th-day${c.isWeekend?' th-wknd':''}${edge(c)}" data-k="${c.key}">${c.day}</th>`).join('')+'</tr>';
   let html='';
   S.groups.forEach(g=>{
     if((S.taskFilter||'all')!=='all'){
@@ -2704,7 +2825,7 @@ function renderTable(){
       const bc=byColor(t.by),dim2=taskMatchesDept(t)?'':' dept-dim',lkB=t.link?`<a class="act-btn" href="${esc(t.link)}" target="_blank" style="text-decoration:none;">🔗</a>`:'';
       const dB=(t.depts||[]).filter(d=>d!=='ALL').map(d=>{const dep=S.departments.find(x=>x.code===d);return dep?`<span class="dept-badge" style="background:${dep.color}">${dep.code}</span>`:''}).join('');
       const fcnt=(t.files||[]).length,fB=fcnt?`<button class="act-btn file-badge" onclick="openTaskEdit('${t.id}')" title="${fcnt} ไฟล์แนบ">📎${fcnt}</button>`:'';
-      html+=`<tr class="tr-task${t.enabled?'':' tr-disabled'}${t.done?' tr-done':''}${dim2}"><td class="s0 td-task col-task"><div class="task-inner"><label class="tog"><input type="checkbox" ${t.enabled?'checked':''} onchange="toggleTask('${t.id}',this.checked)"><span class="tog-sl"></span></label><button class="task-name-btn" onclick="openDP('${t.id}')">${esc(t.name)}</button>${dB}${lkB}${fB}<button class="act-btn act-done" title="${t.done?'ทำเครื่องหมายว่ายังไม่เสร็จ':'ทำเครื่องหมายว่าเสร็จแล้ว'}" onclick="toggleDone('${t.id}')">${t.done?'✅':'⬜'}</button><button class="act-btn edit-only" title="แก้ไข" onclick="openTaskEdit('${t.id}')">✏️</button><span class="act-more"><button class="act-btn" title="เพิ่มเติม" onclick="this.parentNode.classList.toggle('open');event.stopPropagation();">⋯</button><span class="act-menu"><button class="m-done edit-only" onclick="toggleDone('${t.id}')">${t.done?'↩️ ยังไม่เสร็จ':'✅ ทำเครื่องหมายเสร็จ'}</button><button class="m-edit edit-only" onclick="openTaskEdit('${t.id}')">✏️ แก้ไขงาน</button><button onclick="openTaskDocs('${t.id}')">📋 เอกสารแผนก</button><button class="edit-only" onclick="quickDeleteTask('${g.id}','${t.id}')">🗑 ลบงานนี้</button></span></span></div></td><td class="s1 td-by col-by"><span class="by-pill" style="background:${bc}" onclick="cycleBy('${t.id}')">${esc(t.by)}</span></td><td class="s2 td-day col-day"><input class="day-inline-input" type="number" min="1" max="730" value="${t.days||1}" onchange="setTaskDays('${t.id}',+this.value)"></td><td class="s3 td-sort col-sort"><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',-1)">▲</button><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',1)">▼</button></td>`;
+      html+=`<tr class="tr-task${t.done?' tr-done':''}${dim2}"><td class="s0 td-task col-task"><div class="task-inner"><button class="act-btn act-done" title="${t.done?'ทำเครื่องหมายว่ายังไม่เสร็จ':'ทำเครื่องหมายว่าเสร็จแล้ว'}" aria-pressed="${t.done?'true':'false'}" onclick="toggleDone('${t.id}')">${t.done?'✅':'⬜'}</button><button class="task-name-btn" onclick="openDP('${t.id}')">${esc(t.name)}</button>${dB}${lkB}${fB}<button class="act-btn edit-only" title="แก้ไข" onclick="openTaskEdit('${t.id}')">✏️</button><span class="act-more"><button class="act-btn" title="เพิ่มเติม" onclick="this.parentNode.classList.toggle('open');event.stopPropagation();">⋯</button><span class="act-menu"><button class="m-done edit-only" onclick="toggleDone('${t.id}')">${t.done?'↩️ ยังไม่เสร็จ':'✅ ทำเครื่องหมายเสร็จ'}</button><button class="m-edit edit-only" onclick="openTaskEdit('${t.id}')">✏️ แก้ไขงาน</button><button onclick="openTaskDocs('${t.id}')">📋 เอกสารแผนก</button><button class="edit-only" onclick="quickDeleteTask('${g.id}','${t.id}')">🗑 ลบงานนี้</button></span></span></div></td><td class="s1 td-by col-by"><span class="by-pill" style="background:${bc}" onclick="cycleBy('${t.id}')">${esc(t.by)}</span></td><td class="s2 td-day col-day"><input class="day-inline-input" type="number" min="1" max="730" value="${t.days||1}" onchange="setTaskDays('${t.id}',+this.value)"></td><td class="s3 td-sort col-sort"><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',-1)">▲</button><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',1)">▼</button></td>`;
       /* Segment rendering: non-bar days as individual td, bar as single spanning td */
       {let ci=0;while(ci<cols.length){
         const col=cols[ci];
@@ -2725,7 +2846,7 @@ function renderTable(){
           let cls='td-date';
           if(col.isWeekend)cls+=' wknd';
           if(col.isMonthEnd)cls+=' mo-border';else if(col.isWeekBorder)cls+=' wk-border';
-          html+=`<td class="${cls}"></td>`;
+          html+=`<td class="${cls}" data-k="${col.key}"></td>`;
           ci++;
         }
       }}
