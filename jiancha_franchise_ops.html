@@ -1,8 +1,3 @@
-<!doctype html>
-<html lang="th" data-theme="light">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JIAN CHA — Project Timeline</title>
 <!-- Installable-app hints. Manifest is a data: URI so the whole app stays
      one file — no separate manifest.json or icon asset to upload. There is
@@ -163,6 +158,10 @@ a{color:var(--navy);}
 .stat-sub{font-size:11px;color:var(--text-3);margin-top:3px;}
 
 .section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-3);margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.as-hide-toggle{display:inline-flex;align-items:center;gap:6px;text-transform:none;letter-spacing:0;font-weight:600;font-size:12px;color:var(--text-2);cursor:pointer;user-select:none;}
+.as-hide-toggle input{width:15px;height:15px;accent-color:var(--navy);cursor:pointer;}
+.shop-card-empty-hint{grid-column:1/-1;padding:16px 18px;border-radius:var(--r-lg);border:1.5px dashed var(--border-2);background:var(--surface-2);color:var(--text-2);font-size:13px;text-align:center;}
+.shop-card-empty-hint a{color:var(--navy);font-weight:700;}
 /* DEPT GRID — fills full width, wider cards at 1920px */
 .dept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:4px;}
 .dept-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);padding:16px 18px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm);cursor:pointer;transition:box-shadow .15s,transform .12s;-webkit-tap-highlight-color:transparent;}
@@ -348,6 +347,9 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
 .fin-table-scroll{overflow-x:auto;}
 .fin-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:660px;}
 .fin-table th{background:var(--head-bg);color:var(--head-text);padding:10px 14px;text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;}
+.fin-table th.fin-sortable{cursor:pointer;user-select:none;min-height:44px;}
+.fin-table th.fin-sortable:hover{color:var(--gold);}
+.fin-table th.fin-sortable.sorted{color:var(--gold);}
 .fin-table th.num,.fin-table td.num{text-align:right;font-variant-numeric:tabular-nums;}
 .fin-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:middle;}
 .fin-table tbody tr:last-child td{border-bottom:none;}
@@ -703,9 +705,24 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
 @media(max-width:420px){.nav-branch{max-width:90px;font-size:11px;}.dept-grid{grid-template-columns:1fr;}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
 
-/* SHOP TABS BAR */
-#shopTabsBar{position:sticky;top:var(--nav-h);z-index:250;background:var(--surface-2);border-bottom:2px solid var(--border);height:var(--shop-tabs-h);display:flex;align-items:center;gap:4px;padding:0 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;white-space:nowrap;}
+/* SHOP TABS BAR — a wrapper carries the sticky position so two arrow
+   buttons can overlay the ends; the bar itself just scrolls. A branch
+   roster past ~6 already overflows a normal window with no hint it
+   scrolls — the fade + arrows fix that. */
+.shop-tabs-wrap{position:sticky;top:var(--nav-h);z-index:250;background:var(--surface-2);border-bottom:2px solid var(--border);height:var(--shop-tabs-h);display:flex;align-items:stretch;}
+#shopTabsBar{flex:1;min-width:0;display:flex;align-items:center;gap:4px;padding:0 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;white-space:nowrap;}
 #shopTabsBar::-webkit-scrollbar{display:none;}
+.stw-arrow{flex-shrink:0;width:26px;border:none;cursor:pointer;font-size:16px;font-weight:800;color:var(--text-2);
+  background:var(--surface-2);display:none;align-items:center;justify-content:center;z-index:2;}
+.stw-arrow:hover{color:var(--navy);background:var(--surface);}
+.shop-tabs-wrap.has-overflow .stw-arrow{display:flex;}
+.shop-tabs-wrap.at-start .stw-left,.shop-tabs-wrap.at-end .stw-right{visibility:hidden;}
+/* fade the tab bar's own trailing edge so "more to scroll" reads even
+   before anyone notices the arrows */
+.shop-tabs-wrap.has-overflow:not(.at-end) #shopTabsBar{
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent);
+          mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent);
+}
 .shop-tab{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:var(--r-sm);background:none;border:1.5px solid var(--border);color:var(--text-2);font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;min-height:28px;transition:all .15s;flex-shrink:0;}
 .shop-tab:hover{border-color:var(--navy);color:var(--text);}
 .shop-tab.active{background:var(--navy);color:#fff;border-color:var(--navy);}
@@ -964,7 +981,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
    the active section's content, in ink-friendly colors, with the sticky
    table header repeating on each page instead of pinned mid-page. */
 @media print{
-  #topNav,#shopTabsBar,#navDrawer,#bottomNav,.tl-toolbar,.legend-toggle,.legend-wrap,
+  #topNav,.shop-tabs-wrap,#navDrawer,#bottomNav,.tl-toolbar,.legend-toggle,.legend-wrap,
   #roBanner,#rescueBar,.overlay,.skip-link,.act-more,.act-done,.edit-only,
   .srt-btn,.tog,.ga-btn,#dueCard .due-row .due-dot{display:none!important;}
   body{background:#fff;color:#000;}
@@ -1083,8 +1100,6 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
 .mt-badge{display:inline-block;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;color:#fff;letter-spacing:.2px;}
 </style>
 
-</head>
-<body>
 <div id="jc-root">
 <!-- Skip link: first focusable element, so keyboard users can jump past
      the nav. Targets the active section at runtime, which avoids adding a
@@ -1119,7 +1134,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <button id="navHamburger" onclick="toggleDrawer()" aria-label="Menu">☰</button>
   </div>
   <!-- build stamp: lets anyone confirm at a glance which version they opened -->
-  <span id="buildStamp" title="เวอร์ชันของไฟล์นี้">v2026.09.10-e</span>
+  <span id="buildStamp" title="เวอร์ชันของไฟล์นี้">v2026.09.17-b</span>
 </nav>
 <div id="rescueBar" class="rescue-bar"></div>
 <div id="roBanner"><span id="roBannerText">👁 โหมดดูอย่างเดียว — ดูข้อมูลได้ทั้งหมด แก้ไขต้องใส่รหัส (กดไอคอนกุญแจมุมขวาบน)</span></div>
@@ -1141,7 +1156,11 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
   <button data-sec="sec-finance" onclick="showSection('sec-finance')"><span class="bn-ico">💰</span>Finance</button>
 </nav>
 
-<div id="shopTabsBar"></div>
+<div class="shop-tabs-wrap" id="shopTabsWrap">
+  <button class="stw-arrow stw-left" id="stwLeft" onclick="scrollShopTabs(-1)" aria-label="เลื่อนแท็บสาขาไปทางซ้าย">‹</button>
+  <div id="shopTabsBar" onscroll="updateShopTabsScrollUI()"></div>
+  <button class="stw-arrow stw-right" id="stwRight" onclick="scrollShopTabs(1)" aria-label="เลื่อนแท็บสาขาไปทางขวา">›</button>
+</div>
 
 <!-- ALL SHOPS -->
 <section class="section" id="sec-all">
@@ -1156,7 +1175,10 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     </div>
   </div>
   <div class="stats-grid" id="asStats"></div>
-  <div class="section-title">🏪 สาขาทั้งหมด</div>
+  <div class="section-title" style="justify-content:space-between;">
+    <span>🏪 สาขาทั้งหมด</span>
+    <label class="as-hide-toggle"><input type="checkbox" id="asHideDone" onchange="toggleHideCompleted(this.checked)"> ซ่อนสาขาที่เสร็จแล้ว</label>
+  </div>
   <div class="shops-grid" id="asGrid"></div>
 </div>
 </section>
@@ -1178,15 +1200,8 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <div class="card-label">⚙️ ตั้งค่าโปรเจกต์</div>
     <div class="setup-grid">
       <div class="sf"><label>ชื่อโปรเจกต์ / สาขา</label><input class="sf-input" id="qsBranch" placeholder="เช่น สาขา Siam" oninput="syncBranch(this.value)"></div>
-      <div class="sf"><label>วันเริ่มต้น</label><input type="date" class="sf-input" id="qsStart" onchange="S.projectStart=this.value;liveRebuildMonths()"></div>
-      <div class="sf"><label>ระยะเวลา (วัน)</label>
-        <div class="dur-chips">
-          <div class="dur-chip sel" id="dc90" onclick="selDur(90,this)">90</div>
-          <div class="dur-chip" id="dc100" onclick="selDur(100,this)">100</div>
-          <div class="dur-chip" id="dc120" onclick="selDur(120,this)">120</div>
-          <input type="number" class="dur-custom" id="durCustom" placeholder="กำหนด" min="1" max="730" oninput="selDur(+this.value,null)">
-        </div>
-      </div>
+      <div class="sf"><label>วันเริ่มต้น</label><input type="date" class="sf-input" id="qsStart" onchange="onStartDateChange(this.value)"></div>
+      <div class="sf"><label>วันสิ้นสุด</label><input type="date" class="sf-input" id="qsEnd" onchange="onEndDateChange(this.value)"></div>
       <div class="sf"><label>&nbsp;</label>
         <div class="setup-btns">
           <button class="btn btn-navy btn-lg edit-only" onclick="generateTimeline()">🗓 สร้าง Timeline</button>
@@ -1938,7 +1953,7 @@ function _migrateShops(){
 }
 /* SHOP TABS & ALL-SHOPS VIEW */
 function renderShopTabs(){
-  if(_customerMode){const b=document.getElementById('shopTabsBar');if(b)b.style.display='none';return;}
+  if(_customerMode){const b=document.getElementById('shopTabsWrap');if(b)b.style.display='none';return;}
   let h=`<button class="shop-tab-add edit-only" onclick="openNewShop()">＋ เพิ่มสาขา</button>`;
   DB.shops.forEach(sh=>{
     const isA=sh.id===_activeId&&_viewMode!=='all';
@@ -1952,7 +1967,28 @@ function renderShopTabs(){
   });
   h+=`<button class="shop-tab-all${_viewMode==='all'?' active':''}" onclick="switchToAll()">📊 ทุกสาขา</button>`;
   document.getElementById('shopTabsBar').innerHTML=h;
+  updateShopTabsScrollUI();
 }
+/* Arrow + fade affordance for the branch tab bar. Recomputed on render,
+   on scroll, and on resize — cheap reads, no layout thrash. */
+function scrollShopTabs(dir){
+  const bar=document.getElementById('shopTabsBar');if(!bar)return;
+  /* smooth behavior silently no-ops in some browser/automation contexts —
+     instant is unglamorous but never fails to actually move. Update the
+     arrow/fade state directly too, rather than trusting the scroll event
+     alone — a programmatic scroll can dispatch it late or not at all. */
+  bar.scrollBy({left:dir*220});
+  updateShopTabsScrollUI();
+}
+function updateShopTabsScrollUI(){
+  const wrap=document.getElementById('shopTabsWrap'),bar=document.getElementById('shopTabsBar');
+  if(!wrap||!bar)return;
+  const overflow=bar.scrollWidth>bar.clientWidth+2;
+  wrap.classList.toggle('has-overflow',overflow);
+  wrap.classList.toggle('at-start',bar.scrollLeft<=2);
+  wrap.classList.toggle('at-end',bar.scrollLeft+bar.clientWidth>=bar.scrollWidth-2);
+}
+window.addEventListener('resize',updateShopTabsScrollUI);
 /* ── MONEY HELPERS ── */
 function fmtTHB(n){n=+n||0;return'฿'+n.toLocaleString('en-US',{maximumFractionDigits:0});}
 function fmtCompact(n){
@@ -1982,8 +2018,15 @@ function companyFinance(){
   return agg;
 }
 
+/* Hide-completed is a per-browser display preference, not data — it only
+   filters the all-branches grid, never the branch tab bar or search, so a
+   finished branch never becomes hard to find, just quieter by default. */
+function _hideCompleted(){try{return localStorage.getItem('jc_hide_completed')==='1';}catch(e){return false;}}
+function toggleHideCompleted(on){try{localStorage.setItem('jc_hide_completed',on?'1':'0');}catch(e){}renderAllShops();}
 function renderAllShops(){
-  const shops=DB.shops;
+  const cb=document.getElementById('asHideDone');if(cb)cb.checked=_hideCompleted();
+  const shops=DB.shops;                              /* stat totals always count every branch */
+  const gridShops=_hideCompleted()?shops.filter(s=>s.status!=='Completed'):shops;
   const fin=companyFinance();
   const opened=shops.filter(s=>s.status==='Completed').length;
   const collPct=fin.total?Math.round(fin.collected/fin.total*100):0;
@@ -1993,7 +2036,7 @@ function renderAllShops(){
     {val:fmtCompact(fin.total),sub:`มูลค่าที่ทีม BD สร้าง`,label:'มูลค่ารวมโครงการ',icon:'💰',accent:'var(--gold)'},
     {val:fmtCompact(fin.collected),sub:`${collPct}% ของมูลค่ารวม${fin.overdue?` · เกินกำหนด ${fmtCompact(fin.overdue)}`:''}`,label:'เก็บเงินแล้ว',icon:'💵',accent:fin.overdue?'var(--red)':'var(--sky)'},
   ].map(c=>`<div class="stat-card" style="--card-accent:${c.accent}"><div class="stat-icon">${c.icon}</div><div class="stat-val">${c.val}</div><div class="stat-label">${c.label}</div><div class="stat-sub">${c.sub}</div></div>`).join('');
-  document.getElementById('asGrid').innerHTML=shops.map(sh=>{
+  document.getElementById('asGrid').innerHTML=gridShops.map(sh=>{
     const tasks=(sh.groups||[]).flatMap(g=>g.tasks||[]);
     const sched=tasks.filter(t=>t.startDate&&t.enabled);
     const pct=tasks.length?Math.round(sched.length/tasks.length*100):0;
@@ -2012,7 +2055,9 @@ function renderAllShops(){
       ${ownerName?`<div style="font-size:11px;color:var(--text-3);margin-top:9px;">👤 BD: <strong style="color:var(--text-2)">${esc(ownerName)}</strong></div>`:''}
       <button class="btn btn-navy btn-sm" onclick="switchShop('${sh.id}')" style="width:100%;margin-top:11px;">📅 เปิด Timeline</button>
     </div>`;
-  }).join('')+`<div class="shop-card shop-card-new edit-only" onclick="openNewShop()"><div style="font-size:28px;margin-bottom:6px">＋</div><div style="font-weight:700;color:var(--text-2)">เพิ่มสาขาใหม่</div></div>`;
+  }).join('')
+    +(gridShops.length===0&&shops.length>0?`<div class="shop-card-empty-hint">✅ ซ่อนสาขาที่เสร็จแล้วอยู่ (${shops.length-gridShops.length} สาขา) — <a href="#" onclick="document.getElementById('asHideDone').click();return false;">แสดงทั้งหมด</a></div>`:'')
+    +`<div class="shop-card shop-card-new edit-only" onclick="openNewShop()"><div style="font-size:28px;margin-bottom:6px">＋</div><div style="font-weight:700;color:var(--text-2)">เพิ่มสาขาใหม่</div></div>`;
 }
 function _syncFormFromS(){
   document.getElementById('branchInput').value=S.branchName||'';
@@ -2020,10 +2065,8 @@ function _syncFormFromS(){
   document.getElementById('qsStart').value=S.projectStart||'';
   const dur=S.projectDuration||90;
   _selDur=dur;
-  document.querySelectorAll('.dur-chip').forEach(c=>c.classList.remove('sel'));
-  const chips={90:'dc90',100:'dc100',120:'dc120'};
-  if(chips[dur]){const el=document.getElementById(chips[dur]);if(el)el.classList.add('sel');}
-  else document.getElementById('durCustom').value=dur;
+  const endEl=document.getElementById('qsEnd');
+  if(endEl){endEl.min=S.projectStart||'';endEl.value=S.projectStart?addDays(S.projectStart,dur):'';}
   /* Auto-build months if empty */
   if(!S.months||!S.months.length)computeMonthsFromProject(S.projectStart,dur);
 }
@@ -2489,11 +2532,27 @@ document.addEventListener('click',e=>{if(!e.target.closest('.act-more'))document
 /* OVERVIEW */
 function syncBranch(v){S.branchName=v;document.getElementById('branchInput').value=v;dbSave();}
 let _selDur=90;
-function selDur(n,chip){
-  _selDur=n||90;
-  document.querySelectorAll('.dur-chip').forEach(c=>c.classList.remove('sel'));
-  if(chip)chip.classList.add('sel');else document.getElementById('durCustom').value=n;
-  S.projectDuration=_selDur;
+/* Duration is picked the same way the start date already is — as a date,
+   not a fixed 90/100/120 preset. This just derives the day-count from
+   (start, end) and feeds the same internal duration engine (autoSchedule,
+   month generation, the plan-duration stat) the chips used to feed, so
+   nothing downstream had to change. */
+function _setDuration(n){_selDur=n>0?n:90;S.projectDuration=_selDur;}
+function onStartDateChange(v){
+  S.projectStart=v;
+  const endEl=document.getElementById('qsEnd');
+  if(endEl){
+    endEl.min=v;
+    endEl.value=v?addDays(v,_selDur):'';   /* duration stays put — the window just slides */
+  }
+  liveRebuildMonths();
+}
+function onEndDateChange(v){
+  const endEl=document.getElementById('qsEnd');
+  const st=document.getElementById('qsStart').value||S.projectStart;
+  if(!st){_toast('กรุณาเลือกวันเริ่มต้นก่อน','warn');if(endEl)endEl.value='';return;}
+  if(!v||v<st){_toast('วันสิ้นสุดต้องไม่ก่อนวันเริ่มต้น','warn');if(endEl)endEl.value=addDays(st,_selDur);return;}
+  _setDuration(daysBetween(st,v));
   liveRebuildMonths();
 }
 
@@ -3938,6 +3997,11 @@ function removeDeptFile(code,id){
 }
 
 /* ── FINANCE DASHBOARD ───────────────────────────────────────── */
+let _finSort={key:null,dir:'desc'};
+function sortFinTable(key){
+  _finSort=_finSort.key===key?{key,dir:_finSort.dir==='desc'?'asc':'desc'}:{key,dir:'desc'};
+  renderFinance();
+}
 function renderFinance(){
   const agg=companyFinance();
   const shops=DB.shops;
@@ -3973,10 +4037,18 @@ function renderFinance(){
     </div>
   </div>`;
 
-  /* Per-shop table */
+  /* Per-shop table — sortable by clicking a money column header. Default
+     is branch order (unsorted); the most useful click is คงค้าง desc, so
+     collections can see who's furthest behind at a glance. */
+  const sortedShops=shops.map(sh=>({sh,f:shopFinance(sh)}));
+  if(_finSort.key){
+    sortedShops.sort((a,b)=>{
+      const av=a.f[_finSort.key]||0,bv=b.f[_finSort.key]||0;
+      return _finSort.dir==='desc'?bv-av:av-bv;
+    });
+  }
   let sRows='';
-  shops.forEach(sh=>{
-    const f=shopFinance(sh);
+  sortedShops.forEach(({sh,f})=>{
     const pct=f.total?f.collected/f.total*100:0;
     const owner=f.owner||'—';
     const sc=STATUS_COLORS[sh.status]||'#888';
@@ -3991,7 +4063,12 @@ function renderFinance(){
       <td><button class="dept-file-btn" onclick="switchShop('${sh.id}');setTimeout(openFinPayments,60)">✏️ แก้ไข</button></td>
     </tr>`;
   });
-  document.getElementById('finShopTable').innerHTML=`<thead><tr><th>สาขา</th><th>สถานะ</th><th>BD Sales</th><th class="num">มูลค่ารวม</th><th class="num">เก็บแล้ว</th><th class="num">คงค้าง</th><th style="min-width:140px;">%</th><th></th></tr></thead><tbody>${sRows}
+  const sortTh=(key,label)=>{
+    const active=_finSort.key===key;
+    const arrow=active?(_finSort.dir==='desc'?' ▼':' ▲'):'';
+    return `<th class="num fin-sortable${active?' sorted':''}" onclick="sortFinTable('${key}')" title="เรียงตาม${label}">${label}${arrow}</th>`;
+  };
+  document.getElementById('finShopTable').innerHTML=`<thead><tr><th>สาขา</th><th>สถานะ</th><th>BD Sales</th>${sortTh('total','มูลค่ารวม')}${sortTh('collected','เก็บแล้ว')}${sortTh('outstanding','คงค้าง')}<th style="min-width:140px;">%</th><th></th></tr></thead><tbody>${sRows}
     <tr class="fin-total"><td colspan="3">รวมทุกสาขา</td><td class="num">${fmtTHB(agg.total)}</td><td class="num">${fmtTHB(agg.collected)}</td><td class="num">${fmtTHB(agg.outstanding)}</td><td colspan="2"></td></tr></tbody>`;
 
   /* All payments */
@@ -4996,6 +5073,3 @@ _booted=true;
 _editKey=_adminKey;
 initSync();
 </script>
-
-</body>
-</html>
