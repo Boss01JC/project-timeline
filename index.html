@@ -755,6 +755,40 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
 .shop-card-edit{background:none;border:none;font-size:15px;color:var(--text-3);padding:4px;cursor:pointer;flex-shrink:0;}
 .shop-card-edit:hover{color:var(--text);}
 .shop-card-stats{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--text-3);margin-bottom:6px;}
+/* Grand opening highlight — gold block on branch cards, same block inside the Overview hero */
+.shop-card-open,.ov-grand{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;
+  padding:12px 14px;border-radius:var(--r);color:#12200F;
+  background:linear-gradient(135deg,#F3DD6B 0%,#E2C233 55%,#C9A800 100%);
+  border:1px solid rgba(120,92,0,.35);box-shadow:0 4px 14px rgba(201,168,0,.38),inset 0 1px 0 rgba(255,255,255,.55);}
+.shop-card-open{margin:12px 0 4px;}
+.ov-grand{display:inline-flex;margin-top:16px;max-width:100%;}
+.shop-card-open .go-label,.ov-grand .go-label{flex:1 0 100%;font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:rgba(18,32,15,.72);}
+.shop-card-open .go-date,.ov-grand .go-date{font-size:21px;font-weight:900;line-height:1.15;letter-spacing:.2px;color:#12200F;}
+.ov-grand .go-date{font-size:24px;}
+.shop-card-open .go-count,.ov-grand .go-count{padding:4px 12px;border-radius:20px;background:#0F2240;color:#fff;font-size:12.5px;font-weight:800;white-space:nowrap;box-shadow:0 2px 6px rgba(15,34,64,.35);}
+.go-soon .go-count{background:#C2410C;}
+.go-late .go-count{background:#B91C1C;}
+.go-done .go-count{background:#1F7A44;}
+.shop-card-open .go-note,.ov-grand .go-note{margin-left:auto;font-size:10.5px;font-weight:700;color:rgba(18,32,15,.7);}
+.shop-card-open.go-empty,.ov-grand.go-empty{background:transparent;box-shadow:none;border:1.5px dashed var(--border-2);color:var(--text-3);}
+.ov-grand.go-empty{border-color:rgba(255,255,255,.3);}
+.go-empty .go-label{color:inherit;}
+.go-empty .go-date{font-size:14px;font-weight:700;color:inherit;}
+.ov-grand.go-empty .go-date,.ov-grand.go-empty .go-label{color:rgba(255,255,255,.7);}
+@media(max-width:480px){.ov-grand .go-date,.shop-card-open .go-date{font-size:19px;}}
+.sp-hint{font-size:11px;color:var(--text-3);margin-top:5px;line-height:1.5;}
+.cp-box{margin:4px 0 16px;padding:12px 14px;border:1.5px dashed var(--border-2);border-radius:var(--r);background:var(--surface-2);}
+.cp-title{font-size:12px;font-weight:800;color:var(--text);margin-bottom:8px;}
+.cp-opts{margin-top:12px;display:flex;flex-direction:column;gap:2px;}
+.cp-row,.cp-file{display:flex;align-items:flex-start;gap:9px;padding:6px 2px;font-size:13px;color:var(--text);cursor:pointer;text-transform:none;letter-spacing:0;}
+.cp-row input,.cp-file input{margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:var(--navy);}
+.cp-row small,.cp-file small{display:block;font-size:11px;color:var(--text-3);margin-top:1px;line-height:1.4;}
+.cp-files-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 4px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;font-weight:800;}
+.cp-files-head .cp-spacer{flex:1;}
+.cp-files{max-height:230px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--surface);padding:4px 10px;}
+.cp-fgroup{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text-3);margin:8px 0 2px;}
+.cp-file.cp-off{opacity:.5;cursor:not-allowed;}
+.cp-empty{font-size:12px;color:var(--text-3);padding:8px 2px;}
 .shop-card-new{display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border-left-color:var(--border)!important;color:var(--text-3);min-height:140px;border-style:dashed!important;}
 .shop-card-new:hover{background:var(--surface-2);color:var(--text);}
 /* COLOR SWATCHES */
@@ -1197,6 +1231,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <div class="ov-hero-left">
       <div class="ov-hero-title" id="ovTitle">🍵 JIAN CHA Franchise Onboarding</div>
       <div class="ov-hero-sub" id="ovSub">กรุณาตั้งค่าโปรเจกต์เพื่อเริ่มต้น</div>
+      <div id="ovGrand"></div>
     </div>
     <div class="ov-hero-right">
       <button class="btn btn-gold btn-lg" onclick="showSection('sec-timeline')">📅 เปิด Timeline →</button>
@@ -1493,6 +1528,12 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
       </select>
     </div>
     <div class="fgrp"><label>ผู้รับผิดชอบ (BD Sales)</label><input class="finput" id="spOwner" placeholder="ชื่อพนักงานขายที่ดูแลสาขานี้"></div>
+    <div class="fgrp"><label>🎉 วันเปิดร้าน (Grand Opening)</label><input class="finput" type="date" id="spGrand"><div class="sp-hint">เว้นว่าง = ใช้วันที่ของ task "Grand Opening" ในไทม์ไลน์โดยอัตโนมัติ</div></div>
+    <div class="cp-box" id="spCopyWrap" style="display:none">
+      <div class="cp-title">📋 คัดลอกจากสาขาที่มีอยู่ (ไม่บังคับ)</div>
+      <select class="finput" id="spCopySrc" onchange="renderCopyOptions()"></select>
+      <div class="cp-opts" id="spCopyOpts" style="display:none"></div>
+    </div>
     <div class="pfoot">
       <button class="btn btn-danger btn-sm pfoot-left" id="spDeleteBtn" onclick="deleteShop()" style="display:none">ลบสาขา</button>
       <button class="btn btn-ghost2 btn-sm pfoot-left" id="spDupeBtn" onclick="duplicateShopAsTemplate()" style="display:none" title="สร้างสาขาใหม่โดยคัดลอกกลุ่มงาน/รายการ task ทั้งหมด (ไม่รวมวันที่และไฟล์)">📋 ใช้เป็นแม่แบบ</button>
@@ -2055,6 +2096,7 @@ function renderAllShops(){
     return`<div class="shop-card" style="--sc:${sh.color}">
       <div class="shop-card-head"><div class="shop-card-color" style="background:${sh.color}"></div><div class="shop-card-info"><div class="shop-card-name">${esc(sh.name)}</div><div class="shop-card-status" style="background:${sc}22;color:${sc}">${sh.status}</div></div><button class="shop-card-edit" onclick="openEditShop('${sh.id}')">✏️</button></div>
       <div class="shop-card-stats"><span>${tasks.length} tasks</span><span>${sched.length} กำหนดแล้ว</span>${nFiles?`<span>📎 ${nFiles} ไฟล์</span>`:''}${sh.projectStart?`<span>เริ่ม ${fmtTH(sh.projectStart)}</span>`:''}</div>
+      ${grandOpeningBlock(sh,'shop-card-open')}
       <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-3);margin:11px 0 5px;">ความคืบหน้างาน · ${pct}%</div>
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${sh.color}"></div></div>
       ${f.total?`<div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-3);margin:11px 0 5px;">เก็บเงิน · ${fmtCompact(f.collected)} / ${fmtCompact(f.total)}${f.overdue?` <span style="color:var(--red)">· เกินกำหนด</span>`:''}</div>
@@ -2091,15 +2133,24 @@ function openNewShop(){
   _editShopId=null;_spColor=SHOP_COLORS[DB.shops.length%SHOP_COLORS.length];
   document.getElementById('spName').value='';document.getElementById('spStatus').value='Planning';
   document.getElementById('spOwner').value='';
+  document.getElementById('spGrand').value='';
   document.getElementById('spDeleteBtn').style.display='none';
   document.getElementById('spDupeBtn').style.display='none';
   document.getElementById('popShopHead').textContent='🏪 เพิ่มสาขาใหม่';
+  /* offer to carry an existing branch's timeline/files into the new one */
+  const sel=document.getElementById('spCopySrc');
+  sel.innerHTML='<option value="">— ไม่คัดลอก (เริ่มจากแม่แบบมาตรฐาน) —</option>'
+    +DB.shops.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');
+  sel.value='';renderCopyOptions();
+  document.getElementById('spCopyWrap').style.display=DB.shops.length?'':'none';
   renderSwatches();openP('popShop');
 }
 function openEditShop(id){
   _editShopId=id;const sh=DB.shops.find(x=>x.id===id);if(!sh)return;
   _spColor=sh.color;document.getElementById('spName').value=sh.name;document.getElementById('spStatus').value=sh.status;
   document.getElementById('spOwner').value=(sh.finance&&sh.finance.owner)||'';
+  document.getElementById('spGrand').value=sh.grandOpening||'';
+  document.getElementById('spCopyWrap').style.display='none';
   document.getElementById('spDeleteBtn').style.display='';
   document.getElementById('spDupeBtn').style.display='';
   document.getElementById('popShopHead').textContent='✏️ แก้ไขสาขา';
@@ -2112,10 +2163,12 @@ function applyShop(){
   const name=document.getElementById('spName').value.trim();if(!name){_toast('กรุณาใส่ชื่อสาขา','warn');return;}
   const status=document.getElementById('spStatus').value;
   const owner=document.getElementById('spOwner').value.trim();
+  const grand=document.getElementById('spGrand').value||'';
+  let copyJobs=[],copySrcId='';
   if(_editShopId){
     const sh=DB.shops.find(x=>x.id===_editShopId);
     if(sh){
-      sh.name=name;sh.color=_spColor;sh.status=status;
+      sh.name=name;sh.color=_spColor;sh.status=status;sh.grandOpening=grand;
       if(!sh.finance)sh.finance=_defFinance();
       sh.finance.owner=owner;                             /* same field the Finance popup edits */
       /* queueSync() only ever marks _activeId dirty, so editing a branch
@@ -2127,16 +2180,206 @@ function applyShop(){
       logActivity('edit','แก้ไขข้อมูลสาขา "'+name+'"',sh.id);
     }
   }else{
-    const sh=mkNewShopObj(name);sh.color=_spColor;sh.status=status;sh.finance.owner=owner;
+    const sh=mkNewShopObj(name);sh.color=_spColor;sh.status=status;sh.finance.owner=owner;sh.grandOpening=grand;
+    const plan=_collectCopyPlan();
+    if(plan){copyJobs=_applyCopyPlan(sh,plan);copySrcId=plan.src.id;}
     while(DB.shops.find(x=>x.id===sh.id))sh.id=nid();   /* never reuse a live id */
     DB.shops.push(sh);
     dbSave();_activeId=sh.id;applyShopToS(sh);
     document.getElementById('branchInput').value=name;document.getElementById('qsBranch').value=name;
-    initData();syncSToShop();
-    logActivity('create','สร้างสาขาใหม่ "'+name+'"',sh.id);
+    if(!(plan&&plan.timeline))initData();               /* copied timeline replaces the stock template */
+    syncSToShop();
+    logActivity('create','สร้างสาขาใหม่ "'+name+'"'+(plan?' (คัดลอกจาก "'+plan.src.name+'")':''),sh.id);
+    copyJobs.forEach(j=>{j.shopId=sh.id;});
   }
   dbSave();renderShopTabs();closeP('popShop');
   if(_viewMode==='all')renderAllShops();else renderOverview();
+  if(copyJobs.length)_copyFileJobs(copyJobs,copySrcId).catch(e=>console.warn('file copy failed:',e&&e.message));
+  else if(copySrcId)_toast('สร้างสาขา "'+name+'" โดยคัดลอกจากสาขาเดิมแล้ว');
+}
+
+/* ── COPY FROM AN EXISTING BRANCH ─────────────────────────────────────
+   Used when creating a branch. The user picks a source branch and which
+   parts to carry over; files are listed individually so each can be
+   ticked or not. Every id is regenerated, and each file is physically
+   cloned (new storage object / new local blob) rather than shared by id —
+   deleting a file or branch deletes its bytes, so sharing one would break
+   the other branch. Payment documents are never offered: they belong to
+   one branch's money. */
+function renderCopyOptions(){
+  const box=document.getElementById('spCopyOpts');
+  const src=DB.shops.find(x=>x.id===document.getElementById('spCopySrc').value);
+  if(!src){box.style.display='none';box.innerHTML='';return;}
+  const row=(id,label,on,hint,extra)=>`<label class="cp-row"><input type="checkbox" id="${id}" ${on?'checked':''} ${extra||''}><span>${label}${hint?`<small>${hint}</small>`:''}</span></label>`;
+  const nTasks=(src.groups||[]).reduce((n,g)=>n+(g.tasks||[]).length,0);
+  const fileRow=(f,cls,sub)=>`<label class="cp-file"><input type="checkbox" class="${cls}" data-cpf="${esc(f.id)}" data-local="${f.url?0:1}" checked><span>${fileIcon(f.type)} ${esc(f.name)}<small>${sub} · ${f.type==='link'?'ลิงก์':fmtSize(f.size||0)}</small></span></label>`;
+  let taskRows='',nTaskFiles=0;
+  (src.groups||[]).forEach(g=>(g.tasks||[]).forEach(t=>{
+    const fs=t.files||[];if(!fs.length)return;
+    nTaskFiles+=fs.length;
+    taskRows+=fs.map(f=>fileRow(f,'cp-ftask',esc(t.name))).join('');
+  }));
+  let deptRows='',nDeptFiles=0;
+  Object.entries(src.deptFiles||{}).forEach(([code,arr])=>{
+    if(!(arr||[]).length)return;
+    nDeptFiles+=arr.length;
+    const d=(src.departments||[]).find(x=>x.code===code);
+    deptRows+=arr.map(f=>fileRow(f,'cp-fdept','แผนก '+esc(d?d.name:code))).join('');
+  });
+  const files=(taskRows?`<div class="cp-fgroup">ไฟล์แนบของ Task (${nTaskFiles})</div>${taskRows}`:'')
+    +(deptRows?`<div class="cp-fgroup">ไฟล์ของแผนก (${nDeptFiles})</div>${deptRows}`:'');
+  box.innerHTML=
+    row('cpTimeline','โครงสร้างไทม์ไลน์ — กลุ่มงานและ tasks ทั้งหมด',true,nTasks+' tasks (ทำเครื่องหมาย "เสร็จแล้ว" จะถูกล้าง)','onchange="cpToggleTimeline()"')
+    +row('cpDates','วันที่โปรเจกต์ และวันที่ของแต่ละ task',false,'ไม่เลือก = เริ่มใหม่ แล้วตั้งวันเองที่หน้า Overview')
+    +row('cpConfig','ผู้รับผิดชอบ (By) · แผนก · รายชื่อผู้ติดต่อ',true,'')
+    +row('cpUniform','ตั้งค่า Uniform (ประเภท)',true,'ไม่รวมรายชื่อพนักงาน')
+    +`<div class="cp-files-head"><span>📎 ไฟล์ที่จะคัดลอก</span><span class="cp-spacer"></span>
+      <button type="button" class="btn btn-ghost2 btn-sm" onclick="cpSelectFiles(true)">เลือกทั้งหมด</button>
+      <button type="button" class="btn btn-ghost2 btn-sm" onclick="cpSelectFiles(false)">ไม่เลือก</button></div>
+      <div class="cp-files">${files||'<div class="cp-empty">สาขานี้ยังไม่มีไฟล์</div>'}</div>
+      <div class="sp-hint">ไฟล์แนบของ Task จะคัดลอกได้เมื่อเลือก "โครงสร้างไทม์ไลน์" · ไฟล์ที่อัปโหลดจากอุปกรณ์อื่นและไม่ได้อยู่ในเครื่องนี้จะคัดลอกไม่ได้</div>`;
+  box.style.display='';
+  /* bytes that live only on another device cannot be cloned from here */
+  box.querySelectorAll('input[data-local="1"]').forEach(async el=>{
+    if(await _idbHas(el.dataset.cpf))return;
+    el.dataset.gone='1';el.checked=false;el.disabled=true;
+    const lab=el.closest('.cp-file');lab.classList.add('cp-off');lab.title=FILE_ELSEWHERE;
+  });
+}
+function cpToggleTimeline(){
+  const on=document.getElementById('cpTimeline').checked;
+  document.querySelectorAll('#spCopyOpts .cp-ftask').forEach(el=>{
+    if(el.dataset.gone==='1')return;
+    el.disabled=!on;el.checked=on;
+    el.closest('.cp-file').classList.toggle('cp-off',!on);
+  });
+}
+function cpSelectFiles(on){
+  document.querySelectorAll('#spCopyOpts .cp-files input[type=checkbox]').forEach(el=>{
+    if(el.disabled||el.dataset.gone==='1')return;
+    el.checked=on;
+  });
+}
+function _collectCopyPlan(){
+  const sid=document.getElementById('spCopySrc').value;
+  const src=sid&&DB.shops.find(x=>x.id===sid);if(!src)return null;
+  const on=id=>{const e=document.getElementById(id);return!!(e&&e.checked);};
+  const files=new Set([...document.querySelectorAll('#spCopyOpts .cp-files input:checked:not(:disabled)')].map(e=>e.dataset.cpf));
+  return{src,timeline:on('cpTimeline'),dates:on('cpDates'),config:on('cpConfig'),uniform:on('cpUniform'),files};
+}
+const _clone=o=>JSON.parse(JSON.stringify(o));
+/* Fills `sh` from the plan and returns the file-copy jobs (run afterwards,
+   async). A job names its destination by id so it still resolves after a
+   sync replaces the in-memory objects. */
+function _applyCopyPlan(sh,plan){
+  const src=plan.src,jobs=[];
+  if(plan.config){
+    sh.byOptions=_clone(src.byOptions||_defByOptions());
+    sh.departments=_clone(src.departments||_defDepts());
+    sh.contacts=_clone(src.contacts||_defContacts());
+  }
+  if(plan.uniform)sh.uniform={type:(src.uniform&&src.uniform.type)||'shirt',staff:[]};
+  if(plan.dates){
+    sh.projectStart=src.projectStart||'';
+    sh.projectDuration=src.projectDuration||90;
+    sh.months=_clone(src.months||[]);
+  }
+  if(plan.timeline){
+    sh.groups=(src.groups||[]).map(g=>({
+      id:nid(),name:g.name,link:g.link||'',
+      tasks:(g.tasks||[]).map(t=>{
+        const nt={id:nid(),name:t.name,by:t.by,days:t.days,depts:(t.depts||[]).slice(),
+          enabled:t.enabled,done:false,doneAt:'',
+          startDate:plan.dates?(t.startDate||null):null,
+          endDate:plan.dates?(t.endDate||null):null,
+          link:t.link||'',email:t.email||'',lineId:t.lineId||'',notifyMsg:t.notifyMsg||'',
+          files:[]};
+        (t.files||[]).forEach(f=>{if(plan.files.has(f.id))jobs.push({f,taskId:nt.id});});
+        return nt;
+      })
+    }));
+  }
+  Object.entries(src.deptFiles||{}).forEach(([code,arr])=>(arr||[]).forEach(f=>{
+    if(plan.files.has(f.id))jobs.push({f,code});
+  }));
+  return jobs;
+}
+/* One physical copy of a file record: links are plain data; remote files are
+   re-uploaded to the new branch's folder; local ones are re-stored in IndexedDB. */
+async function _cloneFileRecord(f,shopId,code){
+  const now=new Date().toISOString();
+  if(f.type==='link')return{...f,id:'lk_'+nid(),uploadedAt:now};
+  let blob;
+  if(f.url){
+    const r=await fetch(f.url);
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    blob=await r.blob();
+  }else{
+    blob=await _idbGet(f.id);
+    if(!blob)throw new Error('bytes not on this device');
+  }
+  const file=new File([blob],f.name,{type:f.type||blob.type||'application/octet-stream'});
+  const id=code?('df_'+shopId+'_'+nid()):nid();
+  if(_sb){
+    const up=await sbUpload(file,code?('dept/'+shopId+'/'+code):('task/'+shopId));
+    return{id,name:f.name,size:file.size,type:f.type,url:up.url,path:up.path,shared:true,uploadedAt:now};
+  }
+  await _idbPut(id,file);
+  return{id,name:f.name,size:file.size,type:f.type,uploadedAt:now};
+}
+async function _copyFileJobs(jobs,srcId){
+  if(!jobs.length)return;
+  const shopId=jobs[0].shopId;
+  const src=DB.shops.find(x=>x.id===srcId);
+  let ok=0;const failed=[];_uploading++;
+  _toast('กำลังคัดลอกไฟล์ '+jobs.length+' ไฟล์ …');
+  for(const j of jobs){
+    try{
+      const rec=await _cloneFileRecord(j.f,shopId,j.code);
+      const cur=DB.shops.find(x=>x.id===shopId);if(!cur)throw new Error('branch gone');
+      if(j.code){
+        if(!cur.deptFiles)cur.deptFiles={};
+        (cur.deptFiles[j.code]=cur.deptFiles[j.code]||[]).push(rec);
+      }else{
+        const t=(cur.groups||[]).flatMap(g=>g.tasks||[]).find(x=>x.id===j.taskId);
+        if(!t)throw new Error('task gone');
+        (t.files=t.files||[]).push(rec);
+      }
+      _dirtyShops.add(shopId);dbSave();ok++;
+    }catch(e){failed.push(j.f.name);}
+  }
+  _uploading--;
+  await flushNow();
+  logActivity('upload','คัดลอก '+ok+' ไฟล์'+(src?' จากสาขา "'+src.name+'"':''),shopId);
+  rerenderCurrent();
+  _toast(failed.length
+    ?'คัดลอกไฟล์สำเร็จ '+ok+' · ไม่สำเร็จ '+failed.length+' ('+failed.slice(0,3).join(', ')+(failed.length>3?'…':'')+')'
+    :'คัดลอกไฟล์ครบ '+ok+' ไฟล์แล้ว',failed.length?'warn':undefined);
+}
+
+/* Grand opening: an explicit date on the branch wins; otherwise follow the
+   dated "Grand Opening" task in its timeline, so the card tracks reschedules. */
+function shopGrandOpening(sh){
+  if(sh&&sh.grandOpening)return{date:sh.grandOpening,auto:false};
+  const t=((sh&&sh.groups)||[]).flatMap(g=>g.tasks||[])
+    .find(x=>x.enabled!==false&&/^\s*grand\s*opening\s*$/i.test(x.name||'')&&(x.endDate||x.startDate));
+  return t?{date:t.endDate||t.startDate,auto:true}:{date:'',auto:false};
+}
+function grandOpeningCountdown(sh,date){
+  if(!date)return{txt:'',lvl:''};
+  if(sh.status==='Completed')return{txt:'เปิดแล้ว ✓',lvl:'done'};
+  const diff=Math.round((parseDS(date)-parseDS(_todayKey()))/86400000);
+  if(diff>0)return{txt:'อีก '+diff+' วัน',lvl:diff<=14?'soon':'ok'};
+  if(diff===0)return{txt:'วันนี้!',lvl:'soon'};
+  return{txt:'เลยกำหนด '+(-diff)+' วัน',lvl:'late'};
+}
+/* Shared markup for the highlighted grand-opening block (branch cards + Overview hero) */
+function grandOpeningBlock(sh,cls){
+  const go=shopGrandOpening(sh),cd=grandOpeningCountdown(sh,go.date);
+  if(!go.date)return`<div class="${cls} go-empty"><span class="go-label">🎉 Grand Opening</span><span class="go-date">ยังไม่กำหนด</span></div>`;
+  return`<div class="${cls} go-${cd.lvl}"><span class="go-label">🎉 Grand Opening</span><span class="go-date">${fmtTH(go.date)}</span>`
+    +(cd.txt?`<span class="go-count">${cd.txt}</span>`:'')
+    +(go.auto?'<span class="go-note">จาก Timeline</span>':'')+`</div>`;
 }
 async function deleteShop(){
   if(DB.shops.length<=1){_toast('ไม่สามารถลบสาขาสุดท้าย','warn');return;}
@@ -2753,6 +2996,8 @@ function renderOverview(){
   document.getElementById('ovTitle').textContent=`🍵 JIAN CHA${b?' — '+b:''} Franchise Onboarding`;
   if(S.projectStart){const e=addDays(S.projectStart,S.projectDuration);document.getElementById('ovSub').textContent=`เริ่ม ${fmtTH(S.projectStart)} · ${S.projectDuration} วัน · สิ้นสุด ${fmtTH(e)}`;}
   else document.getElementById('ovSub').textContent='กรุณาตั้งค่าโปรเจกต์เพื่อเริ่มต้น';
+  const _ovSh=DB.shops.find(x=>x.id===_activeId);
+  document.getElementById('ovGrand').innerHTML=_ovSh?grandOpeningBlock(_ovSh,'ov-grand'):'';
   if(b&&!document.getElementById('qsBranch').value)document.getElementById('qsBranch').value=b;
   const tasks=allTasks(),active=tasks.filter(t=>t.enabled),sched=scheduledTasks(),cols=getDateCols();
   document.getElementById('ovStats').innerHTML=[
