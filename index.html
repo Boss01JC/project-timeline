@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Content-Security-Policy: the safety net behind output escaping. Inline scripts/styles stay
+     allowed (the app is one file with inline handlers), but nothing can load or talk to anything
+     except this page, the pinned Supabase library on jsDelivr, and this project's own Supabase
+     host — so an injected script cannot pull in code or send data to a third-party server.
+     If SB_URL ever changes, change the two supabase hosts below to match. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://vjlyuuakinpfxpzpmlil.supabase.co; font-src 'self' data:; connect-src 'self' https://vjlyuuakinpfxpzpmlil.supabase.co wss://vjlyuuakinpfxpzpmlil.supabase.co; manifest-src 'self' data:; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'">
 <title>JIAN CHA — Project Timeline</title>
 <!-- Installable-app hints. Manifest is a data: URI so the whole app stays
      one file — no separate manifest.json or icon asset to upload. There is
@@ -1137,6 +1143,185 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
 .mt-pill.soon{background:rgba(232,93,4,.14);color:var(--orange);}
 .mt-pill.none{background:var(--surface-2);color:var(--text-3);}
 .mt-badge{display:inline-block;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;color:#fff;letter-spacing:.2px;}
+.mt-edit{flex-shrink:0;align-self:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);font-size:20px;font-weight:800;line-height:1;cursor:pointer;}
+
+/* ═══ Task extras: dependencies · checklist · comments ═══════════════ */
+.dep-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.dep-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 10px;border-radius:16px;background:var(--surface-2);border:1px solid var(--border-2);font-size:12px;font-weight:700;color:var(--text);}
+.dep-chip button{border:none;background:rgba(0,0,0,.08);color:var(--text-2);width:20px;height:20px;border-radius:50%;font-size:11px;line-height:1;cursor:pointer;}
+.dep-chip button:hover{background:var(--red);color:#fff;}
+.chk-count{font-weight:800;color:var(--navy);text-transform:none;letter-spacing:0;}
+.chk-row{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid var(--border);}
+.fgrp .chk-main{flex:1;display:flex;align-items:flex-start;gap:9px;padding:5px 2px;font-size:13px;color:var(--text);cursor:pointer;text-transform:none;letter-spacing:0;font-weight:500;margin:0;}
+.chk-main input{width:17px;height:17px;margin-top:2px;flex-shrink:0;accent-color:var(--green);}
+.chk-row.done .chk-main span{text-decoration:line-through;color:var(--text-3);}
+.chk-del{border:none;background:none;color:var(--text-3);font-size:13px;width:30px;height:30px;border-radius:6px;cursor:pointer;}
+.chk-del:hover{color:var(--red);background:var(--surface-2);}
+.chk-add{display:flex;gap:8px;margin-top:8px;}
+.chk-add .finput{flex:1;}
+.cmt-list{max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
+.cmt{padding:8px 11px;border-radius:var(--r);background:var(--surface-2);border:1px solid var(--border);}
+.cmt.to-me{border-color:var(--gold);background:var(--gold-pale);}
+.cmt-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--text-3);margin-bottom:3px;text-transform:none;letter-spacing:0;}
+.cmt-head strong{color:var(--text);font-size:12px;}
+.cmt-head em{font-style:normal;font-weight:800;color:var(--orange);}
+.cmt-body{font-size:13px;line-height:1.55;color:var(--text);white-space:pre-wrap;word-break:break-word;text-transform:none;letter-spacing:0;font-weight:500;}
+.mention{display:inline-block;padding:0 6px;border-radius:10px;background:rgba(26,143,181,.16);color:#0B6E8F;font-weight:800;}
+.cmt-mentions{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;}
+.mention-chip{border:1px solid var(--border-2);background:var(--surface);color:var(--text-2);border-radius:14px;padding:3px 9px;font-size:11.5px;font-weight:700;cursor:pointer;}
+.mention-chip:hover{background:rgba(26,143,181,.14);color:#0B6E8F;}
+.cmt-actions{display:flex;justify-content:flex-end;margin-top:8px;}
+.cp-shift{margin:2px 0 8px 27px;padding:8px 10px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--border);}
+.cp-shift label{display:block;font-size:11.5px;font-weight:800;color:var(--text);margin-bottom:5px;text-transform:none;letter-spacing:0;}
+.mini-badge{font-size:10px;font-weight:800;min-width:0;width:auto;padding:1px 5px;border-radius:9px;background:var(--surface-2);color:var(--text-2);border:1px solid var(--border);}
+.mini-badge.ok{background:rgba(46,139,80,.15);color:var(--green);border-color:rgba(46,139,80,.4);}
+.mini-badge.hot{background:var(--gold-pale);color:#8a6a00;border-color:var(--gold);}
+.tl-dep-btn.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+/* Gantt: progress fill, planned-elapsed strip, overdue stripes, overlay */
+#tableOuter{position:relative;}
+#ganttOverlay{position:absolute;top:0;left:0;pointer-events:none;z-index:3;overflow:visible;}
+#ganttOverlay .dep-line{fill:none;stroke:#334155;stroke-width:1.6;stroke-linejoin:round;opacity:.85;}
+#ganttOverlay .today-line{stroke:#D03020;stroke-width:1.6;stroke-dasharray:4 3;opacity:.9;}
+#ganttOverlay .today-flag{fill:#D03020;}
+.td-bar-span .bar-prog{position:absolute;left:0;top:0;bottom:0;background:rgba(0,0,0,.34);pointer-events:none;}
+.td-bar-span .bar-plan{position:absolute;left:0;bottom:0;height:3px;background:rgba(255,255,255,.85);pointer-events:none;}
+.td-bar-span .bar-label-inner{position:relative;z-index:1;}
+.td-bar-span .bar-resize{z-index:2;}
+.td-bar-span.bar-late{box-shadow:inset 0 0 0 2px #D03020,0 1px 3px rgba(0,0,0,.18);
+  background-image:repeating-linear-gradient(135deg,rgba(208,48,32,.42) 0 4px,rgba(208,48,32,0) 4px 9px)!important;}
+.td-bar-span.bar-late .bar-label-inner{text-shadow:0 1px 2px rgba(0,0,0,.55);}
+.td-bar-span.bar-done .bar-label-inner{text-decoration:none;}
+@media print{#ganttOverlay{display:none;}}
+
+/* ═══ All-branches page: dashboard · toolbar · portfolio · calendar ════ */
+.as-hero-actions{display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.as-backup{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:26px;}
+.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;box-shadow:var(--shadow-sm);min-width:0;}
+.dash-title{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;font-weight:800;letter-spacing:.3px;color:var(--text-2);margin-bottom:12px;}
+.dash-bad{font-size:11px;font-weight:800;color:#fff;background:var(--red);border-radius:12px;padding:2px 10px;}
+.dash-foot{margin-top:10px;font-size:12px;color:var(--text-3);}
+.dash-foot strong{color:var(--text);}
+.pipe{display:flex;align-items:stretch;gap:2px;flex-wrap:wrap;}
+.pipe-stage{flex:1;min-width:64px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:9px 4px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--surface-2);cursor:pointer;color:var(--text-2);}
+.pipe-stage strong{font-size:22px;line-height:1.1;color:var(--pc);}
+.pipe-stage em{font-style:normal;font-size:10.5px;font-weight:700;}
+.pipe-stage .pipe-ico{font-size:14px;}
+.pipe-stage.on,.pipe-stage:hover{border-color:var(--pc);background:var(--surface);}
+.pipe-arrow{align-self:center;color:var(--text-3);font-size:18px;}
+.dash-fin{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.dash-fin-n{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--text-2);}
+.dash-fin-n i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;}
+.dash-fin-n strong{color:var(--text);}
+.as-toolbar{display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap;margin-bottom:16px;}
+.as-seg-wrap{display:inline-flex;border:1.5px solid var(--border-2);border-radius:var(--r);overflow:hidden;background:var(--surface);}
+.as-seg{border:none;background:none;padding:8px 14px;font-size:12.5px;font-weight:800;color:var(--text-2);cursor:pointer;min-height:38px;}
+.as-seg.on{background:var(--navy);color:#fff;}
+.as-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.as-chip{border:1.5px solid var(--border-2);background:var(--surface);color:var(--text-2);border-radius:20px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;min-height:34px;}
+.as-chip span{margin-left:4px;font-size:11px;color:var(--text-3);}
+.as-chip.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+.as-chip.on span{color:rgba(255,255,255,.75);}
+.as-selects{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto;}
+.as-selects label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--text-3);}
+.as-selects .dept-select{background:var(--surface);color:var(--text);border:1.5px solid var(--border-2);min-height:36px;}
+.as-selects .dept-select option{color:#1A1714;background:#fff;}
+.bk-sum{padding:11px 13px;border-radius:var(--r);background:var(--surface-2);border:1px solid var(--border);font-size:13px;line-height:1.7;margin-bottom:10px;}
+.bk-names{font-size:11.5px;color:var(--text-3);max-height:64px;overflow:auto;}
+/* portfolio */
+.pf-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);box-shadow:var(--shadow-sm);}
+.pf-inner{position:relative;min-width:100%;}
+.pf-head,.pf-row{display:flex;align-items:stretch;}
+.pf-head{position:sticky;top:0;z-index:2;background:var(--head-bg);color:var(--head-text);border-bottom:2px solid var(--gold);}
+.pf-label{flex:0 0 190px;width:190px;display:flex;align-items:center;gap:9px;padding:8px 12px;position:sticky;left:0;z-index:3;background:inherit;font-size:12px;}
+.pf-row .pf-label{background:var(--surface);border-right:1px solid var(--border);}
+.pf-label strong{display:block;font-size:13px;color:var(--text);}
+.pf-label small{display:block;font-size:10.5px;color:var(--text-3);line-height:1.35;}
+.pf-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+.pf-axis{position:relative;height:30px;}
+.pf-month{position:absolute;top:0;bottom:0;display:flex;align-items:center;padding-left:6px;border-left:1px solid rgba(255,255,255,.2);font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;}
+.pf-row{border-bottom:1px solid var(--border);cursor:pointer;}
+.pf-row:hover .pf-lane,.pf-row:hover .pf-label{background:color-mix(in srgb,var(--gold-pale) 60%,var(--surface));}
+.pf-lane{position:relative;min-height:62px;padding:3px 0;display:flex;flex-direction:column;justify-content:center;}
+.pf-bar{position:relative;height:var(--lh,8px);margin:1px 0;border-radius:3px;overflow:hidden;opacity:.92;}
+.pf-bar i{position:absolute;left:0;top:0;bottom:0;background:rgba(0,0,0,.38);}
+.pf-bar.late{box-shadow:inset 0 0 0 1.5px #D03020;}
+.pf-none{font-size:11px;color:var(--text-3);padding-left:10px;}
+.pf-open{position:absolute;top:0;bottom:0;width:2px;background:var(--gold);z-index:1;}
+.pf-open span{position:absolute;top:1px;left:-8px;font-size:14px;line-height:1;}
+.pf-today{position:absolute;top:30px;bottom:0;width:0;border-left:2px dashed #D03020;z-index:2;pointer-events:none;}
+.pf-today span{position:absolute;top:2px;left:4px;font-size:10px;font-weight:800;color:#fff;background:#D03020;border-radius:4px;padding:0 5px;white-space:nowrap;}
+.pf-legend{display:flex;gap:6px 18px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--text-3);}
+.pf-legend i{display:inline-block;vertical-align:middle;margin-right:5px;}
+.lg-bar{width:22px;height:8px;border-radius:3px;background:var(--navy);}
+.lg-bar.late{box-shadow:inset 0 0 0 1.5px #D03020;}
+.lg-today{width:0;height:12px;border-left:2px dashed #D03020;}
+/* calendar */
+.cal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:16px;}
+.cal-head strong{min-width:150px;text-align:center;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);}
+.cal-dow{padding:7px 4px;text-align:center;font-size:11px;font-weight:800;background:var(--head-bg);color:var(--head-text);}
+.cal-cell{min-height:84px;padding:4px;border-top:1px solid var(--border);border-left:1px solid var(--border);display:flex;flex-direction:column;gap:3px;min-width:0;}
+.cal-cell:nth-child(7n+8){border-left:none;}
+.cal-cell.empty{background:var(--surface-2);}
+.cal-cell.wknd{background:color-mix(in srgb,var(--weekend) 55%,var(--surface));}
+.cal-cell.today{box-shadow:inset 0 0 0 2px var(--gold);}
+.cal-d{font-size:11px;font-weight:800;color:var(--text-3);}
+.cal-cell.today .cal-d{color:#12200F;background:var(--gold);border-radius:9px;padding:0 6px;align-self:flex-start;}
+.cal-chip,.cal-start{display:block;width:100%;text-align:left;border-radius:6px;padding:3px 6px;font-size:11px;font-weight:800;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cal-chip{border:none;color:#fff;}
+.cal-start{background:transparent;border:1px dashed;opacity:.75;font-weight:700;}
+.cal-lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px;}
+/* Narrow phones: the top bar was wider than the screen and pushed the link/lock buttons off the edge */
+@media(max-width:480px){
+  #topNav{gap:8px;padding-left:12px;padding-right:12px;}
+  #topNav .nav-logo-text{display:none;}
+  .nav-actions{gap:5px;}
+  .nav-icon-btn{width:38px;height:38px;}
+  .nav-branch{min-width:60px;}
+}
+/* sign-off */
+.sign-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;margin-top:18px;box-shadow:var(--shadow-sm);}
+.sign-head{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px;}
+.sign-statement{font-size:13px;color:var(--text-2);line-height:1.6;margin:0 0 12px;}
+.sign-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;max-width:560px;}
+.sign-fields .note-who{width:100%;max-width:none;min-height:42px;}
+.sign-pad-wrap{position:relative;max-width:560px;border:2px dashed var(--border-2);border-radius:var(--r);background:#fff;overflow:hidden;}
+.sign-pad{display:block;width:100%;aspect-ratio:2/1;touch-action:none;cursor:crosshair;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+.sign-x{position:absolute;left:14px;bottom:30px;font-size:16px;font-weight:800;color:#9aa3af;pointer-events:none;}
+.sign-pad-wrap::after{content:'';position:absolute;left:12px;right:12px;bottom:28px;border-bottom:1.5px solid #cbd2db;pointer-events:none;}
+.sign-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:14px;font-weight:700;color:#9aa3af;pointer-events:none;padding:0 16px;}
+.sign-ph small{font-size:11px;font-weight:500;margin-top:4px;line-height:1.5;}
+.sign-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;max-width:560px;}
+.sign-actions .note-hint{flex:1;min-width:140px;}
+.sign-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:16px;}
+.sign-item{position:relative;display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface-2);}
+.sign-img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain;background:#fff;border:1px solid var(--border);border-radius:6px;}
+.sign-img.none{display:flex;align-items:center;justify-content:center;color:var(--text-3);}
+.sign-meta{display:flex;flex-direction:column;gap:1px;font-size:12px;color:var(--text-2);min-width:0;}
+.sign-meta strong{font-size:13px;color:var(--text);}
+.sign-at{color:var(--text-3);font-size:11px;}
+.sign-item .note-del{position:absolute;top:6px;right:6px;}
+@media(max-width:640px){.sign-fields{grid-template-columns:1fr;}.sign-panel{padding:14px;}}
+/* first steps */
+.steps-card{border-left:4px solid var(--gold);}
+.steps-n{font-size:12px;font-weight:800;color:var(--navy);text-transform:none;letter-spacing:0;}
+.steps-bar{height:7px;border-radius:4px;background:var(--surface-2);overflow:hidden;margin:2px 0 12px;}
+.steps-bar div{height:100%;background:linear-gradient(90deg,var(--gold),var(--green));border-radius:4px;transition:width .3s;}
+.steps-list{display:flex;flex-direction:column;}
+.step-row{display:flex;align-items:center;gap:10px;padding:9px 2px;border-top:1px solid var(--border);font-size:13px;}
+.step-row:first-child{border-top:none;}
+.step-mark{width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--surface-2);border:1.5px solid var(--border-2);font-size:14px;}
+.step-row.ok .step-mark{background:var(--green);border-color:var(--green);color:#fff;font-weight:800;}
+.step-row.ok .step-t{color:var(--text-3);text-decoration:line-through;}
+.step-t{flex:1;min-width:0;color:var(--text);font-weight:600;}
+@media(max-width:640px){
+  .as-hero-actions{align-items:flex-start;}
+  .as-selects{margin-left:0;}
+  .cal-cell{min-height:64px;padding:2px;}
+  .cal-chip,.cal-start{font-size:9.5px;padding:2px 3px;}
+}
 </style>
 
 </head>
@@ -1211,16 +1396,24 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
       <div class="ov-hero-title">🏪 ทุกสาขา — JIAN CHA Franchise</div>
       <div class="ov-hero-sub">ภาพรวมการดำเนินงานของทุกสาขา</div>
     </div>
-    <div class="ov-hero-right">
+    <div class="ov-hero-right as-hero-actions">
       <button class="btn btn-gold btn-lg edit-only" onclick="openNewShop()">＋ เพิ่มสาขาใหม่</button>
+      <div class="as-backup" id="asBackup">
+        <button class="btn btn-ghost btn-sm" onclick="downloadBackup()" title="ดาวน์โหลดข้อมูลทุกสาขาเป็นไฟล์ JSON">💾 Backup</button>
+        <button class="btn btn-ghost btn-sm edit-only" onclick="openRestore()" title="กู้คืนข้อมูลจากไฟล์ Backup">📥 Restore</button>
+      </div>
     </div>
   </div>
   <div class="stats-grid" id="asStats"></div>
+  <div class="dash-grid" id="asDash"></div>
   <div class="section-title" style="justify-content:space-between;">
     <span>🏪 สาขาทั้งหมด</span>
     <label class="as-hide-toggle"><input type="checkbox" id="asHideDone" onchange="toggleHideCompleted(this.checked)"> ซ่อนสาขาที่เสร็จแล้ว</label>
   </div>
-  <div class="shops-grid" id="asGrid"></div>
+  <div class="as-toolbar" id="asToolbar"></div>
+  <div id="asViewCards"><div class="shops-grid" id="asGrid"></div></div>
+  <div id="asViewPortfolio" class="pf-wrap" style="display:none"></div>
+  <div id="asViewCalendar" style="display:none"></div>
 </div>
 </section>
 
@@ -1238,7 +1431,9 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     </div>
   </div>
 
-  <div class="setup-card">
+  <div class="setup-card steps-card" id="stepsCard" style="display:none"></div>
+
+  <div class="setup-card" id="setupCard">
     <div class="card-label">⚙️ ตั้งค่าโปรเจกต์</div>
     <div class="setup-grid">
       <div class="sf"><label>ชื่อโปรเจกต์ / สาขา</label><input class="sf-input" id="qsBranch" placeholder="เช่น สาขา Siam" oninput="syncBranch(this.value)"></div>
@@ -1291,6 +1486,11 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <div id="dueList"></div>
   </div>
 
+  <div class="setup-card" id="cmtCard" style="display:none;">
+    <div class="card-label">💬 ความคิดเห็นล่าสุด</div>
+    <div id="cmtList"></div>
+  </div>
+
   <div class="stats-grid" id="ovStats"></div>
   <div class="section-title">🏢 สรุปงานแต่ละแผนก</div>
   <div class="dept-grid" id="ovDeptGrid"></div>
@@ -1312,6 +1512,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <div class="tb-sep"></div>
     <button class="btn btn-gold btn-sm" onclick="openMonthPicker()">📅 เดือน</button>
     <button class="btn btn-ghost btn-sm tl-today-btn" onclick="scrollToToday(true)">📍 วันนี้</button>
+    <button class="btn btn-ghost btn-sm tl-dep-btn" id="depToggle" onclick="toggleDepLines()" title="แสดง/ซ่อนเส้นเชื่อมระหว่างงานที่ต้องรอกัน">⛓ เส้นเชื่อม</button>
     <button class="btn btn-ghost btn-sm" onclick="openByEditor()">🎨 By</button>
     <button class="btn btn-ghost btn-sm" onclick="openDeptEditor()">🏢 แผนก</button>
     <button class="btn btn-ghost btn-sm edit-only" onclick="addGroup()">＋ กลุ่ม</button>
@@ -1480,6 +1681,24 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
     <div class="fgrp"><label>💬 LINE User ID</label><input class="finput" id="etLine" placeholder="Uxxxxxxxx"></div>
     <div class="fgrp"><label>📝 ข้อความแจ้งเตือน</label><input class="finput" id="etMsg" placeholder="กรุณาดำเนินการ..."></div>
     <div class="fgrp">
+      <label>⛓ เริ่มหลังจากงาน (Predecessor)</label>
+      <div id="etDeps" class="dep-chips"></div>
+      <select class="finput" id="etDepAdd" onchange="addTaskDep(this.value);this.value=''"></select>
+      <div class="sp-hint">ถ้างานที่เลือกเลื่อน งานนี้จะถูกเลื่อนตามอัตโนมัติ (เลื่อนไปข้างหน้าเท่านั้น ไม่ดึงกลับมาเร็วขึ้น)</div>
+    </div>
+    <div class="fgrp">
+      <label>☑ Checklist <span id="etChkCount" class="chk-count"></span></label>
+      <div id="etChecklist"></div>
+      <div class="chk-add"><input class="finput" id="etChkNew" placeholder="เพิ่มขั้นตอน เช่น ยื่นขออนุญาตแล้ว…" onkeydown="if(event.key==='Enter'){event.preventDefault();addChecklistItem();}"><button type="button" class="btn btn-ghost2 btn-sm" onclick="addChecklistItem()">＋ เพิ่ม</button></div>
+    </div>
+    <div class="fgrp">
+      <label>💬 ความคิดเห็น <span id="etCmtCount" class="chk-count"></span></label>
+      <div id="etComments" class="cmt-list"></div>
+      <div id="etMentions" class="cmt-mentions"></div>
+      <textarea class="finput" id="etCmtNew" rows="2" placeholder="เขียนความคิดเห็น — พิมพ์ @ชื่อ เพื่อกล่าวถึงผู้ที่เกี่ยวข้อง"></textarea>
+      <div class="cmt-actions"><button type="button" class="btn btn-navy btn-sm" onclick="postComment()">ส่งความคิดเห็น</button></div>
+    </div>
+    <div class="fgrp">
       <label>📎 ไฟล์แนบ</label>
       <div id="etFiles"></div>
       <div class="file-upload-area" id="etDropZone" onclick="document.getElementById('etFileInput').click()" ondragover="fileDragOver(event)" ondragleave="fileDragLeave(event)" ondrop="fileDrop(event)">
@@ -1542,6 +1761,15 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
   </div>
 </div></div>
 
+<div class="overlay" id="popBackup"><div class="pbox">
+  <div class="phead">📥 กู้คืนจากไฟล์ Backup<button class="pclose" onclick="closeP('popBackup')">✕</button></div>
+  <div class="pbody">
+    <div class="sp-hint" style="margin:0 0 12px">Backup เก็บ ข้อมูลทุกสาขา (ไทม์ไลน์ ไฟล์แนบที่เป็นลิงก์/คลาวด์ การเงิน ฯลฯ) — ไฟล์ที่เก็บเฉพาะในเครื่องใครเครื่องหนึ่งจะไม่ถูกรวมอยู่ในไฟล์</div>
+    <input type="file" id="bkFile" accept=".json,application/json" onchange="readBackupFile(this.files[0])">
+    <div id="bkSummary" style="margin-top:14px"></div>
+  </div>
+</div></div>
+
 <div class="overlay" id="popFinPay"><div class="pbox pbox-wide">
   <div class="phead">💵 งวดชำระเงิน — <span id="fpBranchName"></span><button class="pclose" onclick="closeP('popFinPay')">✕</button></div>
   <div class="pbody">
@@ -1568,7 +1796,7 @@ body{line-height:1.55;-webkit-text-size-adjust:100%;}
 </div></div>
 </div><!-- /jc-root -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
 <script id="jc-app">
 'use strict';
 /* Pristine copy of the authored markup, captured before anything renders into
@@ -1767,16 +1995,34 @@ function _defByOptions(){return[
 function _defDepts(){return[
   {code:'ALL',name:'ทุกแผนก',color:'#4A5568'},
   {code:'BD',name:'BD Project',color:'#1B3A6B'},
+  {code:'BDA',name:'BD (Admin)',color:'#00796B'},
   {code:'MKT',name:'Marketing',color:'#E85D04'},
   {code:'IT',name:'IT',color:'#6A0DAD'},
-  {code:'SCM',name:'SCM',color:'#2E8B50'},
+  {code:'SCM',name:'SCM (Supply Chain Management)',color:'#2E8B50'},
   {code:'ACC',name:'Accounting',color:'#C9A800'},
   {code:'HR',name:'HR',color:'#D03020'},
   {code:'TRN',name:'Training',color:'#8B5CF6'},
   {code:'OPR',name:'Operation',color:'#1A8FB5'},
 ];}
-/* Required documents checklist per department */
+/* Required documents checklist per department.
+   An entry is a plain string (matched loosely by its words) or {t:label, k:[keywords]} when the
+   words would be too generic — a document counts as "have" when an uploaded file's name contains
+   any keyword (case, spaces, dots, dashes and underscores ignored). */
 const DEPT_DOCS={
+  BDA:[
+    {t:'LOI / Offer letter',k:['loi','offer letter','offer']},
+    {t:'Franchise agreement',k:['franchise agreement','สัญญาแฟรนไชส์','สัญญาแฟรนไชน์']},
+    {t:'หลักฐานการโอน',k:['หลักฐานการโอน','สลิป','slip','โอนเงิน']},
+    {t:'Minutes of the meeting',k:['minutes','บันทึกการประชุม','รายงานการประชุม']},
+    {t:'Meeting agenda',k:['agenda','วาระการประชุม','วาระ']},
+    {t:'Landlord agreement',k:['landlord agreement','lease','สัญญาเช่า']},
+    {t:'Landlord deposit',k:['landlord deposit','deposit','มัดจำ','เงินประกัน']},
+    {t:'หนังสือรับรองนิติบุคคลของพาร์ทเนอร์',k:['หนังสือรับรอง','นิติบุคคล','company certificate']},
+    {t:'ภ.พ.20',k:['ภ.พ.20','ภพ20','pp20','pp.20']},
+    {t:'สำเนาบัตรประชาชนของพาร์ทเนอร์',k:['บัตรประชาชน','สำเนาบัตร','id card','idcard']},
+    {t:'สำเนาทะเบียนบ้านของพาร์ทเนอร์',k:['ทะเบียนบ้าน','house registration']},
+    {t:'หน้าบุ๊คแบงค์ของพาร์ทเนอร์',k:['บุ๊คแบงค์','บุ๊คแบงก์','บุ๊คแบงค','สมุดบัญชี','bookbank','book bank']},
+  ],
   BD:['แบบ Layout ที่อนุมัติแล้ว (Layout Approved)','แบบ 3D Design ที่อนุมัติแล้ว','Construction Drawing (แบบก่อสร้าง)','แบบงานระบบ M&E','BOQ ที่อนุมัติแล้ว','สัญญาก่อสร้างกับผู้รับเหมา','รูปถ่ายความคืบหน้างานก่อสร้าง','เอกสารส่งมอบพื้นที่ (Handover)'],
   MKT:['แผนการตลาดเปิดร้าน (Marketing Plan)','ไฟล์ Branding / CI Guideline','แบบป้ายร้าน (Signage Artwork)','แผน Campaign Grand Opening','ภาพถ่ายร้านสำหรับสื่อประชาสัมพันธ์','สื่อโฆษณา / Artwork โปรโมชั่น'],
   IT:['ใบเสนอราคาระบบ POS','แผนผังการติดตั้งระบบ Network','สัญญาบริการอินเทอร์เน็ต','เอกสารติดตั้ง EDC / เครื่องรูดบัตร','คู่มือการใช้งานระบบ (User Manual)','รายงานผลการ Test Run ระบบ'],
@@ -1788,6 +2034,7 @@ const DEPT_DOCS={
 };
 function _defContacts(){return[
   {dept:'BD',role:'BD Project Manager',name:'',phone:'',email:'',line:''},
+  {dept:'BDA',role:'BD Admin',name:'',phone:'',email:'',line:''},
   {dept:'MKT',role:'Marketing Manager',name:'',phone:'',email:'',line:''},
   {dept:'IT',role:'IT Manager',name:'',phone:'',email:'',line:''},
   {dept:'SCM',role:'SCM Manager',name:'',phone:'',email:'',line:''},
@@ -1821,7 +2068,7 @@ function mkNewShopObj(name){
     branchKey:'B'+Math.random().toString(36).slice(2,10).toUpperCase(),
     projectStart:'',projectDuration:90,months:[],
     byOptions:_defByOptions(),departments:_defDepts(),contacts:_defContacts(),groups:[],
-    uniform:_defUniform(),deptFiles:{},deptNotes:{},owner:{},finance:_defFinance()};
+    uniform:_defUniform(),deptFiles:{},deptNotes:{},deptSign:{},owner:{},finance:_defFinance()};
 }
 function applyShopToS(sh){
   S.branchName=sh.branchName;S.gasUrl=sh.gasUrl;S.deptFilter=sh.deptFilter;
@@ -1831,6 +2078,8 @@ function applyShopToS(sh){
   S.deptFiles=sh.deptFiles||{};
   if(!sh.deptNotes)sh.deptNotes={};
   S.deptNotes=sh.deptNotes;
+  if(!sh.deptSign)sh.deptSign={};
+  S.deptSign=sh.deptSign;
   if(!sh.owner)sh.owner={};
   S.owner=sh.owner;
   if(!sh.finance)sh.finance=_defFinance();
@@ -1845,6 +2094,7 @@ function syncSToShop(){
   sh.uniform=S.uniform;
   sh.deptFiles=S.deptFiles;
   sh.deptNotes=S.deptNotes;
+  sh.deptSign=S.deptSign||sh.deptSign||{};
   sh.owner=S.owner;
   sh.finance=S.finance;
   if(S.branchName)sh.name=S.branchName;
@@ -1963,6 +2213,7 @@ function _migrateShops(){
       (sh.finance.payments||[]).forEach(p=>{if(!Array.isArray(p.files))p.files=[];});
       if(!sh.deptFiles)sh.deptFiles={};
       if(!sh.deptNotes)sh.deptNotes={};
+      if(!sh.deptSign)sh.deptSign={};
       if(!sh.owner)sh.owner={};
       if(!sh.branchKey)sh.branchKey='B'+Math.random().toString(36).slice(2,10).toUpperCase();
       /* POS retired — fold its files into IT, then remove */
@@ -1997,7 +2248,27 @@ function _migrateShops(){
           t.depts=[...new Set([...t.depts.filter(d=>d!=='OPR'&&d!=='HR'),'TRN'])];
         }
       }));
+      _reviseDepts(sh);
     });
+}
+/* Once per branch: spell out SCM, and add the "BD (Admin)" department (code BDA) with its
+   contact row. The flag means a branch that later deletes BDA on purpose doesn't get it back. */
+function _reviseDepts(sh){
+  if(sh._deptRev3)return;
+  if(!Array.isArray(sh.departments))sh.departments=_defDepts();
+  const deps=sh.departments;
+  const scm=deps.find(d=>d.code==='SCM');
+  if(scm&&String(scm.name||'').trim()==='SCM')scm.name='SCM (Supply Chain Management)';
+  if(!deps.some(d=>d.code==='BDA')){
+    const i=deps.findIndex(d=>d.code==='BD');
+    deps.splice(i>=0?i+1:deps.length,0,{code:'BDA',name:'BD (Admin)',color:'#00796B'});
+  }
+  if(!Array.isArray(sh.contacts))sh.contacts=_defContacts();
+  if(!sh.contacts.some(c=>c.dept==='BDA')){
+    const j=sh.contacts.findIndex(c=>c.dept==='BD');
+    sh.contacts.splice(j>=0?j+1:sh.contacts.length,0,{dept:'BDA',role:'BD Admin',name:'',phone:'',email:'',line:''});
+  }
+  sh._deptRev3=true;
 }
 /* SHOP TABS & ALL-SHOPS VIEW */
 function renderShopTabs(){
@@ -2074,7 +2345,7 @@ function toggleHideCompleted(on){try{localStorage.setItem('jc_hide_completed',on
 function renderAllShops(){
   const cb=document.getElementById('asHideDone');if(cb)cb.checked=_hideCompleted();
   const shops=DB.shops;                              /* stat totals always count every branch */
-  const gridShops=_hideCompleted()?shops.filter(s=>s.status!=='Completed'):shops;
+  const gridShops=asVisibleShops();
   const fin=companyFinance();
   const opened=shops.filter(s=>s.status==='Completed').length;
   const collPct=fin.total?Math.round(fin.collected/fin.total*100):0;
@@ -2105,8 +2376,278 @@ function renderAllShops(){
       <button class="btn btn-navy btn-sm" onclick="switchShop('${sh.id}')" style="width:100%;margin-top:11px;">📅 เปิด Timeline</button>
     </div>`;
   }).join('')
-    +(gridShops.length===0&&shops.length>0?`<div class="shop-card-empty-hint">✅ ซ่อนสาขาที่เสร็จแล้วอยู่ (${shops.length-gridShops.length} สาขา) — <a href="#" onclick="document.getElementById('asHideDone').click();return false;">แสดงทั้งหมด</a></div>`:'')
+    +(gridShops.length===0&&shops.length>0?`<div class="shop-card-empty-hint">🔎 ไม่มีสาขาที่ตรงกับตัวกรองตอนนี้ (ซ่อนอยู่ ${shops.length-gridShops.length} สาขา) — <a href="#" onclick="asResetFilters();return false;">ล้างตัวกรอง</a></div>`:'')
     +`<div class="shop-card shop-card-new edit-only" onclick="openNewShop()"><div style="font-size:28px;margin-bottom:6px">＋</div><div style="font-weight:700;color:var(--text-2)">เพิ่มสาขาใหม่</div></div>`;
+  renderAsDash(shops);renderAsToolbar();renderAsViews(gridShops);
+  const bk=document.getElementById('asBackup');if(bk)bk.style.display=_customerMode?'none':'';
+}
+
+/* ══ ALL-BRANCHES PAGE: filters · dashboard · portfolio · calendar ═════ */
+let _as={sort:'open',status:'ALL',owner:'ALL',view:'cards',calY:0,calM:0};
+try{Object.assign(_as,JSON.parse(localStorage.getItem('jc_as_state')||'{}'));}catch(e){}
+function _asSave(){try{localStorage.setItem('jc_as_state',JSON.stringify({sort:_as.sort,status:_as.status,owner:_as.owner,view:_as.view}));}catch(e){}}
+function shopOwnerName(s){return((s.finance&&s.finance.owner)||'').trim();}
+function shopTaskPct(s){
+  const tk=(s.groups||[]).flatMap(g=>g.tasks||[]);
+  return tk.length?tk.filter(t=>t.startDate&&t.enabled).length/tk.length:0;
+}
+function asVisibleShops(){
+  let l=DB.shops.slice();
+  if(_hideCompleted())l=l.filter(s=>s.status!=='Completed');
+  if(_as.status!=='ALL')l=l.filter(s=>s.status===_as.status);
+  if(_as.owner!=='ALL')l=l.filter(s=>shopOwnerName(s)===_as.owner);
+  /* soonest opening first; undated next; branches already open (Completed) last */
+  const go=s=>(s.status==='Completed'?'3':shopGrandOpening(s).date?'1':'2')+(shopGrandOpening(s).date||'');
+  if(_as.sort==='open')l.sort((a,b)=>go(a)<go(b)?-1:go(a)>go(b)?1:0);
+  else if(_as.sort==='name')l.sort((a,b)=>String(a.name).localeCompare(String(b.name),'th'));
+  else if(_as.sort==='progress')l.sort((a,b)=>shopTaskPct(b)-shopTaskPct(a));
+  return l;                                   /* 'order' keeps the saved order */
+}
+function asSet(k,v){_as[k]=v;_asSave();renderAllShops();}
+function asResetFilters(){_as.status='ALL';_as.owner='ALL';_asSave();const cb=document.getElementById('asHideDone');if(cb&&cb.checked){cb.checked=false;toggleHideCompleted(false);return;}renderAllShops();}
+function renderAsToolbar(){
+  const box=document.getElementById('asToolbar');if(!box)return;
+  const owners=[...new Set(DB.shops.map(shopOwnerName).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'th'));
+  if(_as.owner!=='ALL'&&!owners.includes(_as.owner))_as.owner='ALL';
+  const stCount=st=>st==='ALL'?DB.shops.length:DB.shops.filter(s=>s.status===st).length;
+  const chip=st=>`<button class="as-chip${_as.status===st?' on':''}" onclick="asSet('status','${st}')">${st==='ALL'?'ทั้งหมด':st} <span>${stCount(st)}</span></button>`;
+  const view=(v,l)=>`<button class="as-seg${_as.view===v?' on':''}" onclick="asSet('view','${v}')">${l}</button>`;
+  box.innerHTML=
+    `<div class="as-seg-wrap" role="tablist" aria-label="มุมมอง">${view('cards','🗂 การ์ด')}${view('portfolio','📊 Portfolio')}${view('calendar','📅 ปฏิทินเปิดร้าน')}</div>`
+    +`<div class="as-chips">${['ALL','Planning','Active','Completed','On Hold'].map(chip).join('')}</div>`
+    +`<div class="as-selects">
+        <label>เรียง <select class="dept-select" onchange="asSet('sort',this.value)">
+          <option value="open"${_as.sort==='open'?' selected':''}>วันเปิดร้านใกล้สุดก่อน</option>
+          <option value="name"${_as.sort==='name'?' selected':''}>ชื่อสาขา</option>
+          <option value="progress"${_as.sort==='progress'?' selected':''}>ความคืบหน้า</option>
+          <option value="order"${_as.sort==='order'?' selected':''}>ลำดับเดิม</option>
+        </select></label>
+        ${owners.length?`<label>BD <select class="dept-select" onchange="asSet('owner',this.value)"><option value="ALL">ทุกคน</option>${owners.map(o=>`<option value="${esc(o)}"${_as.owner===o?' selected':''}>${esc(o)}</option>`).join('')}</select></label>`:''}
+      </div>`;
+}
+function renderAsViews(list){
+  document.getElementById('asViewCards').style.display=_as.view==='cards'?'':'none';
+  const pf=document.getElementById('asViewPortfolio'),cal=document.getElementById('asViewCalendar');
+  pf.style.display=_as.view==='portfolio'?'':'none';
+  cal.style.display=_as.view==='calendar'?'':'none';
+  if(_as.view==='portfolio')renderPortfolio(list);
+  if(_as.view==='calendar')renderOpenCalendar(list);
+}
+
+/* Dashboard: what needs attention, in one glance */
+function renderAsDash(shops){
+  const box=document.getElementById('asDash');if(!box)return;
+  const today=_todayKey(),in7=addDaysF(today,7),in30=addDaysF(today,30);
+  const stages=[['Planning','📋'],['Active','🟢'],['Completed','✅'],['On Hold','⏸']];
+  const pipe=stages.map(([st,ic],i)=>{
+    const n=shops.filter(s=>s.status===st).length,c=STATUS_COLORS[st]||'#888';
+    return`<button class="pipe-stage${_as.status===st?' on':''}" style="--pc:${c}" onclick="asSet('status',_as.status==='${st}'?'ALL':'${st}')" title="กรองเฉพาะ ${st}"><span class="pipe-ico">${ic}</span><strong>${n}</strong><em>${st}</em></button>${i<stages.length-1?'<span class="pipe-arrow">›</span>':''}`;
+  }).join('');
+  const opening=shops.filter(s=>{const d=shopGrandOpening(s).date;return d&&d>=today&&d<=in30&&s.status!=='Completed';}).length;
+  const rows=[];let overdue=0;
+  shops.forEach(sh=>{
+    if(sh.status==='Completed')return;
+    (sh.groups||[]).forEach(g=>(g.tasks||[]).forEach(t=>{
+      if(!t.enabled||t.done||!t.endDate)return;
+      if(t.endDate<today)overdue++;
+      else if(t.endDate<=in7)rows.push({sh,t});
+    }));
+  });
+  rows.sort((a,b)=>a.t.endDate<b.t.endDate?-1:a.t.endDate>b.t.endDate?1:0);
+  const next=rows.slice(0,6).map(r=>`<div class="due-row" onclick="jumpToSearchResult('${r.sh.id}','${r.t.id}')">
+      <span class="due-dot" style="background:${r.sh.color}"></span><span class="due-name">${esc(r.t.name)}</span>
+      <span class="due-dept">${esc(r.sh.name)}</span><span class="due-when">${r.t.endDate===today?'วันนี้':fmtSD(r.t.endDate)}</span></div>`).join('');
+  const f=companyFinance(),collPct=f.total?Math.round(f.collected/f.total*100):0;
+  const R=34,C=2*Math.PI*R,seg=v=>f.total?v/f.total*C:0,notOver=f.outstanding-f.overdue;
+  const donut=f.total?`<svg width="92" height="92" viewBox="0 0 92 92" style="flex-shrink:0">
+      <circle cx="46" cy="46" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="12"/>
+      <circle cx="46" cy="46" r="${R}" fill="none" stroke="#2E8B50" stroke-width="12" stroke-dasharray="${seg(f.collected)} ${C}" transform="rotate(-90 46 46)"/>
+      <circle cx="46" cy="46" r="${R}" fill="none" stroke="#E85D04" stroke-width="12" stroke-dasharray="${seg(notOver)} ${C}" stroke-dashoffset="${-seg(f.collected)}" transform="rotate(-90 46 46)"/>
+      <circle cx="46" cy="46" r="${R}" fill="none" stroke="#D03020" stroke-width="12" stroke-dasharray="${seg(f.overdue)} ${C}" stroke-dashoffset="${-seg(f.collected+notOver)}" transform="rotate(-90 46 46)"/>
+      <text x="46" y="51" text-anchor="middle" font-size="17" font-weight="800" fill="var(--text)" font-family="system-ui,sans-serif">${collPct}%</text></svg>`:'';
+  box.innerHTML=`
+    <div class="dash-card"><div class="dash-title">🔄 สถานะสาขา (Pipeline)</div>
+      <div class="pipe">${pipe}</div>
+      <div class="dash-foot">${opening?`🎉 เปิดร้านภายใน 30 วัน: <strong>${opening}</strong> สาขา`:'ยังไม่มีสาขาที่จะเปิดภายใน 30 วัน'}</div></div>
+    <div class="dash-card"><div class="dash-title">⏰ 7 วันข้างหน้า${overdue?`<span class="dash-bad">เกินกำหนด ${overdue} งาน</span>`:''}</div>
+      ${next||'<div class="cp-empty">ไม่มีงานที่ครบกำหนดใน 7 วันนี้ 🎉</div>'}
+      ${rows.length>6?`<div class="dash-foot">และอีก ${rows.length-6} งาน</div>`:''}</div>
+    <div class="dash-card"><div class="dash-title">💵 การเก็บเงิน</div>
+      ${f.total?`<div class="dash-fin">${donut}<div class="dash-fin-n">
+        <div><i style="background:#2E8B50"></i>เก็บแล้ว <strong>${fmtCompact(f.collected)}</strong></div>
+        <div><i style="background:#E85D04"></i>รอเก็บ <strong>${fmtCompact(notOver)}</strong></div>
+        <div><i style="background:#D03020"></i>เกินกำหนด <strong>${fmtCompact(f.overdue)}</strong></div></div></div>`
+        :'<div class="cp-empty">ยังไม่มีงวดชำระเงิน</div>'}</div>`;
+}
+
+/* Portfolio: every branch's timeline stacked on one shared date axis */
+function renderPortfolio(list){
+  const box=document.getElementById('asViewPortfolio');if(!box)return;
+  const today=_todayKey();
+  const info=list.map(sh=>{
+    const tk=(sh.groups||[]).flatMap(g=>(g.tasks||[]).filter(t=>t.enabled&&t.startDate));
+    const starts=tk.map(t=>t.startDate).sort(),ends=tk.map(t=>t.endDate||t.startDate).sort();
+    const go=shopGrandOpening(sh).date;
+    return{sh,min:starts[0]||'',max:ends[ends.length-1]||'',go};
+  });
+  const all=info.flatMap(i=>[i.min,i.max,i.go]).filter(Boolean);
+  if(!all.length){box.innerHTML='<div class="cp-empty" style="padding:24px;text-align:center">ยังไม่มีสาขาที่กำหนดวันในไทม์ไลน์ — สร้าง Timeline ให้สาขาก่อน แล้วภาพรวมจะแสดงที่นี่</div>';return;}
+  all.push(today);
+  const rs=addDaysF(all.reduce((a,b)=>a<b?a:b),-3),re=addDaysF(all.reduce((a,b)=>a>b?a:b),5);
+  const total=Math.max(7,daysBetween(rs,re));
+  const avail=Math.max(320,(box.clientWidth||box.parentElement.clientWidth||900)-200);
+  const ppd=Math.min(14,Math.max(2.4,avail/total)),W=Math.round(total*ppd);
+  const X=k=>Math.round(daysBetween(rs,k>re?re:k<rs?rs:k)*ppd-ppd/2);
+  let mh='',cur=new Date(parseDS(rs).getFullYear(),parseDS(rs).getMonth(),1);
+  while(cur<=parseDS(re)){
+    const ks=ds(cur.getFullYear(),cur.getMonth()+1,1),ke=ds(cur.getFullYear(),cur.getMonth()+1,dim(cur.getFullYear(),cur.getMonth()+1));
+    const a=ks<rs?rs:ks,b=ke>re?re:ke;
+    mh+=`<div class="pf-month" style="left:${Math.round((daysBetween(rs,a)-1)*ppd)}px;width:${Math.round(daysBetween(a,b)*ppd)}px">${MONTHS_TH[cur.getMonth()]} ${String(cur.getFullYear()).slice(2)}</div>`;
+    cur.setMonth(cur.getMonth()+1);
+  }
+  const todayX=(today>=rs&&today<=re)?Math.round((daysBetween(rs,today)-.5)*ppd):-1;
+  const rowsHtml=info.map(({sh,min,max,go})=>{
+    const groups=(sh.groups||[]).map(g=>{
+      const tk=(g.tasks||[]).filter(t=>t.enabled&&t.startDate);if(!tk.length)return'';
+      const s=tk.map(t=>t.startDate).sort()[0],e=tk.map(t=>t.endDate||t.startDate).sort().pop();
+      const done=tk.filter(t=>t.done).length,late=sh.status!=='Completed'&&tk.some(t=>!t.done&&(t.endDate||t.startDate)<today);
+      const x=Math.round((daysBetween(rs,s)-1)*ppd),w=Math.max(4,Math.round(daysBetween(s,e)*ppd));
+      return`<div class="pf-bar${late?' late':''}" style="left:${x}px;width:${w}px;background:${sh.color}" title="${esc(g.name)} · ${fmtSD(s)}–${fmtSD(e)} · เสร็จ ${done}/${tk.length}"><i style="width:${Math.round(done/tk.length*100)}%"></i></div>`;
+    }).join('')||'<span class="pf-none">ยังไม่กำหนดวัน</span>';
+    const lanes=Math.max(1,(sh.groups||[]).filter(g=>(g.tasks||[]).some(t=>t.enabled&&t.startDate)).length);
+    const laneH=Math.min(11,Math.max(6,Math.floor(56/lanes)));
+    const gx=go?`<div class="pf-open" style="left:${X(go)}px" title="Grand Opening ${fmtTH(go)}"><span>🎉</span></div>`:'';
+    const cd=grandOpeningCountdown(sh,go);
+    return`<div class="pf-row" onclick="switchShop('${sh.id}');showSection('sec-timeline')" title="เปิด Timeline ของ ${esc(sh.name)}">
+      <div class="pf-label"><span class="pf-dot" style="background:${sh.color}"></span><div><strong>${esc(sh.name)}</strong>
+        <small>${esc(sh.status)}${go?' · 🎉 '+fmtTH(go):''}${cd.txt?' · '+cd.txt:''}</small></div></div>
+      <div class="pf-lane" style="width:${W}px;--lh:${laneH}px">${gx}${groups}</div></div>`;
+  }).join('');
+  box.innerHTML=`<div class="pf-scroll"><div class="pf-inner" style="width:${W+190}px">
+      <div class="pf-head"><div class="pf-label">สาขา</div><div class="pf-axis" style="width:${W}px">${mh}</div></div>
+      <div class="pf-body">${rowsHtml}${todayX>=0?`<div class="pf-today" style="left:${190+todayX}px"><span>วันนี้</span></div>`:''}</div>
+    </div></div>
+    <div class="pf-legend"><span><i class="lg-bar"></i> ช่วงงานของแต่ละกลุ่ม (แถบเข้ม = ทำเสร็จแล้ว)</span><span><i class="lg-bar late"></i> มีงานเกินกำหนด</span><span>🎉 วันเปิดร้าน</span><span><i class="lg-today"></i> วันนี้</span></div>`;
+}
+
+/* Calendar of grand openings (project starts shown faintly) */
+function renderOpenCalendar(list){
+  const box=document.getElementById('asViewCalendar');if(!box)return;
+  const now=new Date();
+  if(!_as.calY){_as.calY=now.getFullYear();_as.calM=now.getMonth()+1;}
+  const y=_as.calY,m=_as.calM,today=_todayKey();
+  const ev={};
+  const push=(k,o)=>{(ev[k]=ev[k]||[]).push(o);};
+  const undated=[];
+  list.forEach(sh=>{
+    const go=shopGrandOpening(sh).date;
+    if(go)push(go,{sh,kind:'open'});else undated.push(sh);
+    if(sh.projectStart)push(sh.projectStart,{sh,kind:'start'});
+  });
+  const off=(dow(y,m,1)+6)%7,days=dim(y,m);
+  let cells='';
+  for(let i=0;i<off;i++)cells+='<div class="cal-cell empty"></div>';
+  for(let d=1;d<=days;d++){
+    const k=ds(y,m,d),w=dow(y,m,d),es=(ev[k]||[]).sort((a,b)=>a.kind==='open'?-1:1);
+    cells+=`<div class="cal-cell${k===today?' today':''}${(w===0||w===6)?' wknd':''}"><div class="cal-d">${d}</div>${es.map(e=>e.kind==='open'
+      ?`<button class="cal-chip" style="background:${e.sh.color}" onclick="switchShop('${e.sh.id}')" title="Grand Opening — ${esc(e.sh.name)}">🎉 ${esc(e.sh.name)}</button>`
+      :`<button class="cal-start" style="border-color:${e.sh.color};color:${e.sh.color}" onclick="switchShop('${e.sh.id}')" title="เริ่มโปรเจกต์ — ${esc(e.sh.name)}">▶ ${esc(e.sh.name)}</button>`).join('')}</div>`;
+  }
+  const upcoming=list.map(sh=>({sh,go:shopGrandOpening(sh).date})).filter(x=>x.go).sort((a,b)=>a.go<b.go?-1:1)
+    .map(({sh,go})=>{const cd=grandOpeningCountdown(sh,go);return`<div class="due-row" onclick="switchShop('${sh.id}')"><span class="due-dot" style="background:${sh.color}"></span><span class="due-name">${esc(sh.name)}</span><span class="due-dept">${fmtTH(go)}</span><span class="due-when">${esc(cd.txt)}</span></div>`;}).join('');
+  box.innerHTML=`<div class="cal-head"><button class="btn btn-ghost2 btn-sm" onclick="calMove(-1)" aria-label="เดือนก่อน">‹</button>
+      <strong>${MONTHS_EN[m-1]} ${y}</strong>
+      <button class="btn btn-ghost2 btn-sm" onclick="calMove(1)" aria-label="เดือนถัดไป">›</button>
+      <button class="btn btn-ghost2 btn-sm" onclick="calMove(0)">เดือนนี้</button></div>
+    <div class="cal-grid">${DOW_MO.map(d=>`<div class="cal-dow">${d}</div>`).join('')}${cells}</div>
+    <div class="cal-lists"><div class="dash-card"><div class="dash-title">🎉 ลำดับการเปิดร้าน</div>${upcoming||'<div class="cp-empty">ยังไม่มีวันเปิดร้านที่กำหนด</div>'}</div>
+    ${undated.length?`<div class="dash-card"><div class="dash-title">ยังไม่กำหนดวันเปิดร้าน (${undated.length})</div>${undated.map(s=>`<div class="due-row" onclick="openEditShop('${s.id}')"><span class="due-dot" style="background:${s.color}"></span><span class="due-name">${esc(s.name)}</span><span class="due-when">กำหนดวัน ✏️</span></div>`).join('')}</div>`:''}</div>`;
+}
+function calMove(d){
+  if(d===0){const n=new Date();_as.calY=n.getFullYear();_as.calM=n.getMonth()+1;}
+  else{let m=_as.calM+d,y=_as.calY;if(m<1){m=12;y--;}if(m>12){m=1;y++;}_as.calY=y;_as.calM=m;}
+  renderAllShops();
+}
+
+/* ══ BACKUP / RESTORE ═══════════════════════════════════════════════
+   One JSON file with every branch. Files stored as links or in cloud
+   storage travel as references; bytes kept only inside one browser's local
+   store cannot be included. Restore never deletes: it adds branches that
+   are missing and (optionally) overwrites branches with the same id. */
+function buildBackup(){
+  syncSToShop();
+  return{app:'jiancha-ops',schema:1,exportedAt:new Date().toISOString(),
+    fiscalYear:DB.fiscalYear||new Date().getFullYear(),bdTeam:DB.bdTeam||[],shops:DB.shops};
+}
+function downloadBackup(tag){
+  const data=buildBackup();
+  const blob=new Blob([JSON.stringify(data,null,1)],{type:'application/json'});
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  const name=`JIANCHA_backup${tag?'_'+tag:''}_${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}.json`;
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),8000);
+  _toast('ดาวน์โหลด Backup แล้ว — '+data.shops.length+' สาขา');
+  return name;
+}
+let _bkPending=null;
+function openRestore(){
+  if(_customerMode){_toast('เฉพาะผู้ดูแลเท่านั้นที่กู้คืนข้อมูลได้','warn');return;}
+  _bkPending=null;document.getElementById('bkFile').value='';document.getElementById('bkSummary').innerHTML='';
+  openP('popBackup');
+}
+function parseBackup(text){
+  const o=JSON.parse(text);
+  if(!o||o.app!=='jiancha-ops'||!Array.isArray(o.shops))throw new Error('ไม่ใช่ไฟล์ Backup ของระบบนี้');
+  const shops=o.shops.filter(s=>s&&typeof s.id==='string'&&s.id&&Array.isArray(s.groups));
+  if(!shops.length)throw new Error('ไม่พบข้อมูลสาขาในไฟล์');
+  return{exportedAt:o.exportedAt,fiscalYear:o.fiscalYear,bdTeam:Array.isArray(o.bdTeam)?o.bdTeam:null,shops,skipped:o.shops.length-shops.length};
+}
+function readBackupFile(file){
+  const box=document.getElementById('bkSummary');
+  if(!file)return;
+  if(file.size>60*1048576){box.innerHTML='<div class="owner-status warn">ไฟล์ใหญ่เกินไป (เกิน 60 MB)</div>';return;}
+  const fr=new FileReader();
+  fr.onload=()=>{
+    try{
+      const bk=parseBackup(String(fr.result));_bkPending=bk;
+      const have=new Set(DB.shops.map(s=>s.id));
+      const fresh=bk.shops.filter(s=>!have.has(s.id)),same=bk.shops.length-fresh.length;
+      box.innerHTML=`<div class="bk-sum"><div>📅 สำรองเมื่อ <strong>${bk.exportedAt?new Date(bk.exportedAt).toLocaleString('th-TH'):'ไม่ทราบ'}</strong></div>
+        <div>🏪 ในไฟล์ <strong>${bk.shops.length}</strong> สาขา → ใหม่ <strong>${fresh.length}</strong> · มีอยู่แล้ว <strong>${same}</strong>${bk.skipped?` · ข้ามที่ข้อมูลเสีย ${bk.skipped}`:''}</div>
+        <div class="bk-names">${bk.shops.map(s=>esc(s.name||s.id)).join(' · ')}</div></div>
+        <label class="cp-row"><input type="radio" name="bkMode" value="add" checked><span>เพิ่มเฉพาะสาขาที่ยังไม่มี<small>สาขาที่มีอยู่แล้วจะไม่ถูกแตะต้อง (ปลอดภัยที่สุด)</small></span></label>
+        <label class="cp-row"><input type="radio" name="bkMode" value="replace"><span>เพิ่ม + แทนที่สาขาที่ id ตรงกันด้วยข้อมูลในไฟล์<small>จะดาวน์โหลดสำเนาข้อมูลปัจจุบันให้ก่อนอัตโนมัติ · สาขาที่ไม่อยู่ในไฟล์จะไม่ถูกลบ</small></span></label>
+        <div class="pfoot"><button class="btn btn-gold" onclick="applyRestore()">กู้คืน</button></div>`;
+    }catch(e){_bkPending=null;box.innerHTML='<div class="owner-status warn">⚠️ '+esc(e.message||'อ่านไฟล์ไม่ได้')+'</div>';}
+  };
+  fr.onerror=()=>{box.innerHTML='<div class="owner-status warn">⚠️ อ่านไฟล์ไม่ได้</div>';};
+  fr.readAsText(file);
+}
+function applyRestore(){
+  if(!_bkPending||_customerMode||!requireEdit())return;
+  const mode=(document.querySelector('input[name="bkMode"]:checked')||{}).value||'add';
+  const bk=_bkPending;
+  if(mode==='replace')downloadBackup('before-restore');
+  syncSToShop();
+  let added=0,replaced=0;
+  bk.shops.forEach(s=>{
+    const i=DB.shops.findIndex(x=>x.id===s.id);
+    if(i<0){DB.shops.push(s);_dirtyShops.add(s.id);added++;}
+    else if(mode==='replace'){DB.shops[i]=s;_dirtyShops.add(s.id);replaced++;}
+  });
+  if(mode==='replace'){
+    if(bk.bdTeam){DB.bdTeam=bk.bdTeam;_metaDirty=true;}
+    if(bk.fiscalYear){DB.fiscalYear=bk.fiscalYear;_metaDirty=true;}
+  }
+  _migrateShops();
+  const cur=DB.shops.find(x=>x.id===_activeId)||DB.shops[0];
+  if(cur){_activeId=cur.id;applyShopToS(cur);}
+  dbSave();renderShopTabs();closeP('popBackup');
+  rerenderCurrent();renderAllShops();
+  logActivity('create','กู้คืนจาก Backup: เพิ่ม '+added+' · แทนที่ '+replaced+' สาขา');
+  _bkPending=null;
+  _toast('กู้คืนแล้ว — เพิ่ม '+added+' สาขา'+(replaced?' · แทนที่ '+replaced+' สาขา':''));
 }
 function _syncFormFromS(){
   document.getElementById('branchInput').value=S.branchName||'';
@@ -2188,6 +2729,7 @@ function applyShop(){
     dbSave();_activeId=sh.id;applyShopToS(sh);
     document.getElementById('branchInput').value=name;document.getElementById('qsBranch').value=name;
     if(!(plan&&plan.timeline))initData();               /* copied timeline replaces the stock template */
+    if(plan&&plan.dates){autoExtendMonths();enforceDeps();}   /* shifted plans can outgrow the copied window */
     syncSToShop();
     logActivity('create','สร้างสาขาใหม่ "'+name+'"'+(plan?' (คัดลอกจาก "'+plan.src.name+'")':''),sh.id);
     copyJobs.forEach(j=>{j.shopId=sh.id;});
@@ -2230,7 +2772,12 @@ function renderCopyOptions(){
     +(deptRows?`<div class="cp-fgroup">ไฟล์ของแผนก (${nDeptFiles})</div>${deptRows}`:'');
   box.innerHTML=
     row('cpTimeline','โครงสร้างไทม์ไลน์ — กลุ่มงานและ tasks ทั้งหมด',true,nTasks+' tasks (ทำเครื่องหมาย "เสร็จแล้ว" จะถูกล้าง)','onchange="cpToggleTimeline()"')
-    +row('cpDates','วันที่โปรเจกต์ และวันที่ของแต่ละ task',false,'ไม่เลือก = เริ่มใหม่ แล้วตั้งวันเองที่หน้า Overview')
+    +row('cpDates','วันที่โปรเจกต์ และวันที่ของแต่ละ task',false,'ไม่เลือก = เริ่มใหม่ แล้วตั้งวันเองที่หน้า Overview','onchange="cpDatesChanged()"')
+    +`<div class="cp-shift" id="cpShiftWrap" style="display:none">
+        <label for="cpShiftStart">📆 เริ่มโปรเจกต์ใหม่วันที่</label>
+        <input type="date" class="finput" id="cpShiftStart" oninput="cpDatesChanged()">
+        <div class="sp-hint" id="cpShiftHint">เว้นว่าง = ใช้วันที่เดิมทุกประการ · ใส่วันเริ่มใหม่ = เลื่อนทุกงานตามจำนวนวันที่ต่างกัน โดยคงระยะเวลาและช่วงห่างระหว่างงานไว้</div>
+      </div>`
     +row('cpConfig','ผู้รับผิดชอบ (By) · แผนก · รายชื่อผู้ติดต่อ',true,'')
     +row('cpUniform','ตั้งค่า Uniform (ประเภท)',true,'ไม่รวมรายชื่อพนักงาน')
     +`<div class="cp-files-head"><span>📎 ไฟล์ที่จะคัดลอก</span><span class="cp-spacer"></span>
@@ -2245,6 +2792,19 @@ function renderCopyOptions(){
     el.dataset.gone='1';el.checked=false;el.disabled=true;
     const lab=el.closest('.cp-file');lab.classList.add('cp-off');lab.title=FILE_ELSEWHERE;
   });
+}
+function cpDatesChanged(){
+  const on=document.getElementById('cpDates').checked;
+  const wrap=document.getElementById('cpShiftWrap');wrap.style.display=on?'':'none';
+  const hint=document.getElementById('cpShiftHint');
+  const src=DB.shops.find(x=>x.id===document.getElementById('spCopySrc').value);
+  const to=document.getElementById('cpShiftStart').value;
+  if(!on||!src||!to){hint.textContent='เว้นว่าง = ใช้วันที่เดิมทุกประการ · ใส่วันเริ่มใหม่ = เลื่อนทุกงานตามจำนวนวันที่ต่างกัน โดยคงระยะเวลาและช่วงห่างระหว่างงานไว้';return;}
+  const dated=(src.groups||[]).flatMap(g=>g.tasks||[]).map(t=>t.startDate).filter(Boolean).sort();
+  const anchor=src.projectStart||dated[0];
+  if(!anchor){hint.textContent='สาขาต้นทางยังไม่มีวันที่ — จะไม่มีอะไรให้เลื่อน';return;}
+  const d=Math.round((parseDS(to)-parseDS(anchor))/86400000);
+  hint.textContent='ต้นทางเริ่ม '+fmtTH(anchor)+' → เลื่อน '+(d>=0?'+':'')+d+' วัน'+(d%7?' (วันในสัปดาห์จะเปลี่ยนไป — เลือกให้ต่างกันเป็นสัปดาห์เต็มถ้าต้องการให้ตรงวันเดิม)':' (ตรงวันในสัปดาห์เดิม)');
 }
 function cpToggleTimeline(){
   const on=document.getElementById('cpTimeline').checked;
@@ -2265,7 +2825,9 @@ function _collectCopyPlan(){
   const src=sid&&DB.shops.find(x=>x.id===sid);if(!src)return null;
   const on=id=>{const e=document.getElementById(id);return!!(e&&e.checked);};
   const files=new Set([...document.querySelectorAll('#spCopyOpts .cp-files input:checked:not(:disabled)')].map(e=>e.dataset.cpf));
-  return{src,timeline:on('cpTimeline'),dates:on('cpDates'),config:on('cpConfig'),uniform:on('cpUniform'),files};
+  const dates=on('cpDates');
+  const shiftEl=document.getElementById('cpShiftStart');
+  return{src,timeline:on('cpTimeline'),dates,shiftTo:(dates&&shiftEl&&shiftEl.value)||'',config:on('cpConfig'),uniform:on('cpUniform'),files};
 }
 const _clone=o=>JSON.parse(JSON.stringify(o));
 /* Fills `sh` from the plan and returns the file-copy jobs (run afterwards,
@@ -2279,24 +2841,47 @@ function _applyCopyPlan(sh,plan){
     sh.contacts=_clone(src.contacts||_defContacts());
   }
   if(plan.uniform)sh.uniform={type:(src.uniform&&src.uniform.type)||'shirt',staff:[]};
+  /* Optional shift: move every date so the plan starts on a new day, keeping
+     each task's duration and the gaps between tasks. Anchor = the source's
+     project start, or its earliest dated task if it never set one. */
+  let delta=0;
   if(plan.dates){
-    sh.projectStart=src.projectStart||'';
-    sh.projectDuration=src.projectDuration||90;
-    sh.months=_clone(src.months||[]);
+    const dated=(src.groups||[]).flatMap(g=>g.tasks||[]).map(t=>t.startDate).filter(Boolean).sort();
+    const anchor=src.projectStart||dated[0]||'';
+    if(plan.shiftTo&&anchor)delta=Math.round((parseDS(plan.shiftTo)-parseDS(anchor))/86400000);
+    const sd=s=>(s&&delta)?addDaysF(s,delta):(s||'');
+    if(delta){
+      sh.projectStart=sd(anchor);
+      sh.projectDuration=src.projectDuration||90;
+      sh.months=_monthsFor(sh.projectStart,sh.projectDuration);   /* S.autoExtendMonths widens it after */
+    }else{
+      sh.projectStart=src.projectStart||'';
+      sh.projectDuration=src.projectDuration||90;
+      sh.months=_clone(src.months||[]);
+    }
   }
   if(plan.timeline){
+    const idMap=new Map();
     sh.groups=(src.groups||[]).map(g=>({
       id:nid(),name:g.name,link:g.link||'',
       tasks:(g.tasks||[]).map(t=>{
         const nt={id:nid(),name:t.name,by:t.by,days:t.days,depts:(t.depts||[]).slice(),
           enabled:t.enabled,done:false,doneAt:'',
-          startDate:plan.dates?(t.startDate||null):null,
-          endDate:plan.dates?(t.endDate||null):null,
+          startDate:plan.dates?(t.startDate?(delta?addDaysF(t.startDate,delta):t.startDate):null):null,
+          endDate:plan.dates?(t.endDate?(delta?addDaysF(t.endDate,delta):t.endDate):null):null,
           link:t.link||'',email:t.email||'',lineId:t.lineId||'',notifyMsg:t.notifyMsg||'',
+          deps:[],
+          checklist:(t.checklist||[]).map(c=>({id:nid(),text:c.text,done:false})),   /* steps carry over, ticks don't */
           files:[]};
+        idMap.set(t.id,nt);
         (t.files||[]).forEach(f=>{if(plan.files.has(f.id))jobs.push({f,taskId:nt.id});});
         return nt;
       })
+    }));
+    /* point each dependency at the copy of its predecessor */
+    (src.groups||[]).forEach(g=>(g.tasks||[]).forEach(t=>{
+      const nt=idMap.get(t.id);
+      nt.deps=depIds(t).map(id=>(idMap.get(id)||{}).id).filter(Boolean);
     }));
   }
   Object.entries(src.deptFiles||{}).forEach(([code,arr])=>(arr||[]).forEach(f=>{
@@ -2467,15 +3052,24 @@ function duplicateShopAsTemplate(){
     sh.departments=JSON.parse(JSON.stringify(src.departments||_defDepts()));
     sh.uniform=JSON.parse(JSON.stringify(src.uniform||_defUniform()));
     sh.deptFilter=src.deptFilter||'ALL';
+    const _tIdMap=new Map();
     sh.groups=(src.groups||[]).map(g=>({
       id:nid(),name:g.name,link:g.link||'',
-      tasks:(g.tasks||[]).map(t=>({
-        id:nid(),name:t.name,by:t.by,days:t.days,depts:(t.depts||[]).slice(),
-        enabled:t.enabled,done:false,doneAt:'',
-        startDate:null,endDate:null,               /* dates are branch-specific */
-        link:t.link||'',email:t.email||'',lineId:t.lineId||'',notifyMsg:t.notifyMsg||'',
-        files:[]                                    /* files never carry over */
-      }))
+      tasks:(g.tasks||[]).map(t=>{
+        const nt={
+          id:nid(),name:t.name,by:t.by,days:t.days,depts:(t.depts||[]).slice(),
+          enabled:t.enabled,done:false,doneAt:'',
+          startDate:null,endDate:null,               /* dates are branch-specific */
+          link:t.link||'',email:t.email||'',lineId:t.lineId||'',notifyMsg:t.notifyMsg||'',
+          deps:[],
+          checklist:(t.checklist||[]).map(c=>({id:nid(),text:c.text,done:false})),
+          files:[]                                    /* files never carry over */
+        };
+        _tIdMap.set(t.id,nt);return nt;
+      })
+    }));
+    (src.groups||[]).forEach(g=>(g.tasks||[]).forEach(t=>{
+      _tIdMap.get(t.id).deps=depIds(t).map(id=>(_tIdMap.get(id)||{}).id).filter(Boolean);
     }));
     while(DB.shops.find(x=>x.id===sh.id))sh.id=nid();
     DB.shops.push(sh);
@@ -2511,9 +3105,10 @@ const S={
   departments:[
     {code:'ALL',name:'ทุกแผนก',color:'#4A5568'},
     {code:'BD',name:'BD Project',color:'#1B3A6B'},
+    {code:'BDA',name:'BD (Admin)',color:'#00796B'},
     {code:'MKT',name:'Marketing',color:'#E85D04'},
     {code:'IT',name:'IT',color:'#6A0DAD'},
-    {code:'SCM',name:'SCM',color:'#2E8B50'},
+    {code:'SCM',name:'SCM (Supply Chain Management)',color:'#2E8B50'},
     {code:'ACC',name:'Accounting',color:'#C9A800'},
     {code:'HR',name:'HR',color:'#D03020'},
     {code:'TRN',name:'Training',color:'#8B5CF6'},
@@ -2521,6 +3116,7 @@ const S={
   ],
   contacts:[
     {dept:'BD',role:'BD Project Manager',name:'',phone:'',email:'',line:''},
+    {dept:'BDA',role:'BD Admin',name:'',phone:'',email:'',line:''},
     {dept:'MKT',role:'Marketing Manager',name:'',phone:'',email:'',line:''},
     {dept:'IT',role:'IT Manager',name:'',phone:'',email:'',line:''},
     {dept:'SCM',role:'SCM Manager',name:'',phone:'',email:'',line:''},
@@ -2533,6 +3129,7 @@ const S={
   uniform:{type:'shirt',staff:[]},
   deptFiles:{},
   deptNotes:{},
+  deptSign:{},
   owner:{},
   finance:{owner:'',payments:[]}
 };
@@ -2815,6 +3412,10 @@ function computeMonthsFromProject(startStr,dur){
     const td=new Date();startStr=ds(td.getFullYear(),td.getMonth()+1,td.getDate());
   }
   S.projectStart=startStr;S.projectDuration=dur;
+  S.months=_monthsFor(startStr,dur);
+}
+/* Pure version: the month window for a start date + duration */
+function _monthsFor(startStr,dur){
   const start=parseDS(startStr),end=new Date(start);
   end.setDate(end.getDate()+dur-1);
   const months=[],cur=new Date(start.getFullYear(),start.getMonth(),1);
@@ -2826,7 +3427,58 @@ function computeMonthsFromProject(startStr,dur){
     months.push({year:y,month:m,startDay:isFirst?start.getDate():1,endDay:isLast?end.getDate():last});
     cur.setMonth(cur.getMonth()+1);
   }
-  S.months=months;
+  return months;
+}
+
+/* ── TASK DEPENDENCIES (finish-to-start) ───────────────────────────────
+   task.deps = ids of tasks that must finish first. A dependent task is
+   pushed LATER when a predecessor slips so it never starts before the
+   predecessor ends; it is never pulled earlier (manual plans stay put),
+   and tasks without dates are left unscheduled. Disabled/missing
+   predecessors are ignored, so deleting a task can't break the chain. */
+function depIds(t){return Array.isArray(t&&t.deps)?t.deps:[];}
+function _taskMap(){const m=new Map();allTasks().forEach(t=>m.set(t.id,t));return m;}
+function dependsOn(aId,bId,map){
+  map=map||_taskMap();
+  const seen=new Set(),stack=[aId];
+  while(stack.length){
+    const t=map.get(stack.pop());if(!t)continue;
+    for(const d of depIds(t)){
+      if(d===bId)return true;
+      if(!seen.has(d)){seen.add(d);stack.push(d);}
+    }
+  }
+  return false;
+}
+function enforceDeps(){
+  const map=_taskMap(),moved=new Set();
+  const tasks=[...map.values()].filter(t=>t.enabled&&depIds(t).length);
+  for(let pass=0;pass<tasks.length+2;pass++){            /* bounded, so a cycle can never hang */
+    let changed=false;
+    for(const t of tasks){
+      if(!t.startDate)continue;
+      let need='';
+      for(const pid of depIds(t)){
+        const p=map.get(pid);if(!p||!p.enabled)continue;
+        const pe=p.endDate||p.startDate;if(!pe)continue;
+        const c=addDaysF(pe,1);if(c>need)need=c;
+      }
+      if(need&&t.startDate<need){
+        const span=Math.max(1,daysBetween(t.startDate,t.endDate||t.startDate));
+        t.startDate=need;t.endDate=addDays(need,span);t.days=span;
+        moved.add(t.id);changed=true;
+      }
+    }
+    if(!changed)break;
+  }
+  if(moved.size)autoExtendMonths();
+  return moved.size;
+}
+/* Run after any date edit; tells the user when other tasks moved with it */
+function afterDateChange(){
+  const n=enforceDeps();
+  if(n)_toast('ปรับวันที่อีก '+n+' งานตามลำดับที่เชื่อมโยงไว้','warn');
+  return n;
 }
 
 /* The start date is fixed: no task may begin before it. Shift any that do. */
@@ -2885,6 +3537,7 @@ function liveRebuildMonths(){
     computeMonthsFromProject(st,_selDur);
     clampTasksToProjectStart();
     autoExtendMonths();
+    enforceDeps();
     dbSave();
   }
   if(document.getElementById('sec-timeline').classList.contains('active'))render();
@@ -2945,6 +3598,7 @@ function autoSchedule(silent){
     next=addDaysF(t.endDate,1);
   });});
   autoExtendMonths();
+  enforceDeps();
   dbSave();
   if(!silent)showSection('sec-timeline');
   else render();
@@ -2962,7 +3616,7 @@ function setOwner(k,v){
   if(!requireEdit())return;
   if(!S.owner)S.owner={};
   S.owner[k]=v;
-  dbSave();renderOwnerStatus();
+  dbSave();renderOwnerStatus();renderFirstSteps();
 }
 function renderOwnerForm(){
   if(!S.owner)S.owner={};
@@ -2990,8 +3644,56 @@ function renderOwnerStatus(){
   box.innerHTML='⚠️ ยังไม่ได้กรอก '+missing.length+' ช่อง: '+missing.map(f=>esc(f.label)).join(' · ');
 }
 
+/* ── FIRST STEPS: a short guided checklist for a branch that is still being set up.
+   Disappears by itself once every step is done. */
+function renderFirstSteps(){
+  const card=document.getElementById('stepsCard');if(!card)return;
+  const sh=DB.shops.find(x=>x.id===_activeId);
+  if(!sh){card.style.display='none';return;}
+  const o=S.owner||{};
+  const ownerOk=OWNER_FIELDS.every(f=>String(o[f.k]||'').trim());
+  const hasDocs=allTasks().some(t=>(t.files||[]).length)||Object.values(S.deptFiles||{}).some(a=>(a||[]).length);
+  const steps=[
+    {ok:!!(S.branchName&&S.projectStart),ico:'📅',t:'ตั้งชื่อสาขาและวันเริ่มโครงการ',go:"stepGo('setup','qsStart')"},
+    {ok:!!(S.months&&S.months.length&&scheduledTasks().length),ico:'🗓',t:'สร้าง Timeline (กด "สร้าง Timeline" ในกล่องตั้งค่า)',go:"stepGo('setup','qsStart')"},
+    {ok:!!shopGrandOpening(sh).date,ico:'🎉',t:'กำหนดวัน Grand Opening',go:"stepGo('shop','spGrand')"},
+    {ok:!!shopOwnerName(sh),ico:'👤',t:'ระบุ BD ผู้รับผิดชอบสาขา',go:"stepGo('shop','spOwner')"},
+    {ok:ownerOk,ico:'📝',t:'กรอกข้อมูลเจ้าของร้านให้ครบ',go:"stepGo('owner')"},
+    {ok:hasDocs,ico:'📎',t:'เพิ่มเอกสาร/ไฟล์ของแผนกอย่างน้อย 1 รายการ',go:"stepGo('files')"},
+  ];
+  const n=steps.filter(s=>s.ok).length;
+  if(n===steps.length){card.style.display='none';return;}
+  card.style.display='';
+  card.innerHTML=`<div class="card-label" style="justify-content:space-between"><span>🚀 เริ่มต้นใช้งานสาขานี้</span><span class="steps-n">${n}/${steps.length}</span></div>
+    <div class="steps-bar"><div style="width:${Math.round(n/steps.length*100)}%"></div></div>
+    <div class="steps-list">${steps.map(s=>`<div class="step-row${s.ok?' ok':''}">
+      <span class="step-mark">${s.ok?'✓':s.ico}</span><span class="step-t">${s.t}</span>
+      ${s.ok?'':`<button class="btn btn-ghost2 btn-sm" onclick="${s.go}">ทำเลย →</button>`}</div>`).join('')}</div>`;
+}
+function renderRecentComments(){
+  const card=document.getElementById('cmtCard'),box=document.getElementById('cmtList');
+  if(!card||!box)return;
+  const all=[];
+  allTasks().forEach(t=>(t.comments||[]).forEach(c=>all.push({t,c})));
+  if(!all.length){card.style.display='none';return;}
+  card.style.display='';
+  all.sort((a,b)=>String(b.c.at).localeCompare(String(a.c.at)));
+  box.innerHTML=all.slice(0,6).map(({t,c})=>`<div class="due-row${commentMentionsMe(c)?' overdue':''}" onclick="openTaskEdit('${t.id}')" style="align-items:flex-start;height:auto;padding:9px 4px">
+      <span class="due-name" style="white-space:normal"><strong>${esc(c.by||'ไม่ระบุชื่อ')}</strong> · ${esc(t.name)}${commentMentionsMe(c)?' <em style="font-style:normal;color:var(--orange);font-weight:800">🔔 ถึงคุณ</em>':''}<br><span style="font-weight:500;color:var(--text-2)">${fmtMentions(String(c.text).slice(0,140))}</span></span>
+      <span class="due-when" style="color:var(--text-3)">${fmtCmtTime(c.at)}</span></div>`).join('');
+}
+function stepGo(kind,id){
+  if(kind==='setup'){const el=document.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>el.focus(),350);}}
+  else if(kind==='owner'){
+    const o=S.owner||{},f=OWNER_FIELDS.find(x=>!String(o[x.k]||'').trim())||OWNER_FIELDS[0];
+    const el=document.getElementById(f.el);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>el.focus(),350);}
+  }
+  else if(kind==='shop'){openEditShop(_activeId);setTimeout(()=>{const el=document.getElementById(id);if(el)el.focus();},120);}
+  else if(kind==='files')showSection('sec-files');
+}
 function renderOverview(){
   renderOwnerForm();
+  renderFirstSteps();renderRecentComments();
   const b=S.branchName;
   document.getElementById('ovTitle').textContent=`🍵 JIAN CHA${b?' — '+b:''} Franchise Onboarding`;
   if(S.projectStart){const e=addDays(S.projectStart,S.projectDuration);document.getElementById('ovSub').textContent=`เริ่ม ${fmtTH(S.projectStart)} · ${S.projectDuration} วัน · สิ้นสุด ${fmtTH(e)}`;}
@@ -3008,7 +3710,7 @@ function renderOverview(){
   ].map(c=>`<div class="stat-card" style="--card-accent:${c.accent}"><div class="stat-icon">${c.icon}</div><div class="stat-val">${c.val}</div><div class="stat-label">${c.label}</div><div class="stat-sub">${c.sub}</div></div>`).join('');
   document.getElementById('ovDeptGrid').innerHTML=S.departments.filter(d=>d.code!=='ALL').map(d=>{
     const dt=allTasks().filter(t=>(t.depts||[]).includes(d.code)),ds2=dt.filter(t=>t.startDate&&t.enabled),pct=dt.length?Math.round(ds2.length/dt.length*100):0;
-    return`<div class="dept-card" onclick="setDeptFilter('${d.code}');showSection('sec-timeline')"><div class="dept-dot" style="background:${d.color}">${d.code.slice(0,2)}</div><div class="dept-card-info"><div class="dept-card-name">${d.name}</div><div class="dept-card-count">${dt.length} tasks · ${ds2.length} กำหนดแล้ว</div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${d.color}"></div></div></div></div>`;
+    return`<div class="dept-card" onclick="setDeptFilter('${d.code}');showSection('sec-timeline')"><div class="dept-dot" style="background:${d.color}">${S.departments.filter(x=>x.code.slice(0,2)===d.code.slice(0,2)).length>1?d.code.slice(0,3):d.code.slice(0,2)}</div><div class="dept-card-info"><div class="dept-card-name">${d.name}</div><div class="dept-card-count">${dt.length} tasks · ${ds2.length} กำหนดแล้ว</div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${d.color}"></div></div></div></div>`;
   }).join('');
   renderDueList();renderActivityLog();
 }
@@ -3124,8 +3826,14 @@ function renderMobileTimeline(){
         <div class="mt-check" onclick="toggleDone('${t.id}')">✓</div>
         <div class="mt-body" onclick="openDP('${t.id}')">
           <div class="mt-name">${esc(t.name)}</div>
-          <div class="mt-meta">${badges}<span class="mt-dates">${dstr}</span><span class="mt-pill ${pcls}">${ptxt}</span></div>
+          <div class="mt-meta">${badges}<span class="mt-dates">${dstr}</span><span class="mt-pill ${pcls}">${ptxt}</span>${(()=>{
+            const cl=checklistProgress(t),nc=(t.comments||[]).length,nd=depIds(t).filter(id=>findTask(id)).length;
+            return(cl.total?`<span class="mt-pill ${cl.done===cl.total?'done':'none'}">☑ ${cl.done}/${cl.total}</span>`:'')
+              +(nc?`<span class="mt-pill ${t.comments.some(commentMentionsMe)?'overdue':'none'}">💬 ${nc}</span>`:'')
+              +(nd?`<span class="mt-pill none" title="เริ่มหลังงานอื่น">⛓ ${nd}</span>`:'');
+          })()}</div>
         </div>
+        <button class="mt-edit" title="Checklist · ความคิดเห็น · แก้ไขงาน" aria-label="เปิดรายละเอียดงาน" onclick="openTaskEdit('${t.id}')">⋯</button>
       </div>`;
     });
     html+='</div></div>';
@@ -3189,6 +3897,7 @@ function _stickyColspan(){
   return Math.max(1,n);
 }
 function renderTable(){
+  const _todayStr=_todayKey();
   const SCS=_stickyColspan();
   const cols=getDateCols();
   document.getElementById('noMonthHint').innerHTML=cols.length===0?`<div style="display:inline-block;border:2px dashed var(--border);border-radius:14px;padding:36px 52px;"><p style="font-size:15px;font-weight:700;color:var(--text-2);margin-bottom:8px;">📅 ยังไม่มีเดือนในไทม์ไลน์</p><p style="font-size:13px;color:var(--text-3);">กดปุ่ม <strong>"เดือน"</strong> ในแถบด้านบน หรือกลับไป Overview แล้วกด <strong>"สร้าง Timeline"</strong></p></div>`:'';
@@ -3223,7 +3932,11 @@ function renderTable(){
       const bc=byColor(t.by),dim2=taskMatchesDept(t)?'':' dept-dim',lkB=t.link?`<a class="act-btn" href="${esc(t.link)}" target="_blank" style="text-decoration:none;">🔗</a>`:'';
       const dB=(t.depts||[]).filter(d=>d!=='ALL').map(d=>{const dep=S.departments.find(x=>x.code===d);return dep?`<span class="dept-badge" style="background:${dep.color}">${dep.code}</span>`:''}).join('');
       const fcnt=(t.files||[]).length,fB=fcnt?`<button class="act-btn file-badge" onclick="openTaskEdit('${t.id}')" title="${fcnt} ไฟล์แนบ">📎${fcnt}</button>`:'';
-      html+=`<tr class="tr-task${t.done?' tr-done':''}${dim2}"><td class="s0 td-task col-task"><div class="task-inner"><button class="act-btn act-done" title="${t.done?'ทำเครื่องหมายว่ายังไม่เสร็จ':'ทำเครื่องหมายว่าเสร็จแล้ว'}" aria-pressed="${t.done?'true':'false'}" onclick="toggleDone('${t.id}')">${t.done?'✅':'⬜'}</button><button class="task-name-btn" onclick="openDP('${t.id}')">${esc(t.name)}</button>${dB}${lkB}${fB}<button class="act-btn edit-only" title="แก้ไข" onclick="openTaskEdit('${t.id}')">✏️</button><span class="act-more"><button class="act-btn" title="เพิ่มเติม" onclick="this.parentNode.classList.toggle('open');event.stopPropagation();">⋯</button><span class="act-menu"><button class="m-done edit-only" onclick="toggleDone('${t.id}')">${t.done?'↩️ ยังไม่เสร็จ':'✅ ทำเครื่องหมายเสร็จ'}</button><button class="m-edit edit-only" onclick="openTaskEdit('${t.id}')">✏️ แก้ไขงาน</button><button onclick="openTaskDocs('${t.id}')">📋 เอกสารแผนก</button><button class="edit-only" onclick="quickDeleteTask('${g.id}','${t.id}')">🗑 ลบงานนี้</button></span></span></div></td><td class="s1 td-by col-by"><span class="by-pill" style="background:${bc}" onclick="cycleBy('${t.id}')">${esc(t.by)}</span></td><td class="s2 td-day col-day"><input class="day-inline-input" type="number" min="1" max="730" value="${t.days||1}" onchange="setTaskDays('${t.id}',+this.value)"></td><td class="s3 td-sort col-sort"><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',-1)">▲</button><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',1)">▼</button></td>`;
+      const _cl=checklistProgress(t),_nc=(t.comments||[]).length,_nd=depIds(t).filter(id=>findTask(id)).length;
+      const xB=(_cl.total?`<button class="act-btn mini-badge${_cl.done===_cl.total?' ok':''}" onclick="openTaskEdit('${t.id}')" title="Checklist ${_cl.done}/${_cl.total}">☑${_cl.done}/${_cl.total}</button>`:'')
+        +(_nc?`<button class="act-btn mini-badge${t.comments.some(commentMentionsMe)?' hot':''}" onclick="openTaskEdit('${t.id}')" title="${_nc} ความคิดเห็น">💬${_nc}</button>`:'')
+        +(_nd?`<button class="act-btn mini-badge" onclick="openTaskEdit('${t.id}')" title="เริ่มหลัง: ${esc(depIds(t).map(id=>(findTask(id)||{}).name).filter(Boolean).join(', '))}">⛓${_nd}</button>`:'');
+      html+=`<tr class="tr-task${t.done?' tr-done':''}${dim2}"><td class="s0 td-task col-task"><div class="task-inner"><button class="act-btn act-done" title="${t.done?'ทำเครื่องหมายว่ายังไม่เสร็จ':'ทำเครื่องหมายว่าเสร็จแล้ว'}" aria-pressed="${t.done?'true':'false'}" onclick="toggleDone('${t.id}')">${t.done?'✅':'⬜'}</button><button class="task-name-btn" onclick="openDP('${t.id}')">${esc(t.name)}</button>${dB}${lkB}${fB}${xB}<button class="act-btn edit-only" title="แก้ไข" onclick="openTaskEdit('${t.id}')">✏️</button><span class="act-more"><button class="act-btn" title="เพิ่มเติม" onclick="this.parentNode.classList.toggle('open');event.stopPropagation();">⋯</button><span class="act-menu"><button class="m-done edit-only" onclick="toggleDone('${t.id}')">${t.done?'↩️ ยังไม่เสร็จ':'✅ ทำเครื่องหมายเสร็จ'}</button><button class="m-edit edit-only" onclick="openTaskEdit('${t.id}')">✏️ แก้ไขงาน</button><button onclick="openTaskDocs('${t.id}')">📋 เอกสารแผนก</button><button class="edit-only" onclick="quickDeleteTask('${g.id}','${t.id}')">🗑 ลบงานนี้</button></span></span></div></td><td class="s1 td-by col-by"><span class="by-pill" style="background:${bc}" onclick="cycleBy('${t.id}')">${esc(t.by)}</span></td><td class="s2 td-day col-day"><input class="day-inline-input" type="number" min="1" max="730" value="${t.days||1}" onchange="setTaskDays('${t.id}',+this.value)"></td><td class="s3 td-sort col-sort"><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',-1)">▲</button><button class="srt-btn" onclick="mvTask('${g.id}','${t.id}',1)">▼</button></td>`;
       /* Segment rendering: non-bar days as individual td, bar as single spanning td */
       {let ci=0;while(ci<cols.length){
         const col=cols[ci];
@@ -3235,10 +3948,13 @@ function renderTable(){
           const depts=(t.depts||[]).filter(d=>d!=='ALL');
           const deptLbl=depts.length?depts.join(' '):t.by;
           const dateLbl=fmtSD(t.startDate)+'–'+fmtSD(t.endDate);
-          const lbl=span>1?`${deptLbl} · ${dateLbl}`:'';
+          const _pr=taskProgress(t),_pl=taskPlanPct(t,_todayStr);
+          const _late=!t.done&&t.endDate<_todayStr;
+          const lbl=span>1?`${t.done?'✓ ':''}${deptLbl} · ${dateLbl}${(_cl.total&&span>3)?` · ☑${_cl.done}/${_cl.total}`:''}`:'';
           const rEnd=cols[end-1];
           const borderR=rEnd&&rEnd.isMonthEnd?'border-right:3px solid rgba(255,255,255,.25)':rEnd&&rEnd.isWeekBorder?'border-right:2px solid rgba(255,255,255,.18)':'border-right:none';
-          html+=`<td colspan="${span}" class="td-bar-span" style="background:${bc};${borderR}" onclick="openDP('${t.id}')"><div class="bar-label-inner">${lbl}</div><div class="bar-resize" onpointerdown="onBarResizeStart(event,'${t.id}')" onclick="event.stopPropagation()">⟺</div></td>`;
+          const _tip=esc(t.name)+' · '+dateLbl+(t.done?' · เสร็จแล้ว':(_late?' · เกินกำหนด':''))+(_pr&&!t.done?' · ความคืบหน้า '+_pr+'%':'');
+          html+=`<td colspan="${span}" class="td-bar-span${_late?' bar-late':''}${t.done?' bar-done':''}" data-tid="${t.id}" title="${_tip}" style="background:${bc};${borderR}" onclick="openDP('${t.id}')"><span class="bar-prog" style="width:${_pr}%"></span>${(_pl&&!t.done)?`<span class="bar-plan" style="width:${_pl}%"></span>`:''}<div class="bar-label-inner">${lbl}</div><div class="bar-resize" onpointerdown="onBarResizeStart(event,'${t.id}')" onclick="event.stopPropagation()">⟺</div></td>`;
           ci=end;
         }else{
           let cls='td-date';
@@ -3253,7 +3969,77 @@ function renderTable(){
   });
   document.getElementById('ganttBody').innerHTML=html;
   renderScheduleHint();
+  drawGanttOverlay();
 }
+/* Actual progress: done = 100%, otherwise the share of checklist steps ticked.
+   Planned progress: how much of the task's dated window has elapsed today. */
+function taskProgress(t){
+  if(t.done)return 100;
+  const p=checklistProgress(t);
+  return p.total?Math.round(p.done/p.total*100):0;
+}
+function taskPlanPct(t,today){
+  if(!t.startDate||!t.endDate||t.done||today<t.startDate)return 0;
+  if(today>=t.endDate)return 100;
+  return Math.round(daysBetween(t.startDate,today)/daysBetween(t.startDate,t.endDate)*100);
+}
+/* ── GANTT OVERLAY: today line + dependency arrows ─────────────────────
+   One SVG laid over the table (pointer-events none, under the sticky
+   columns). Positions are read back from the rendered bars, so it always
+   matches the real layout; it is redrawn after every render and on resize. */
+let _showDeps=true;try{_showDeps=localStorage.getItem('jc_show_deps')!=='0';}catch(e){}
+function toggleDepLines(){
+  _showDeps=!_showDeps;
+  try{localStorage.setItem('jc_show_deps',_showDeps?'1':'0');}catch(e){}
+  const b=document.getElementById('depToggle');if(b)b.classList.toggle('on',_showDeps);
+  drawGanttOverlay();
+}
+function drawGanttOverlay(){
+  const outer=document.getElementById('tableOuter'),tbl=document.getElementById('gantt');
+  if(!outer||!tbl)return;
+  let svg=document.getElementById('ganttOverlay');
+  if(!svg){
+    svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.id='ganttOverlay';svg.setAttribute('aria-hidden','true');
+    outer.appendChild(svg);
+  }
+  const tr=tbl.getBoundingClientRect();
+  if(!tr.width||!outer.offsetParent){svg.innerHTML='';return;}   /* hidden (phone list mode) */
+  svg.setAttribute('width',Math.ceil(tr.width));svg.setAttribute('height',Math.ceil(tr.height));
+  const o=svg.getBoundingClientRect();
+  const _db=document.getElementById('depToggle');if(_db)_db.classList.toggle('on',_showDeps);
+  let h='<defs><marker id="depArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#334155"/></marker></defs>';
+  /* today: a continuous line through the body, bar rows included */
+  const th=document.querySelector('#ganttHead th.th-day[data-k="'+_todayKey()+'"]');
+  if(th){
+    const r=th.getBoundingClientRect(),hb=document.getElementById('ganttHead').getBoundingClientRect();
+    const x=r.left-o.left+r.width/2,y0=hb.bottom-o.top;
+    h+=`<line x1="${x}" y1="${y0}" x2="${x}" y2="${o.height}" class="today-line"/><path d="M${x-5},${y0} L${x+5},${y0} L${x},${y0+7} z" class="today-flag"/>`;
+  }
+  /* dependency arrows: from the end of a predecessor to the start of its successor */
+  if(_showDeps){
+    const bars={};
+    document.querySelectorAll('#ganttBody td.td-bar-span[data-tid]').forEach(el=>{
+      const r=el.getBoundingClientRect();
+      bars[el.dataset.tid]={l:r.left-o.left,r:r.right-o.left,m:r.top-o.top+r.height/2,h:r.height};
+    });
+    allTasks().forEach(t=>{
+      const to=bars[t.id];if(!to)return;
+      depIds(t).forEach(pid=>{
+        const from=bars[pid];if(!from)return;
+        const x1=from.r,y1=from.m,x2=to.l,y2=to.m;
+        const down=y2>y1,ya=y1+(down?1:-1)*from.h/2;      /* leave from the bottom/top edge */
+        let d;
+        if(x2>=x1-4){const sx=Math.max(from.l+6,x1-8);d=`M${sx},${ya} V${y2} H${x2}`;}
+        else{const ym=(y1+y2)/2;d=`M${x1},${y1} H${x1+6} V${ym} H${x2-8} V${y2} H${x2}`;}
+        h+=`<path d="${d}" class="dep-line" marker-end="url(#depArrow)"/>`;
+      });
+    });
+  }
+  svg.innerHTML=h;
+}
+let _ganttResizeT=null;
+window.addEventListener('resize',()=>{clearTimeout(_ganttResizeT);_ganttResizeT=setTimeout(drawGanttOverlay,120);});
 /* Point the user at "สร้าง Timeline" instead of showing an empty grid */
 function renderScheduleHint(){
   const el=document.getElementById('noMonthHint');if(!el)return;
@@ -3307,7 +4093,7 @@ function dpC(k){
 }
 function updateRI(){document.getElementById('riStart').textContent=fmtTH(_dpS);document.getElementById('riEnd').textContent=fmtTH(_dpE2);const n=(_dpS&&_dpE2)?daysBetween(_dpS,_dpE2):0;document.getElementById('riDays').textContent=n?`${n} วัน`:'—';}
 function clearDP(){_dpS=null;_dpE2=null;_dpStep=0;renderDP();updateRI();}
-function applyDP(){const t=findTask(_dpId);if(t&&_dpS){let s=_dpS;if(S.projectStart&&s<S.projectStart){s=S.projectStart;_toast('ปรับวันเริ่มเป็นวันเริ่มโครงการ','warn');}t.startDate=s;t.endDate=(_dpE2&&_dpE2>=s)?_dpE2:s;t.days=daysBetween(t.startDate,t.endDate);if(document.getElementById('cascadeToggle').checked)cascadeF(t);}dbSave();closeP('popDate');render();}
+function applyDP(){const t=findTask(_dpId);if(t&&_dpS){let s=_dpS;if(S.projectStart&&s<S.projectStart){s=S.projectStart;_toast('ปรับวันเริ่มเป็นวันเริ่มโครงการ','warn');}t.startDate=s;t.endDate=(_dpE2&&_dpE2>=s)?_dpE2:s;t.days=daysBetween(t.startDate,t.endDate);if(document.getElementById('cascadeToggle').checked)cascadeF(t);afterDateChange();}dbSave();closeP('popDate');render();}
 function cascadeF(from){const g=findTaskGroup(from.id);if(!g)return;let idx=g.tasks.findIndex(t=>t.id===from.id),next=addDaysF(from.endDate,1);for(let i=idx+1;i<g.tasks.length;i++){const nt=g.tasks[i];if(!nt.enabled)continue;nt.startDate=next;nt.endDate=addDays(next,nt.days||1);nt.days=daysBetween(nt.startDate,nt.endDate);next=addDaysF(nt.endDate,1);}}
 
 function toggleDone(id){
@@ -3334,13 +4120,149 @@ function renderTaskFilter(){
 function setTaskDays(id,n){
   const t=findTask(id);if(!t||!n||n<1)return;
   t.days=n;
-  if(t.startDate){t.endDate=addDays(t.startDate,n);autoExtendMonths();}
+  if(t.startDate){t.endDate=addDays(t.startDate,n);autoExtendMonths();afterDateChange();}
   dbSave();render();
 }
 
 /* TASK / GROUP EDIT */
 let _etId=null;
-function openTaskEdit(id){_etId=id;const t=findTask(id);if(!t)return;document.getElementById('etName').value=t.name;document.getElementById('etLink').value=t.link||'';document.getElementById('etEmail').value=t.email||'';document.getElementById('etLine').value=t.lineId||'';document.getElementById('etMsg').value=t.notifyMsg||'';const td=t.depts||[];document.getElementById('etDeptChecks').innerHTML=S.departments.map(d=>{const a=td.includes(d.code);return`<div class="dept-chip-check${a?' active':''}" style="${a?'background:'+d.color+';color:#fff;':''}" onclick="tDC(this,'${d.code}')">${d.name}</div>`;}).join('');renderTaskFiles(t);renderStorageBar();openP('popTask');}
+function openTaskEdit(id){_etId=id;const t=findTask(id);if(!t)return;document.getElementById('etName').value=t.name;document.getElementById('etLink').value=t.link||'';document.getElementById('etEmail').value=t.email||'';document.getElementById('etLine').value=t.lineId||'';document.getElementById('etMsg').value=t.notifyMsg||'';const td=t.depts||[];document.getElementById('etDeptChecks').innerHTML=S.departments.map(d=>{const a=td.includes(d.code);return`<div class="dept-chip-check${a?' active':''}" style="${a?'background:'+d.color+';color:#fff;':''}" onclick="tDC(this,'${d.code}')">${d.name}</div>`;}).join('');renderTaskFiles(t);renderStorageBar();renderTaskExtras(t);openP('popTask');}
+
+/* ── TASK EXTRAS: predecessors · checklist · comments ─────────────────
+   All three save immediately (like attachments) rather than waiting for
+   the dialog's Save button — a comment or a ticked step should never be
+   lost by closing the dialog. */
+function _taskLabel(t){const g=findTaskGroup(t.id);return(g?g.name+' › ':'')+t.name;}
+function renderTaskExtras(t){renderTaskDeps(t);renderChecklist(t);renderComments(t);}
+function renderTaskDeps(t){
+  const map=_taskMap(),have=new Set(depIds(t));
+  document.getElementById('etDeps').innerHTML=depIds(t).map(id=>{
+    const p=map.get(id);if(!p)return'';
+    return`<span class="dep-chip">⛓ ${esc(p.name)}<button type="button" title="เอาออก" aria-label="เอางานนี้ออกจากรายการที่ต้องรอ" onclick="removeTaskDep('${esc(id)}')">✕</button></span>`;
+  }).join('')||'<span class="cp-empty">ไม่มี — เริ่มได้ตามวันที่กำหนดเอง</span>';
+  /* offer every other task, except ones that would create a loop */
+  let opts='<option value="">＋ เลือกงานที่ต้องเสร็จก่อน…</option>';
+  S.groups.forEach(g=>{
+    const list=g.tasks.filter(x=>x.id!==t.id&&!have.has(x.id)&&!dependsOn(x.id,t.id,map));
+    if(!list.length)return;
+    opts+=`<optgroup label="${esc(g.name)}">`+list.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('')+'</optgroup>';
+  });
+  document.getElementById('etDepAdd').innerHTML=opts;
+}
+function addTaskDep(pid){
+  if(!pid||!requireEdit())return;
+  const t=findTask(_etId),p=findTask(pid);if(!t||!p)return;
+  if(dependsOn(pid,t.id)){_toast('เชื่อมไม่ได้ — จะเกิดวงวน (งานนั้นรองานนี้อยู่แล้ว)','warn');return;}
+  if(!Array.isArray(t.deps))t.deps=[];
+  if(!t.deps.includes(pid))t.deps.push(pid);
+  const n=enforceDeps();
+  dbSave();renderTaskDeps(t);render();
+  logActivity('edit','ตั้งให้ "'+t.name+'" เริ่มหลัง "'+p.name+'"');
+  if(n)_toast('ปรับวันที่ '+n+' งานตามลำดับที่เชื่อมโยงไว้','warn');
+}
+function removeTaskDep(pid){
+  if(!requireEdit())return;
+  const t=findTask(_etId);if(!t)return;
+  t.deps=depIds(t).filter(x=>x!==pid);
+  dbSave();renderTaskDeps(t);render();
+}
+function checklistProgress(t){
+  const c=t.checklist||[];
+  return{done:c.filter(x=>x.done).length,total:c.length};
+}
+function renderChecklist(t){
+  const c=t.checklist||[],pr=checklistProgress(t);
+  document.getElementById('etChkCount').textContent=c.length?`(${pr.done}/${pr.total})`:'';
+  document.getElementById('etChecklist').innerHTML=c.length?c.map(x=>`
+    <div class="chk-row${x.done?' done':''}">
+      <label class="chk-main"><input type="checkbox" ${x.done?'checked':''} onchange="toggleChecklistItem('${esc(x.id)}',this.checked)"><span>${esc(x.text)}</span></label>
+      <button type="button" class="chk-del" title="ลบขั้นตอน" aria-label="ลบขั้นตอน" onclick="removeChecklistItem('${esc(x.id)}')">✕</button>
+    </div>`).join(''):'<div class="cp-empty">ยังไม่มีขั้นตอนย่อย</div>';
+}
+function addChecklistItem(){
+  if(!requireEdit())return;
+  const t=findTask(_etId);if(!t)return;
+  const inp=document.getElementById('etChkNew'),txt=inp.value.trim();
+  if(!txt){inp.focus();return;}
+  if(!Array.isArray(t.checklist))t.checklist=[];
+  t.checklist.push({id:nid(),text:txt,done:false});
+  inp.value='';dbSave();renderChecklist(t);render();inp.focus();
+}
+function toggleChecklistItem(id,on){
+  if(!requireEdit()){renderChecklist(findTask(_etId));return;}
+  const t=findTask(_etId);if(!t)return;
+  const it=(t.checklist||[]).find(x=>x.id===id);if(!it)return;
+  it.done=!!on;
+  dbSave();renderChecklist(t);render();
+  const pr=checklistProgress(t);
+  if(on&&pr.total&&pr.done===pr.total&&!t.done)_toast('ทำครบทุกขั้นตอนแล้ว — กด ✅ ที่งานเพื่อปิดงานได้เลย');
+}
+function removeChecklistItem(id){
+  if(!requireEdit())return;
+  const t=findTask(_etId);if(!t)return;
+  t.checklist=(t.checklist||[]).filter(x=>x.id!==id);
+  dbSave();renderChecklist(t);render();
+}
+/* Names that can be @-mentioned: the people already attached to the branch */
+function mentionNames(){
+  const set=new Set();
+  const add=n=>{n=String(n||'').trim();if(n&&n.length<=40)set.add(n);};
+  (S.contacts||[]).forEach(c=>add(c.name));
+  add((S.owner||{}).name);add((S.finance||{}).owner);
+  (DB.bdTeam||[]).forEach(m=>add(m.name));
+  allTasks().forEach(t=>(t.comments||[]).forEach(c=>add(c.by)));
+  add(getActorName());
+  return[...set];
+}
+function fmtMentions(text){
+  let h=esc(text);
+  const names=mentionNames().sort((a,b)=>b.length-a.length).map(n=>esc(n).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  const re=new RegExp('@(?:'+(names.length?names.join('|')+'|':'')+'[^\\s@]+)','g');
+  return h.replace(re,m=>`<span class="mention">${m}</span>`);
+}
+function commentMentionsMe(c){
+  const me=getActorName().trim().toLowerCase();
+  return!!me&&String(c.text||'').toLowerCase().includes('@'+me);
+}
+function fmtCmtTime(iso){
+  const d=new Date(iso);if(isNaN(d))return'';
+  return d.toLocaleDateString('th-TH',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+}
+function renderComments(t){
+  const c=t.comments||[];
+  document.getElementById('etCmtCount').textContent=c.length?`(${c.length})`:'';
+  document.getElementById('etComments').innerHTML=c.length?c.map(x=>`
+    <div class="cmt${commentMentionsMe(x)?' to-me':''}">
+      <div class="cmt-head"><strong>${esc(x.by||'ไม่ระบุชื่อ')}</strong><span>${fmtCmtTime(x.at)}</span>${commentMentionsMe(x)?'<em>🔔 ถึงคุณ</em>':''}</div>
+      <div class="cmt-body">${fmtMentions(x.text)}</div>
+    </div>`).join(''):'<div class="cp-empty">ยังไม่มีความคิดเห็น</div>';
+  const box=document.getElementById('etComments');box.scrollTop=box.scrollHeight;
+  document.getElementById('etMentions').innerHTML=mentionNames().slice(0,10).map(n=>`<button type="button" class="mention-chip" onclick="insertMention(this.dataset.n)" data-n="${esc(n)}">@${esc(n)}</button>`).join('');
+}
+function insertMention(n){
+  const ta=document.getElementById('etCmtNew');
+  ta.value+=(ta.value&&!/\s$/.test(ta.value)?' ':'')+'@'+n+' ';
+  ta.focus();
+}
+function postComment(){
+  if(!requireEdit())return;
+  const t=findTask(_etId);if(!t)return;
+  const ta=document.getElementById('etCmtNew'),txt=ta.value.trim();
+  if(!txt){ta.focus();return;}
+  const go=()=>{
+    if(!Array.isArray(t.comments))t.comments=[];
+    t.comments.push({id:nid(),by:getActorName()||(_customerMode?'สาขา':'ทีมงาน'),text:txt,at:new Date().toISOString()});
+    ta.value='';
+    _dirtyShops.add(_activeId);dbSave();renderComments(t);render();
+    logActivity('edit','💬 ความคิดเห็นในงาน "'+t.name+'": '+txt.slice(0,80));
+  };
+  if(getActorName())go();
+  else _prompt('ชื่อของคุณ (แสดงข้างความคิดเห็นและประวัติการแก้ไข)','',n=>{
+    n=(n||'').trim();if(!n)return;
+    try{localStorage.setItem(ACTOR_STORE,n);}catch(e){}
+    go();
+  });
+}
 function tDC(el,code){el.classList.toggle('active');if(el.classList.contains('active')){const d=S.departments.find(x=>x.code===code);el.style.background=d?d.color:'';el.style.color='#fff';}else{el.style.background='';el.style.color='';}}
 function applyTask(){const t=findTask(_etId);if(!t)return;t.name=document.getElementById('etName').value;t.link=document.getElementById('etLink').value;t.email=document.getElementById('etEmail').value;t.lineId=document.getElementById('etLine').value;t.notifyMsg=document.getElementById('etMsg').value;t.depts=[...document.getElementById('etDeptChecks').querySelectorAll('.dept-chip-check.active')].map(el=>el.getAttribute('onclick').match(/'([^']+)'\)/)[1]);dbSave();closeP('popTask');render();logActivity('edit','แก้ไขงาน "'+t.name+'"');}
 function deleteTask(){_confirm('ลบ task นี้?',()=>{let dead=null,deadIdx=-1,deadGid=null;for(const g of S.groups){const i=g.tasks.findIndex(t=>t.id===_etId);if(i>=0){dead=g.tasks[i];deadIdx=i;deadGid=g.id;g.tasks.splice(i,1);break;}}if(dead){deleteTaskFiles(dead).catch(()=>{});stashUndo('task',{task:dead,index:deadIdx,groupId:deadGid});logActivity('delete','ลบงาน "'+dead.name+'"');}dbSave();closeP('popTask');render();});}
@@ -3850,7 +4772,7 @@ function _onBarUp(e){
   if(t&&t.startDate&&nd!==_drag.startDays){
     t.days=nd;t.endDate=addDays(t.startDate,nd);
     cascadeAllFrom(_drag.taskId);
-    autoExtendMonths();dbSave();render();
+    autoExtendMonths();afterDateChange();dbSave();render();
   }
   _drag.active=false;
   document.removeEventListener('pointermove',_onBarMove);
@@ -3892,7 +4814,7 @@ function renderDeptListPanel(){
     <div class="dept-list-item${_activeDeptCode===d.code?' active':''}" onclick="selectDeptFiles('${d.code}')">
       <div class="dept-list-dot" style="background:${d.color}"></div>
       <span>${d.name}</span>
-      <span class="dept-counts"><span title="ไฟล์">📎${_deptFileCount(d.code)}</span>${_noteCount(d.code)?`<span title="บันทึกการประชุม" class="dept-note-count">📝${_noteCount(d.code)}</span>`:''}</span>
+      <span class="dept-counts"><span title="ไฟล์">📎${_deptFileCount(d.code)}</span>${_noteCount(d.code)?`<span title="บันทึกการประชุม" class="dept-note-count">📝${_noteCount(d.code)}</span>`:''}${_signCount(d.code)?`<span title="ผู้เซ็นรับทราบ" class="dept-note-count">✍️${_signCount(d.code)}</span>`:''}</span>
     </div>`).join('');
   if(!_activeDeptCode){_activeDeptCode='ALL';}
   renderDeptFilesPanel();
@@ -3926,11 +4848,22 @@ function renderDeptFilesPanel(){
   const docs=DEPT_DOCS[code]||[];
   const upNames=files.map(f=>f.name.toLowerCase());
   const _kw=s=>s.replace(/\(.*?\)/g,'').trim().toLowerCase().split(/[\s/]+/).filter(w=>w.length>2);
+  /* object entries carry explicit keywords; compare ignoring case, dots, dashes, underscores and spaces */
+  const _norm=s=>String(s).toLowerCase().replace(/[._\-]+/g,' ').replace(/\s+/g,' ').trim();
+  const _nameN=files.map(f=>_norm(f.name));
+  const _hasKey=k=>{
+    k=_norm(k);if(!k)return false;
+    if(/^[a-z0-9 ]{1,4}$/.test(k))return _nameN.some(n=>new RegExp('(^|[^a-z0-9])'+k+'([^a-z0-9]|$)').test(n));  /* short latin keys: whole word only */
+    const ks=k.replace(/ /g,'');
+    return _nameN.some(n=>n.includes(k)||n.replace(/ /g,'').includes(ks));
+  };
+  const _label=d=>typeof d==='string'?d:d.t;
+  const _have=d=>typeof d==='string'?_kw(d).some(k=>upNames.some(n=>n.includes(k))):d.k.some(_hasKey);
   const docsHtml=docs.length?`<div class="req-docs">
-      <div class="req-docs-head">📋 เอกสารที่ต้องส่ง — ${esc(deptName)} <span style="margin-left:auto;font-weight:600;opacity:.7;">${docs.filter(d=>_kw(d).some(k=>upNames.some(n=>n.includes(k)))).length}/${docs.length}</span></div>
+      <div class="req-docs-head">📋 เอกสารที่ต้องส่ง — ${esc(deptName)} <span style="margin-left:auto;font-weight:600;opacity:.7;">${docs.filter(_have).length}/${docs.length}</span></div>
       <div class="req-docs-list">${docs.map(d=>{
-        const have=_kw(d).some(k=>upNames.some(n=>n.includes(k)));
-        return `<div class="req-doc-item${have?' have':''}">${esc(d)}</div>`;
+        const have=_have(d);
+        return `<div class="req-doc-item${have?' have':''}">${esc(_label(d))}</div>`;
       }).join('')}</div>
     </div>`:'';
   el.innerHTML=`<div class="dept-files-panel">
@@ -3962,8 +4895,10 @@ function renderDeptFilesPanel(){
         </div>
       </div>`).join('')}</div>`:'<div style="text-align:center;color:var(--text-3);padding:32px;font-size:13px;">ยังไม่มีไฟล์ในแผนกนี้</div>'}
   </div>
-  ${renderDeptNotes(code,deptName)}`;
+  ${renderDeptNotes(code,deptName)}
+  ${renderDeptSign(code,deptName)}`;
   markRemoteFiles(el);lockUI();
+  sigInit(code);
 }
 
 /* ── MEETING NOTES PER DEPARTMENT ──────────────────────────────────── */
@@ -4025,6 +4960,162 @@ function removeDeptNote(code,id){
     if(S.deptNotes&&S.deptNotes[code])S.deptNotes[code]=S.deptNotes[code].filter(n=>n.id!==id);
     dbSave();renderDeptFilesPanel();renderDeptListPanel();
   });
+}
+/* ── SIGN-OFF PER DEPARTMENT: "เซ็นรับทราบและเข้าใจ" ─────────────────────
+   A signature pad at the end of every department page. It uses Pointer
+   Events, so one code path covers a finger or stylus on a phone/tablet and
+   a trackpad or mouse on a laptop (press and drag; a touchscreen laptop
+   works too). Strokes are kept as 0..1 coordinates so they survive a resize
+   or rotation, and are held in memory across re-renders so a sync refresh
+   cannot wipe a signature half-way through. Saved entries are PNG data
+   URLs with name, position and time; "deleting" voids an entry (kept for
+   the record, hidden from the list) so it cannot be resurrected by a sync. */
+let _sig={code:'',strokes:[],name:'',role:'',cur:null},_sigRO=null;
+const SIG_AR=2;                       /* pad width : height */
+function _signsFor(code){return((S.deptSign&&S.deptSign[code])||[]).filter(x=>!x.void);}
+function _signCount(code){
+  if(code==='ALL')return Object.keys(S.deptSign||{}).reduce((a,k)=>a+_signsFor(k).length,0);
+  return _signsFor(code).length;
+}
+function _safeSigImg(s){return typeof s==='string'&&/^data:image\/png;base64,[A-Za-z0-9+\/=]+$/.test(s)?s:'';}
+function renderDeptSign(code,deptName){
+  if(code==='ALL')return'';
+  const list=_signsFor(code).slice().sort((a,b)=>new Date(b.at)-new Date(a.at));
+  return`<div class="sign-panel" id="signPanel">
+    <div class="sign-head">✍️ เซ็นรับทราบและเข้าใจ — ${esc(deptName)}<span class="notes-count">${list.length}</span></div>
+    <p class="sign-statement">ข้าพเจ้าได้อ่านเอกสารและข้อกำหนดของแผนกนี้ และ <strong>รับทราบและเข้าใจ</strong> ทุกข้อแล้ว</p>
+    <div class="sign-compose edit-only">
+      <div class="sign-fields">
+        <input class="note-who" id="sigName" aria-label="ชื่อ-นามสกุลผู้ลงนาม" placeholder="ชื่อ-นามสกุล ผู้ลงนาม *" oninput="_sig.name=this.value" autocomplete="name">
+        <input class="note-who" id="sigRole" aria-label="ตำแหน่งหรือบริษัท" placeholder="ตำแหน่ง / บริษัท (ไม่บังคับ)" oninput="_sig.role=this.value">
+      </div>
+      <div class="sign-pad-wrap">
+        <canvas id="sigPad" class="sign-pad" role="img" aria-label="พื้นที่เซ็นชื่อ ใช้นิ้ว ทัชแพด หรือเมาส์"></canvas>
+        <div class="sign-x" aria-hidden="true">✕</div>
+        <div class="sign-ph" id="sigPh">เซ็นชื่อที่นี่<br><small>มือถือ/แท็บเล็ต: ใช้นิ้วลากในกรอบ · แล็ปท็อป: กดค้างที่ทัชแพดหรือเมาส์แล้วลาก</small></div>
+      </div>
+      <div class="sign-actions">
+        <button type="button" class="btn btn-ghost2 btn-sm" onclick="sigUndo()">↶ ย้อนกลับ</button>
+        <button type="button" class="btn btn-ghost2 btn-sm" onclick="sigClear()">🗑 ล้างลายเซ็น</button>
+        <span class="note-hint">ลายเซ็นจะแชร์ให้ทุกคนที่เปิดลิงก์เห็น</span>
+        <button type="button" class="btn btn-navy btn-sm" onclick="saveSignature('${code}')">✔ ยืนยันลายเซ็น</button>
+      </div>
+    </div>
+    ${list.length?`<div class="sign-list">${list.map(s=>{const img=_safeSigImg(s.img);return`
+      <div class="sign-item">
+        ${img?`<img class="sign-img" src="${img}" alt="ลายเซ็นของ ${esc(s.name)}">`:'<div class="sign-img none">—</div>'}
+        <div class="sign-meta"><strong>${esc(s.name||'ไม่ระบุชื่อ')}</strong>${s.role?`<span>${esc(s.role)}</span>`:''}
+          <span class="sign-at">${new Date(s.at).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'})}</span></div>
+        <button class="note-del edit-only" title="ยกเลิกลายเซ็นนี้" aria-label="ยกเลิกลายเซ็นของ ${esc(s.name)}" onclick="voidSignature('${code}','${esc(s.id)}')">🗑</button>
+      </div>`;}).join('')}</div>`
+    :'<div class="note-empty">ยังไม่มีผู้เซ็นรับทราบของแผนกนี้</div>'}
+  </div>`;
+}
+function _sigDraw(ctx,W,H,strokes,lw){
+  ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#0F2240';ctx.fillStyle='#0F2240';ctx.lineWidth=lw;
+  strokes.forEach(s=>{
+    if(!s.length)return;
+    if(s.length<3){
+      ctx.beginPath();ctx.arc(s[0][0]*W,s[0][1]*H,lw/2,0,Math.PI*2);ctx.fill();
+      if(s.length===2){ctx.beginPath();ctx.moveTo(s[0][0]*W,s[0][1]*H);ctx.lineTo(s[1][0]*W,s[1][1]*H);ctx.stroke();}
+      return;
+    }
+    ctx.beginPath();ctx.moveTo(s[0][0]*W,s[0][1]*H);
+    for(let i=1;i<s.length-1;i++){        /* smooth through midpoints */
+      ctx.quadraticCurveTo(s[i][0]*W,s[i][1]*H,(s[i][0]+s[i+1][0])/2*W,(s[i][1]+s[i+1][1])/2*H);
+    }
+    const l=s[s.length-1];ctx.lineTo(l[0]*W,l[1]*H);ctx.stroke();
+  });
+}
+function sigRedraw(){
+  const cv=document.getElementById('sigPad');if(!cv)return;
+  const ctx=cv.getContext('2d');ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);
+  const css=cv.clientWidth||cv.width;
+  _sigDraw(ctx,cv.width,cv.height,_sig.strokes,2.6*cv.width/css);
+  const ph=document.getElementById('sigPh');if(ph)ph.style.display=_sig.strokes.length?'none':'';
+}
+function sigInit(code){
+  if(code==='ALL'){_sig.cur=null;return;}
+  const cv=document.getElementById('sigPad');if(!cv)return;
+  if(_sig.code!==code)_sig={code,strokes:[],name:'',role:'',cur:null};   /* new department → fresh pad */
+  _sig.cur=null;
+  const n=document.getElementById('sigName'),r=document.getElementById('sigRole');
+  if(n)n.value=_sig.name;if(r)r.value=_sig.role;
+  const fit=()=>{
+    const w=cv.clientWidth||300,h=Math.round(w/SIG_AR),dpr=window.devicePixelRatio||1;
+    cv.style.height=h+'px';cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);sigRedraw();
+  };
+  fit();
+  if(window.ResizeObserver){
+    if(_sigRO)_sigRO.disconnect();
+    _sigRO=new ResizeObserver(()=>{const w=cv.clientWidth;if(w&&Math.abs(w*(window.devicePixelRatio||1)-cv.width)>2)fit();});
+    _sigRO.observe(cv);
+  }
+  const pos=e=>{const b=cv.getBoundingClientRect();return[Math.min(1,Math.max(0,(e.clientX-b.left)/b.width)),Math.min(1,Math.max(0,(e.clientY-b.top)/b.height))];};
+  cv.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    e.preventDefault();
+    try{cv.setPointerCapture(e.pointerId);}catch(x){}
+    _sig.cur=[pos(e)];_sig.strokes.push(_sig.cur);sigRedraw();
+  });
+  cv.addEventListener('pointermove',e=>{
+    if(!_sig.cur)return;
+    e.preventDefault();
+    const evs=(e.getCoalescedEvents&&e.getCoalescedEvents())||[];
+    (evs.length?evs:[e]).forEach(x=>_sig.cur.push(pos(x)));
+    sigRedraw();
+  });
+  const end=()=>{_sig.cur=null;};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);cv.addEventListener('lostpointercapture',end);
+  cv.addEventListener('contextmenu',e=>e.preventDefault());
+}
+function sigUndo(){_sig.strokes.pop();_sig.cur=null;sigRedraw();}
+function sigClear(){_sig.strokes=[];_sig.cur=null;sigRedraw();}
+function saveSignature(code){
+  if(!requireEdit())return;
+  if(code==='ALL'){_toast('กรุณาเลือกแผนกก่อน','warn');return;}
+  const nEl=document.getElementById('sigName'),rEl=document.getElementById('sigRole');
+  const name=(nEl&&nEl.value||'').trim(),role=(rEl&&rEl.value||'').trim();
+  if(!name){_toast('กรุณาใส่ชื่อ-นามสกุลผู้ลงนาม','warn');if(nEl)nEl.focus();return;}
+  const pts=_sig.strokes.reduce((a,s)=>a+s.length,0);
+  if(!_sig.strokes.length||pts<4){_toast('กรุณาเซ็นชื่อในกรอบก่อน','warn');return;}
+  const off=document.createElement('canvas');off.width=640;off.height=320;
+  const c=off.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,off.width,off.height);
+  const css=(document.getElementById('sigPad')||{}).clientWidth||320;
+  _sigDraw(c,off.width,off.height,_sig.strokes,2.6*off.width/css);
+  const img=off.toDataURL('image/png');
+  if(!S.deptSign)S.deptSign={};
+  if(!S.deptSign[code])S.deptSign[code]=[];
+  S.deptSign[code].push({id:nid(),name,role,at:new Date().toISOString(),img});
+  _sig={code,strokes:[],name:'',role:'',cur:null};
+  const dName=(S.departments.find(d=>d.code===code)||{name:code}).name;
+  dbSave();renderDeptFilesPanel();renderDeptListPanel();
+  logActivity('edit','✍️ เซ็นรับทราบและเข้าใจ ('+dName+'): '+name);
+  _toast('บันทึกลายเซ็นของ '+name+' แล้ว');
+}
+function voidSignature(code,id){
+  if(!requireEdit())return;
+  const rec=((S.deptSign||{})[code]||[]).find(x=>x.id===id);if(!rec)return;
+  _confirm('ยกเลิกลายเซ็นของ "'+rec.name+'"?\nรายการจะถูกซ่อนจากหน้านี้',()=>{
+    rec.void=true;rec.voidAt=new Date().toISOString();rec.voidBy=getActorName()||'';
+    dbSave();renderDeptFilesPanel();renderDeptListPanel();
+    logActivity('delete','ยกเลิกลายเซ็น: '+rec.name);
+  });
+}
+/* Union by id; once an entry is voided on either side it stays voided */
+function _mergeSignMap(mine,theirs){
+  const out={};
+  new Set([...Object.keys(mine||{}),...Object.keys(theirs||{})]).forEach(k=>{
+    const map=new Map();
+    ((theirs||{})[k]||[]).forEach(x=>{if(x&&x.id)map.set(x.id,{...x});});
+    ((mine||{})[k]||[]).forEach(x=>{
+      if(!x||!x.id)return;
+      const o=map.get(x.id);
+      map.set(x.id,o?{...o,...x,void:!!(o.void||x.void)}:{...x});
+    });
+    out[k]=[...map.values()].sort((a,b)=>String(a.at).localeCompare(String(b.at)));
+  });
+  return out;
 }
 /* Files can exist in the bucket while their index is missing (an interrupted
    save). Rebuild the list for this branch straight from storage. */
@@ -4998,6 +6089,7 @@ function mergeShopForWrite(local,server){
   const m=JSON.parse(JSON.stringify(local));
   m.deptFiles=_mergeMap(local.deptFiles,server.deptFiles);
   m.deptNotes=_mergeMap(local.deptNotes,server.deptNotes);
+  m.deptSign=_mergeSignMap(local.deptSign,server.deptSign);
   if(m.finance&&server.finance&&Array.isArray(m.finance.payments)){
     m.finance.payments.forEach(p=>{
       const sp=(server.finance.payments||[]).find(x=>x.id===p.id);
@@ -5009,7 +6101,13 @@ function mergeShopForWrite(local,server){
     const sg=(server.groups||[]).find(x=>x.id===g.id);if(!sg)return;
     (g.tasks||[]).forEach(t=>{
       const st=(sg.tasks||[]).find(x=>x.id===t.id);
-      if(st)t.files=_mergeById(t.files,st.files);
+      if(st){
+        t.files=_mergeById(t.files,st.files);
+        /* comments are an append-only discussion: never lose someone else's */
+        if((t.comments&&t.comments.length)||(st.comments&&st.comments.length)){
+          t.comments=_mergeById(t.comments,st.comments).sort((a,b)=>String(a.at).localeCompare(String(b.at)));
+        }
+      }
     });
   });
   return m;
