@@ -452,6 +452,21 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
 .of-input.missing{border-color:#E85D04;background:rgba(232,93,4,.07);}
 .of-input.bad{border-color:var(--red);background:rgba(208,48,32,.08);}
 .of-hint{font-size:.7188rem;color:var(--text-3);}
+textarea.of-input{resize:vertical;min-height:84px;font-family:inherit;line-height:1.5;}
+.store-map-open{align-self:flex-start;margin-top:4px;text-decoration:none;}
+.store-photos{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
+.store-photos-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.875rem;color:var(--text);}
+.store-photos-head .notes-count{margin-left:6px;}
+.file-btn.is-full{opacity:.55;}
+.store-photo-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:4px;}
+.store-photo{position:relative;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface-2);}
+.store-photo-open{display:block;padding:0;border:0;background:#fff;border-radius:6px;overflow:hidden;cursor:zoom-in;aspect-ratio:4/3;width:100%;}
+.store-photo-open img{display:block;width:100%;height:100%;object-fit:cover;}
+.store-photo-open:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.store-photo .note-del{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);border:1px solid var(--border);min-width:32px;min-height:32px;}
+.store-photo-meta{display:flex;flex-direction:column;font-size:.75rem;font-weight:600;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;}
+.store-photo-meta span{font-weight:500;color:var(--text-3);}
+
 .of-tag{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:rgba(232,93,4,.12);color:var(--orange-text);font-size:.7188rem;font-weight:700;letter-spacing:0;text-transform:none;vertical-align:middle;}
 .owner-status{margin-top:16px;font-size:.8438rem;padding:11px 15px;border-radius:var(--r);background:var(--surface-2);color:var(--text-3);}
 .owner-status.warn{background:rgba(232,93,4,.12);color:#B24704;font-weight:600;}
@@ -1501,6 +1516,7 @@ body.cust-mode #sec-overview .ov-hero{order:-4;}
 body.cust-mode #custWelcome{order:-3;}
 body.cust-mode #stepsCard{order:-2;}
 body.cust-mode #ownerCard{order:-1;}
+body.cust-mode #storeCard{order:-1;}
 
 /* required-documents checklist is tickable by hand too */
 label.req-doc-item{display:flex;align-items:center;gap:8px;cursor:pointer;}
@@ -1706,6 +1722,33 @@ label.req-doc-item input{flex-shrink:0;}
       </div>
     </div>
     <div id="ownerStatus" class="owner-status"></div>
+  </div>
+
+  <div class="setup-card" id="storeCard">
+    <div class="card-label">📍 ที่ตั้งร้าน และรูปร้านจริง</div>
+    <p class="owner-intro">ตำแหน่งหน้าร้านบน Google Maps และรูปหน้าร้านจริง — ใช้ให้ทีมงานและระบบเดลิเวอรี่ตรวจสอบสถานที่</p>
+    <div class="owner-grid">
+      <div class="of">
+        <label for="ownMapUrl">ลิงก์ Google Maps ของร้าน</label>
+        <input class="of-input" type="url" inputmode="url" id="ownMapUrl" maxlength="500" placeholder="https://maps.app.goo.gl/…" oninput="setStoreInfo('mapUrl',this.value)" autocomplete="off">
+        <span class="of-hint">เปิด Google Maps → ค้นหาร้าน/ปักหมุด → กด “แชร์” → คัดลอกลิงก์ มาวางที่นี่</span>
+        <a class="btn btn-ghost2 btn-sm store-map-open" id="ownMapOpen" target="_blank" rel="noopener noreferrer" style="display:none">🗺 เปิดดูบน Google Maps</a>
+      </div>
+      <div class="of">
+        <label for="ownAddress">ที่ตั้งร้าน (ที่อยู่)</label>
+        <textarea class="of-input" id="ownAddress" rows="3" maxlength="500" placeholder="เลขที่ ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์ หรือชื่อห้าง/ชั้น/ยูนิต" oninput="setStoreInfo('address',this.value)"></textarea>
+        <span class="of-hint">เขียนให้คนที่ไม่เคยมาร้านหาเจอ</span>
+      </div>
+    </div>
+    <div class="store-photos">
+      <div class="store-photos-head">
+        <strong>📷 รูปร้านจริง <span class="notes-count" id="storePhotoCount">0</span></strong>
+        <label class="btn btn-gold btn-sm edit-only file-btn" id="storePhotoBtn">⬆️ อัปโหลดรูปร้าน<input type="file" accept="image/*" multiple class="sr-file" id="storePhotoInput" onchange="addStorePhotos(this.files);this.value=''"></label>
+      </div>
+      <span class="of-hint">รูปหน้าร้านจริง / ภายใน / ป้ายร้าน — สูงสุด 6 รูป ระบบย่อรูปให้อัตโนมัติ และแชร์ให้ทุกคนที่เปิดลิงก์เห็น</span>
+      <div id="storePhotoList" class="store-photo-list"></div>
+    </div>
+    <div id="storeStatus" class="owner-status"></div>
   </div>
 
   <div class="setup-card" id="dueCard" style="display:none;">
@@ -1987,6 +2030,11 @@ label.req-doc-item input{flex-shrink:0;}
       <button class="btn btn-gold" onclick="applyShop()">บันทึก</button>
     </div>
   </div>
+</div></div>
+
+<div class="overlay" id="popPhoto"><div class="pbox pbox-wide">
+  <div class="phead">🖼 รูปร้านจริง<button class="pclose" onclick="closeP('popPhoto')" aria-label="ปิด">✕</button></div>
+  <div class="pbody"><img id="photoBig" alt="" style="display:block;width:100%;height:auto;border-radius:8px;background:var(--surface-2)"><div class="sp-hint" id="photoCap" style="margin:10px 0 0"></div></div>
 </div></div>
 
 <div class="overlay" id="popBackup"><div class="pbox">
@@ -2299,7 +2347,7 @@ function mkNewShopObj(name){
     branchKey:'B'+Math.random().toString(36).slice(2,10).toUpperCase(),
     projectStart:'',projectDuration:90,months:[],
     byOptions:_defByOptions(),departments:_defDepts(),contacts:_defContacts(),groups:[],
-    uniform:_defUniform(),deptFiles:{},deptNotes:{},deptSign:{},docChecks:{},owner:{},finance:_defFinance()};
+    uniform:_defUniform(),deptFiles:{},deptNotes:{},deptSign:{},docChecks:{},owner:{},storePhotos:[],finance:_defFinance()};
 }
 function applyShopToS(sh){
   S.branchName=sh.branchName;S.gasUrl=sh.gasUrl;S.deptFilter=sh.deptFilter;
@@ -2315,6 +2363,8 @@ function applyShopToS(sh){
   S.docChecks=sh.docChecks;
   if(!sh.owner)sh.owner={};
   S.owner=sh.owner;
+  if(!Array.isArray(sh.storePhotos))sh.storePhotos=[];
+  S.storePhotos=sh.storePhotos;
   if(!sh.finance)sh.finance=_defFinance();
   S.finance=sh.finance;
 }
@@ -2330,6 +2380,7 @@ function syncSToShop(){
   sh.deptSign=S.deptSign||sh.deptSign||{};
   sh.docChecks=S.docChecks||sh.docChecks||{};
   sh.owner=S.owner;
+  sh.storePhotos=S.storePhotos||sh.storePhotos||[];
   sh.finance=S.finance;
   if(S.branchName)sh.name=S.branchName;
 }
@@ -2451,6 +2502,7 @@ function _migrateShops(){
       if(!sh.deptSign)sh.deptSign={};
       if(!sh.docChecks)sh.docChecks={};
       if(!sh.owner)sh.owner={};
+      if(!Array.isArray(sh.storePhotos))sh.storePhotos=[];
       if(!sh.branchKey)sh.branchKey='B'+Math.random().toString(36).slice(2,10).toUpperCase();
       /* POS retired — fold its files into IT, then remove */
       if(sh.deptFiles.POS&&sh.deptFiles.POS.length){
@@ -3378,6 +3430,7 @@ const S={
   deptSign:{},
   docChecks:{},
   owner:{},
+  storePhotos:[],
   finance:{owner:'',payments:[]}
 };
 
@@ -3745,6 +3798,7 @@ function _sanitizeShop(sh){
   if(sh.docChecks&&typeof sh.docChecks==='object'){
     const out={};Object.keys(sh.docChecks).forEach(code=>{out[code==='ALL'?'ALL':_cleanCode(code)]=sh.docChecks[code];});sh.docChecks=out;
   }
+  if(Array.isArray(sh.storePhotos))sh.storePhotos=sh.storePhotos.filter(p=>p&&typeof p==='object').map(p=>{p.id=_safeId(p.id);if(typeof p.img!=='string'||!/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(p.img))p.img='';return p;});
   const fin=sh.finance;
   if(fin&&Array.isArray(fin.payments))fin.payments.forEach(p=>{if(!p)return;p.id=_safeId(p.id);fixFiles(p.files);});
 }
@@ -4176,6 +4230,121 @@ function renderOwnerForm(){
   });
   renderOwnerStatus();
 }
+/* ── STORE LOCATION + REAL STORE PHOTOS ───────────────────────────────
+   Map link and address live on the shop's owner record. Photos are shrunk in the browser to a JPEG
+   (long side 1280px) and kept with the shop like signatures, so everyone with the link sees them.
+   "Deleting" voids an entry (and drops its pixels) so a stale tab cannot bring it back. */
+const STORE_PHOTO_MAX=6;
+function _storePhotos(){return(S.storePhotos||[]).filter(p=>p&&!p.void);}
+function _safePhotoImg(s){return typeof s==='string'&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s)?s:'';}
+function _mapUrlState(v){
+  v=String(v||'').trim();if(!v)return{state:'empty'};
+  const href=safeHref(v);let u=null;
+  try{u=new URL(href);}catch(e){return{state:'bad'};}
+  if(!/^https?:$/.test(u.protocol)||!/\.[a-z]{2,}$/i.test(u.hostname)||/\s/.test(v))return{state:'bad'};
+  const host=u.hostname.toLowerCase().replace(/^www\./,'');
+  const google=host==='maps.app.goo.gl'||host==='goo.gl'||host==='g.co'||/^maps\.google\.[a-z.]+$/.test(host)||(/^google\.[a-z.]+$/.test(host)&&/^\/maps/.test(u.pathname))||(/^(www\.)?google\.[a-z.]+$/.test(host)&&/[?&]q=/.test(u.search));
+  return{state:google?'ok':'other',href:u.href};
+}
+function setStoreInfo(k,v){
+  if(!requireEdit())return;
+  if(!S.owner)S.owner={};
+  S.owner[k]=String(v||'').slice(0,500);
+  dbSave();renderStoreStatus();
+}
+function renderStoreCard(){
+  if(!S.owner)S.owner={};
+  [['ownMapUrl','mapUrl'],['ownAddress','address']].forEach(([id,k])=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=S.owner[k]||'';});
+  renderStorePhotos();renderStoreStatus();
+}
+function renderStoreStatus(){
+  const box=document.getElementById('storeStatus');if(!box)return;
+  box.removeAttribute('role');
+  const o=S.owner||{},m=_mapUrlState(o.mapUrl),addr=String(o.address||'').trim(),n=_storePhotos().length;
+  const mEl=document.getElementById('ownMapUrl');if(mEl)mEl.classList.toggle('bad',m.state==='bad');
+  const open=document.getElementById('ownMapOpen');
+  if(open){const ok=m.state==='ok'||m.state==='other';open.style.display=ok?'':'none';if(ok)open.href=m.href;else open.removeAttribute('href');}
+  if(m.state==='bad'){box.className='owner-status warn';box.setAttribute('role','alert');box.textContent='⚠️ ลิงก์แผนที่ไม่ถูกต้อง — กรุณาวางลิงก์ที่คัดลอกจากปุ่ม “แชร์” ใน Google Maps';return;}
+  if(m.state==='other'){box.className='owner-status warn';box.textContent='⚠️ ลิงก์นี้ไม่ใช่ลิงก์ของ Google Maps — ตรวจสอบอีกครั้งว่าวางลิงก์ถูกต้อง';return;}
+  const miss=[];if(m.state==='empty')miss.push('ลิงก์ Google Maps');if(!addr)miss.push('ที่ตั้งร้าน');if(!n)miss.push('รูปร้านจริง');
+  if(!miss.length){box.className='owner-status done';box.textContent='✅ ข้อมูลที่ตั้งร้านครบแล้ว ขอบคุณครับ';return;}
+  box.className='owner-status';box.textContent='ℹ️ ยังไม่มี: '+miss.join(' · ');
+}
+function renderStorePhotos(){
+  const box=document.getElementById('storePhotoList');if(!box)return;
+  const list=_storePhotos().slice().sort((a,b)=>String(a.at).localeCompare(String(b.at)));
+  const c=document.getElementById('storePhotoCount');if(c)c.textContent=list.length;
+  const btn=document.getElementById('storePhotoBtn');if(btn)btn.classList.toggle('is-full',list.length>=STORE_PHOTO_MAX);
+  box.innerHTML=list.length?list.map((p,i)=>{const img=_safePhotoImg(p.img);
+    return'<div class="store-photo">'+(img?'<button type="button" class="store-photo-open" onclick="viewStorePhoto(&#39;'+esc(p.id)+'&#39;)" aria-label="ดูรูปร้านรูปที่ '+(i+1)+' ขนาดใหญ่"><img src="'+img+'" alt="รูปร้านจริงรูปที่ '+(i+1)+'"></button>':'<div class="store-photo-open none">—</div>')
+      +'<button type="button" class="note-del edit-only" title="ลบรูปนี้" aria-label="ลบรูปร้านรูปที่ '+(i+1)+'" onclick="removeStorePhoto(&#39;'+esc(p.id)+'&#39;)">🗑</button>'
+      +'<div class="store-photo-meta">'+esc(p.name||'รูปร้าน')+'<span>'+esc(new Date(p.at).toLocaleDateString('th-TH',{dateStyle:'medium'}))+'</span></div></div>';}).join('')
+    :'<div class="note-empty">ยังไม่มีรูปร้านจริง</div>';
+}
+function viewStorePhoto(id){
+  const p=_storePhotos().find(x=>x.id===id);const img=p&&_safePhotoImg(p.img);if(!img)return;
+  document.getElementById('photoBig').src=img;
+  document.getElementById('photoBig').alt='รูปร้านจริง'+(p.name?' '+p.name:'');
+  document.getElementById('photoCap').textContent=(p.name||'')+(p.at?' · '+new Date(p.at).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'}):'')+(p.by?' · โดย '+p.by:'');
+  openP('popPhoto');
+}
+/* read a picture, scale its long side to 1280px, return a JPEG data URL under ~450 KB */
+function _shrinkPhoto(file){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onerror=()=>rej(new Error('read'));
+    fr.onload=()=>{
+      const im=new Image();
+      im.onerror=()=>rej(new Error('decode'));
+      im.onload=()=>{
+        const k=Math.min(1,1280/Math.max(im.naturalWidth,im.naturalHeight));
+        const w=Math.max(1,Math.round(im.naturalWidth*k)),hh=Math.max(1,Math.round(im.naturalHeight*k));
+        const cv=document.createElement('canvas');cv.width=w;cv.height=hh;
+        const cx=cv.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,w,hh);cx.drawImage(im,0,0,w,hh);
+        let q=.8,out=cv.toDataURL('image/jpeg',q);
+        while(out.length>450000&&q>.4){q-=.1;out=cv.toDataURL('image/jpeg',q);}
+        res(out);
+      };
+      im.src=String(fr.result);
+    };
+    fr.readAsDataURL(file);
+  });
+}
+async function addStorePhotos(files){
+  if(!requireEdit())return;
+  files=Array.from(files||[]);if(!files.length)return;
+  if(!S.storePhotos)S.storePhotos=[];
+  let added=0,skipped=0,full=false;
+  for(const f of files){
+    if(_storePhotos().length>=STORE_PHOTO_MAX){full=true;break;}
+    if(!/^image\/(jpeg|png|webp|gif|bmp)$/i.test(f.type||'')){skipped++;continue;}
+    try{
+      const img=await _shrinkPhoto(f);
+      S.storePhotos.push({id:nid(),name:String(f.name||'รูปร้าน').replace(/\.[^.]*$/,'').slice(0,60),at:new Date().toISOString(),by:getActorName()||'',img});
+      added++;
+    }catch(e){skipped++;}
+  }
+  if(added){dbSave();renderStorePhotos();renderStoreStatus();logActivity('edit','📷 เพิ่มรูปร้านจริง '+added+' รูป');}
+  if(added)_toast('เพิ่มรูปร้านแล้ว '+added+' รูป');
+  if(full)_toast('รูปร้านเต็ม '+STORE_PHOTO_MAX+' รูปแล้ว — ลบรูปเดิมก่อนจึงเพิ่มได้','warn');
+  if(skipped)_toast('ข้ามไฟล์ที่ใช้ไม่ได้ '+skipped+' ไฟล์ (รองรับ JPG, PNG, WebP เท่านั้น — รูปจาก iPhone แบบ HEIC ให้ถ่ายใหม่หรือบันทึกเป็น JPG ก่อน)','warn');
+}
+function removeStorePhoto(id){
+  if(!requireEdit())return;
+  const p=(S.storePhotos||[]).find(x=>x.id===id);if(!p)return;
+  _confirm('ลบรูปร้านรูปนี้?',()=>{
+    p.void=true;p.voidAt=new Date().toISOString();p.img='';
+    dbSave();renderStorePhotos();renderStoreStatus();
+    logActivity('delete','ลบรูปร้านจริง');
+  });
+}
+/* Union by id; once a photo is voided on either side it stays voided */
+function _mergePhotos(mine,theirs){
+  const map=new Map();
+  (theirs||[]).forEach(x=>{if(x&&x.id)map.set(x.id,{...x});});
+  (mine||[]).forEach(x=>{if(!x||!x.id)return;const o=map.get(x.id);const v=!!((o&&o.void)||x.void);const r=o?{...o,...x}:{...x};r.void=v;if(v)r.img='';map.set(x.id,r);});
+  return[...map.values()].sort((a,b)=>String(a.at).localeCompare(String(b.at)));
+}
 function renderOwnerStatus(){
   const box=document.getElementById('ownerStatus');if(!box)return;
   box.removeAttribute('role');
@@ -4253,7 +4422,7 @@ function stepGo(kind,id){
 }
 function renderOverview(){
   const _cw=document.getElementById('custWelcomeName');if(_cw)_cw.textContent=S.branchName||'ของคุณ';
-  renderOwnerForm();
+  renderOwnerForm();renderStoreCard();
   renderFirstSteps();renderRecentComments();
   const b=S.branchName;
   document.getElementById('ovTitle').textContent=`🍵 JIAN CHA${b?' — '+b:''} Franchise Onboarding`;
@@ -6748,6 +6917,7 @@ function mergeShopForWrite(local,server){
   m.deptFiles=_mergeMap(local.deptFiles,server.deptFiles);
   m.deptNotes=_mergeMap(local.deptNotes,server.deptNotes);
   m.deptSign=_mergeSignMap(local.deptSign,server.deptSign);
+  m.storePhotos=_mergePhotos(local.storePhotos,server.storePhotos);
   if(m.finance&&server.finance&&Array.isArray(m.finance.payments)){
     m.finance.payments.forEach(p=>{
       const sp=(server.finance.payments||[]).find(x=>x.id===p.id);
