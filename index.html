@@ -2273,6 +2273,8 @@ function _defByOptions(){return[
 ];}
 function _defDepts(){return[
   {code:'ALL',name:'ทุกแผนก',color:'#4A5568'},
+  {code:'BDL',name:'BD Location',color:'#5D4037'},
+  {code:'BDS',name:'BD Sales',color:'#C2185B'},
   {code:'BD',name:'BD Project',color:'#1B3A6B'},
   {code:'BDA',name:'BD (Admin)',color:'#00796B'},
   {code:'MKT',name:'Marketing',color:'#E85D04'},
@@ -2288,6 +2290,27 @@ function _defDepts(){return[
    words would be too generic — a document counts as "have" when an uploaded file's name contains
    any keyword (case, spaces, dots, dashes and underscores ignored). */
 const DEPT_DOCS={
+  BDL:[
+    {t:'ลิงก์ / พิกัด Google Maps ของทำเล',k:['google map','gmap','แผนที่','พิกัด','location pin']},
+    {t:'รูปถ่ายทำเลและพื้นที่จริง (Site Photos)',k:['site photo','รูปทำเล','รูปพื้นที่','รูปหน้าร้าน','ภาพถ่ายทำเล']},
+    {t:'แบบฟอร์มสำรวจทำเล (Site Survey)',k:['site survey','survey','สำรวจทำเล','แบบสำรวจ']},
+    {t:'ผลนับคนเดินผ่าน (Traffic / Footfall Count)',k:['traffic','footfall','คนเดินผ่าน','นับคน']},
+    {t:'แผนที่คู่แข่งและร้านใกล้เคียง (Competitor Map)',k:['competitor','คู่แข่ง']},
+    {t:'ผังพื้นที่ / ขนาดพื้นที่เช่า (Floor Plan)',k:['floor plan','floorplan','ผังพื้นที่','แปลน']},
+    {t:'ข้อมูลเจ้าของพื้นที่ / ผู้ติดต่อ (Landlord Contact)',k:['landlord contact','ข้อมูลเจ้าของพื้นที่','ผู้ให้เช่า']},
+    {t:'ใบเสนอค่าเช่าและเงื่อนไขการเช่า (Rental Offer)',k:['rental offer','rent offer','ใบเสนอค่าเช่า','เงื่อนไขการเช่า','ค่าเช่า']},
+    {t:'สรุปผลประเมิน / อนุมัติทำเล (Location Approval)',k:['location approval','location evaluation','site approval','อนุมัติทำเล','ประเมินทำเล']},
+  ],
+  BDS:[
+    {t:'ใบสมัครแฟรนไชส์ (Application Form)',k:['application','ใบสมัคร','แบบฟอร์มสมัคร']},
+    {t:'ข้อตกลงรักษาความลับ (NDA)',k:['nda','รักษาความลับ','confidential']},
+    {t:'Franchise Proposal / Presentation',k:['proposal','presentation','นำเสนอ','พรีเซนต์','pitch']},
+    {t:'ใบเสนอราคาค่าแฟรนไชส์ (Quotation)',k:['quotation','quote','ใบเสนอราคา']},
+    {t:'ประมาณการยอดขายและจุดคุ้มทุน (Feasibility)',k:['feasibility','forecast','ประมาณการยอดขาย','จุดคุ้มทุน','break even','breakeven']},
+    {t:'สรุปการเจรจาและประชุมกับผู้สนใจ',k:['negotiation','เจรจา','สรุปการเจรจา','lead meeting']},
+    {t:'ผลประเมินคุณสมบัติผู้สมัคร (Candidate Assessment)',k:['assessment','candidate','ประเมินผู้สมัคร','คุณสมบัติผู้สมัคร','สัมภาษณ์','interview']},
+    {t:'ใบจอง / หลักฐานเงินจอง (Booking)',k:['booking','ใบจอง','เงินจอง','reservation']},
+  ],
   BDA:[
     {t:'LOI / Offer letter',k:['loi','offer letter','offer']},
     {t:'Franchise agreement',k:['franchise agreement','สัญญาแฟรนไชส์','สัญญาแฟรนไชน์']},
@@ -2312,6 +2335,8 @@ const DEPT_DOCS={
   OPR:['SOP การปฏิบัติงานประจำวัน','ตารางกะการทำงาน (Shift Schedule)','Checklist เปิด-ปิดร้าน','รายงานผล Test Run','เอกสารตรวจสอบคุณภาพ (QC Report)','แผนบริหารจัดการหน้าร้าน'],
 };
 function _defContacts(){return[
+  {dept:'BDL',role:'BD Location',name:'',phone:'',email:'',line:''},
+  {dept:'BDS',role:'BD Sales',name:'',phone:'',email:'',line:''},
   {dept:'BD',role:'BD Project Manager',name:'',phone:'',email:'',line:''},
   {dept:'BDA',role:'BD Admin',name:'',phone:'',email:'',line:''},
   {dept:'MKT',role:'Marketing Manager',name:'',phone:'',email:'',line:''},
@@ -2542,6 +2567,7 @@ function _migrateShops(){
 /* Once per branch: spell out SCM, and add the "BD (Admin)" department (code BDA) with its
    contact row. The flag means a branch that later deletes BDA on purpose doesn't get it back. */
 function _reviseDepts(sh){
+  _reviseDeptsBdParts(sh);
   if(sh._deptRev3)return;
   if(!Array.isArray(sh.departments))sh.departments=_defDepts();
   const deps=sh.departments;
@@ -2557,6 +2583,30 @@ function _reviseDepts(sh){
     sh.contacts.splice(j>=0?j+1:sh.contacts.length,0,{dept:'BDA',role:'BD Admin',name:'',phone:'',email:'',line:''});
   }
   sh._deptRev3=true;
+}
+/* Once per branch: add BD Location and BD Sales in front of BD Project (so the BD teams read
+   Location → Sales → Project → Admin), each with its contact row. Nothing is removed or renamed. */
+function _reviseDeptsBdParts(sh){
+  if(sh._deptRev4)return;
+  if(!Array.isArray(sh.departments))sh.departments=_defDepts();
+  const deps=sh.departments;
+  [{code:'BDL',name:'BD Location',color:'#5D4037',role:'BD Location'},{code:'BDS',name:'BD Sales',color:'#C2185B',role:'BD Sales'}].forEach(x=>{
+    if(!deps.some(d=>d.code===x.code)){
+      const i=deps.findIndex(d=>d.code==='BD');
+      deps.splice(i>=0?i:Math.min(1,deps.length),0,{code:x.code,name:x.name,color:x.color});
+    }
+    if(!Array.isArray(sh.contacts))sh.contacts=_defContacts();
+    if(!sh.contacts.some(c=>c.dept===x.code)){
+      const j=sh.contacts.findIndex(c=>c.dept==='BD');
+      sh.contacts.splice(j>=0?j:0,0,{dept:x.code,role:x.role,name:'',phone:'',email:'',line:''});
+    }
+  });
+  /* put the four BD teams in the order the team uses, keeping every other department where it was */
+  const bdOrder=['BDL','BDS','BD','BDA'],slots=[];
+  deps.forEach((d,i)=>{if(bdOrder.includes(d.code))slots.push(i);});
+  const sorted=bdOrder.map(c=>deps.find(d=>d.code===c)).filter(Boolean);
+  slots.forEach((pos,k)=>{deps[pos]=sorted[k];});
+  sh._deptRev4=true;
 }
 /* SHOP TABS & ALL-SHOPS VIEW */
 function renderShopTabs(){
@@ -3402,6 +3452,8 @@ const S={
   ],
   departments:[
     {code:'ALL',name:'ทุกแผนก',color:'#4A5568'},
+    {code:'BDL',name:'BD Location',color:'#5D4037'},
+    {code:'BDS',name:'BD Sales',color:'#C2185B'},
     {code:'BD',name:'BD Project',color:'#1B3A6B'},
     {code:'BDA',name:'BD (Admin)',color:'#00796B'},
     {code:'MKT',name:'Marketing',color:'#E85D04'},
@@ -3413,6 +3465,8 @@ const S={
     {code:'OPR',name:'Operation',color:'#1A8FB5'},
   ],
   contacts:[
+    {dept:'BDL',role:'BD Location',name:'',phone:'',email:'',line:''},
+    {dept:'BDS',role:'BD Sales',name:'',phone:'',email:'',line:''},
     {dept:'BD',role:'BD Project Manager',name:'',phone:'',email:'',line:''},
     {dept:'BDA',role:'BD Admin',name:'',phone:'',email:'',line:''},
     {dept:'MKT',role:'Marketing Manager',name:'',phone:'',email:'',line:''},
