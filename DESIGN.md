@@ -1,3 +1,4 @@
+[DESIGN.md](https://github.com/user-attachments/files/33711783/DESIGN.md)
 # JIAN CHA Franchise Ops — Design guide
 
 One page of rules so new screens look like old ones. The tokens below exist as CSS variables
@@ -51,9 +52,16 @@ Branch / department / role colours are user-chosen; text on them is picked autom
 - Escape every user string with `esc()`; links go through `safeHref()` (http/https only) with `rel="noopener noreferrer"`.
 - Colours from data pass through `_safeColor()`.
 
+## Language (TH / EN)
+- Screens are written in Thai. The **EN/ไทย** button (top bar and the link-needed page) swaps text for English through the dictionary in the `jc-i18n` script at the end of `index.html` (`DICT` = Thai phrase → English; `PATTERNS` = whole messages that carry a value, e.g. a name or a count).
+- **New Thai text needs a dictionary entry**, or it stays Thai in English mode. Keep each phrase as one literal (not glued from pieces) so it can be looked up whole.
+- Names, notes, comments and file names that people type are never translated unless the whole text is a built-in phrase; input values are never touched. Mark anything that must never change with `translate="no"`.
+- Dates requested with `'th-TH'` show as normal English dates (e.g. 19 Oct 2026) in English mode.
+
 ## Checklist before shipping a screen
 - [ ] One primary button · all text ≥ AA contrast · no text below the size floor
 - [ ] Works at 320px wide with no sideways page scroll; tables scroll inside their own box
 - [ ] Every control reachable and operable by keyboard; focus visible; dialog focus returns
 - [ ] Empty, loading and error states each say what to do next
 - [ ] Title/`<h1>` reflect the page (`setPageTitle()`)
+- [ ] Switch to EN: no Thai left on the screen except typed data
