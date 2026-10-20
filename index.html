@@ -49,7 +49,7 @@ null
   --weekend:#EEEAD3;--group-bg:#E8E3D9;--group-text:#1B3A6B;
   --sticky-bg:#FFFFFF;--head-bg:#0F2240;--head-text:rgba(255,255,255,.9);
   --nav-h:60px;
-  --shop-tabs-h:42px;
+  --shop-tabs-h:54px;   /* tab row + its scroll bar */
   --pad:clamp(20px,4.5vw,96px);
   --r:8px;--r-sm:5px;--r-lg:14px;
   --shadow:0 4px 28px rgba(15,34,64,.13);--shadow-sm:0 2px 10px rgba(15,34,64,.08);
@@ -151,12 +151,6 @@ a{color:var(--navy);}
 .due-dept{color:var(--text-3);font-size:.7188rem;flex-shrink:0;}
 .due-when{font-size:.7188rem;font-weight:700;color:var(--orange);flex-shrink:0;}
 .due-row.overdue .due-when{color:var(--red);}
-.activity-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--border);font-size:.7813rem;flex-wrap:wrap;}
-.activity-row:last-child{border-bottom:none;}
-.activity-icon{flex-shrink:0;}
-.activity-detail{flex:1;min-width:160px;color:var(--text);}
-.activity-who{color:var(--text-3);font-weight:600;flex-shrink:0;}
-.activity-at{color:var(--text-3);font-size:.6875rem;flex-shrink:0;font-variant-numeric:tabular-nums;}
 .sf{display:flex;flex-direction:column;gap:6px;}
 .sf label{font-size:.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-3);}
 .sf-input{padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.8125rem;background:var(--bg);color:var(--text);width:100%;min-height:42px;transition:border-color .15s;}
@@ -454,11 +448,9 @@ body.dragging-bar{cursor:col-resize!important;user-select:none!important;}
 .of-hint{font-size:.7188rem;color:var(--text-3);}
 textarea.of-input{resize:vertical;min-height:84px;font-family:inherit;line-height:1.5;}
 .store-map-open{align-self:flex-start;margin-top:4px;text-decoration:none;}
-.store-photos{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
-.store-photos-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.875rem;color:var(--text);}
-.store-photos-head .notes-count{margin-left:6px;}
+.store-photos-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
 .file-btn.is-full{opacity:.55;}
-.store-photo-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:4px;}
+.store-photo-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
 .store-photo{position:relative;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface-2);}
 .store-photo-open{display:block;padding:0;border:0;background:#fff;border-radius:6px;overflow:hidden;cursor:zoom-in;aspect-ratio:4/3;width:100%;}
 .store-photo-open img{display:block;width:100%;height:100%;object-fit:cover;}
@@ -466,6 +458,38 @@ textarea.of-input{resize:vertical;min-height:84px;font-family:inherit;line-heigh
 .store-photo .note-del{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);border:1px solid var(--border);min-width:32px;min-height:32px;}
 .store-photo-meta{display:flex;flex-direction:column;font-size:.75rem;font-weight:600;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;}
 .store-photo-meta span{font-weight:500;color:var(--text-3);}
+.tl-toolbar .tl-hide{display:none!important;}
+.dr-intro{margin:0 0 14px;font-size:.875rem;color:var(--text-2);line-height:1.6;}
+.dr-sec{border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;background:var(--surface);}
+.dr-h{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:800;font-size:.875rem;color:var(--text);margin-bottom:8px;}
+.dr-h .tf-n{margin-left:6px;}
+.dr-use{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:.875rem;color:var(--text-2);}
+.dr-list{display:flex;flex-direction:column;gap:2px;}
+.dr-item{display:flex;align-items:flex-start;gap:10px;padding:8px 4px;border-bottom:1px solid var(--border);font-size:.875rem;cursor:pointer;min-height:44px;}
+.dr-item:last-child{border-bottom:0;}
+.dr-item input{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--green);}
+.dr-item.done span{color:var(--text-3);text-decoration:line-through;}
+.dr-edit-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.dr-edit-row .of-input{flex:1;min-width:0;}
+.dr-edit-row .srt-btn,.dr-edit-row .chk-del{min-width:36px;min-height:36px;}
+.dr-add{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.dr-add .of-input{flex:1;min-width:180px;}
+.dr-edit-foot{display:flex;justify-content:space-between;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.dr-note p{margin:0 0 6px;font-size:.8438rem;color:var(--text-2);line-height:1.6;}
+.dr-addr{font-size:.875rem;color:var(--text);line-height:1.7;background:var(--gold-pale,#FBF6DF);}
+.dr-foot{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.of-sub{margin-top:20px;padding-top:16px;border-top:1px dashed var(--border);}
+.owner-intro+.of-sub{margin-top:6px;padding-top:0;border-top:0;}
+.of-sub-h{font-size:.875rem;font-weight:800;color:var(--text);margin:0 0 12px;}
+.share-what{margin:0 0 12px;font-size:.875rem;color:var(--text-2);line-height:1.6;}
+.share-branch{margin:0 0 12px;font-size:.875rem;color:var(--text-3);}
+.share-branch strong{color:var(--text);}
+.share-url{width:100%;font-family:ui-monospace,Consolas,monospace;font-size:.8125rem;margin:6px 0 12px;}
+.share-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.share-reset{margin-top:14px;padding-top:12px;border-top:1px dashed var(--border);}
+.access-list{display:flex;flex-direction:column;gap:8px;}
+.access-list .btn{justify-content:flex-start;}
+.nav-lang-btn{font-size:.75rem;font-weight:800;letter-spacing:.3px;min-width:44px;}
 
 .of-tag{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;background:rgba(232,93,4,.12);color:var(--orange-text);font-size:.7188rem;font-weight:700;letter-spacing:0;text-transform:none;vertical-align:middle;}
 .owner-status{margin-top:16px;font-size:.8438rem;padding:11px 15px;border-radius:var(--r);background:var(--surface-2);color:var(--text-3);}
@@ -555,6 +579,33 @@ textarea.of-input{resize:vertical;min-height:84px;font-family:inherit;line-heigh
   .act-menu{right:auto;left:0;}
 }
 /* Task filter segmented control */
+.done-section{margin:18px 16px 0;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);}
+.done-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.done-title{font-weight:800;color:var(--text);display:inline-flex;align-items:center;gap:8px;}
+.done-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 4px;border-top:1px solid var(--border);}
+.done-row:first-child{margin-top:12px;}
+.done-row .task-name-btn{text-decoration:line-through;color:var(--text-2);}
+.done-meta{flex:1;min-width:140px;font-size:.75rem;color:var(--text-3);}
+.tr-heading td.s0,.tr-heading td.s1,.tr-heading td.s2,.tr-heading td.s3{background:var(--group-bg);}
+.tr-heading .task-name-btn{font-weight:800;color:var(--navy);}
+.tr-heading .task-inner>.dept-badge{display:none;}
+.tr-heading .task-inner>button.act-btn.edit-only{display:none;}   /* edit is in the ⋯ menu; the name needs the room */   /* the heading line has no room for every department; they show on its bar */
+.mt-heading .mt-name{font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:var(--navy);}
+.mt-headonly{margin-bottom:10px;}
+.eg-head{display:flex;gap:10px;align-items:flex-start;margin:4px 0 14px;font-size:.8125rem;color:var(--text-2);line-height:1.5;cursor:pointer;}
+.eg-head input{width:20px;height:20px;margin-top:1px;flex-shrink:0;accent-color:var(--navy);}
+.td-bar-span{cursor:grab;}
+body.dragging-move,body.dragging-move .td-bar-span{cursor:grabbing!important;user-select:none;}
+.td-bar-span.moving{position:relative;z-index:4;box-shadow:0 6px 18px rgba(0,0,0,.28);opacity:.92;transition:none;}
+.td-bar-span.moving .bar-label-inner{white-space:nowrap;overflow:visible;font-weight:800;}
+#ganttBody td.td-date,#ganttBody td.group-span-td{cursor:grab;}
+#tableOuter.panning,#tableOuter.panning *{cursor:grabbing!important;user-select:none;}
+.tl-hint{font-size:.7188rem;color:var(--text-3);white-space:nowrap;}
+@media(max-width:820px){.tl-hint{display:none;}}
+.toast-act{display:flex;align-items:center;gap:12px;}
+.toast-btn{flex-shrink:0;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:8px;padding:6px 12px;font-weight:800;cursor:pointer;min-height:36px;}
+.toast-btn:hover{background:rgba(255,255,255,.3);}
+.grp-alldone{margin-left:8px;white-space:nowrap;font-size:.6875rem;font-weight:700;color:var(--green-text,#1d6b3c);background:rgba(46,139,80,.12);padding:2px 8px;border-radius:99px;}
 .task-filter{display:inline-flex;gap:0;border:1.5px solid var(--border-2);border-radius:20px;overflow:hidden;flex-shrink:0;background:var(--surface);}
 .tf-btn{border:none;background:none;padding:5px 14px;font-size:.7188rem;font-weight:700;color:var(--text-2);cursor:pointer;
   display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:background .15s,color .15s;min-height:30px;}
@@ -750,6 +801,15 @@ textarea.of-input{resize:vertical;min-height:84px;font-family:inherit;line-heigh
 .shop-tabs-wrap{position:sticky;top:var(--nav-h);z-index:250;background:var(--surface-2);border-bottom:2px solid var(--border);height:var(--shop-tabs-h);display:flex;align-items:stretch;}
 #shopTabsBar{flex:1;min-width:0;display:flex;align-items:center;gap:4px;padding:0 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;white-space:nowrap;}
 #shopTabsBar::-webkit-scrollbar{display:none;}
+/* the tab row sits above its own always-visible scroll bar (phones hide native scroll bars, so it is drawn) */
+.shop-tabs-wrap{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr) 12px;}
+.shop-tabs-wrap>#stwLeft{grid-column:1;grid-row:1;}.shop-tabs-wrap>#shopTabsBar{grid-column:2;grid-row:1;}.shop-tabs-wrap>#stwRight{grid-column:3;grid-row:1;}
+.stw-track{grid-column:1/-1;grid-row:2;position:relative;margin:0 12px 4px;height:8px;border-radius:99px;background:rgba(27,58,107,.10);visibility:hidden;cursor:pointer;touch-action:none;}
+.shop-tabs-wrap.has-overflow .stw-track{visibility:visible;}
+.stw-thumb{position:absolute;top:0;left:0;height:100%;min-width:40px;border-radius:99px;background:var(--navy);opacity:.55;cursor:grab;touch-action:none;}
+.stw-thumb::before{content:'';position:absolute;left:0;right:0;top:-10px;bottom:-8px;}   /* bigger finger target */
+.stw-track:hover .stw-thumb,.stw-thumb.dragging{opacity:.85;}
+.stw-thumb.dragging{cursor:grabbing;}
 .stw-arrow{flex-shrink:0;width:26px;border:none;cursor:pointer;font-size:1rem;font-weight:800;color:var(--text-2);
   background:var(--surface-2);display:none;align-items:center;justify-content:center;z-index:2;}
 .stw-arrow:hover{color:var(--navy);background:var(--surface);}
@@ -1479,7 +1539,9 @@ input[type="checkbox"],input[type="radio"]{width:24px;height:24px;min-width:24px
 @media(max-width:820px){#appFooter{padding-bottom:96px;}}
 
 .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;}
-.gate-card{width:100%;max-width:560px;padding:36px 30px;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);}
+.gate-lang{position:absolute;top:12px;right:12px;min-width:44px;min-height:44px;padding:6px 12px;border:1.5px solid var(--border-2);border-radius:9px;background:none;color:var(--text-2);font-size:.8125rem;font-weight:800;cursor:pointer;}
+.gate-lang:hover{background:var(--surface-2);}
+.gate-card{position:relative;width:100%;max-width:560px;padding:36px 30px;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);}
 .gate-logo{width:72px;height:72px;object-fit:contain;margin:0 auto 10px;display:block;background:#12305F;border-radius:50%;padding:8px;box-sizing:border-box;}
 .gate-brand{font-size:1.25rem;font-weight:900;letter-spacing:.14em;color:var(--navy);}
 .gate-brand span{font-weight:700;letter-spacing:.06em;color:var(--text-2);}
@@ -1508,7 +1570,7 @@ input[type="checkbox"],input[type="radio"]{width:24px;height:24px;min-width:24px
 .cust-only{display:none;}
 body.cust-mode .cust-only{display:block;}
 .cust-p{font-size:.9rem;color:var(--text-2);line-height:1.7;margin:0 0 12px;}
-body.cust-mode #setupCard,body.cust-mode #activityCard,body.cust-mode [onclick="openBdTeam()"],
+body.cust-mode #setupCard,body.cust-mode [onclick="openBdTeam()"],
 body.cust-mode #bottomNav [data-sec="sec-all"],body.cust-mode .nav-drawer-link[data-sec="sec-all"]{display:none!important;}
 body.cust-mode #sec-overview .sec-wrap{display:flex;flex-direction:column;}
 body.cust-mode #sec-overview .sec-wrap>*{order:5;}
@@ -1592,6 +1654,7 @@ label.req-doc-item input{flex-shrink:0;}
   </div>
   <div class="nav-actions">
     <div id="syncPill" class="sync-pill" title="สถานะการซิงก์ข้อมูล"><span class="sync-dot"></span><span id="syncText">กำลังเชื่อมต่อ…</span></div>
+    <button class="nav-icon-btn nav-lang-btn" id="langBtn" type="button" translate="no" data-lang-btn onclick="toggleLang()">EN</button>
     <button class="nav-icon-btn" id="searchBtn" onclick="openGlobalSearch()" title="ค้นหางานทุกสาขา">🔍</button>
     <button class="nav-icon-btn edit-only" id="custLinkBtn" onclick="copyBranchLink()" title="คัดลอกลิงก์สำหรับลูกค้า (เห็นเฉพาะสาขานี้)">🔗</button>
     <button class="nav-icon-btn" id="lockBtn" title="สิทธิ์การเข้าถึง">👁</button>
@@ -1624,6 +1687,7 @@ label.req-doc-item input{flex-shrink:0;}
   <button class="stw-arrow stw-left" id="stwLeft" onclick="scrollShopTabs(-1)" aria-label="เลื่อนแท็บสาขาไปทางซ้าย">‹</button>
   <div id="shopTabsBar" onscroll="updateShopTabsScrollUI()"></div>
   <button class="stw-arrow stw-right" id="stwRight" onclick="scrollShopTabs(1)" aria-label="เลื่อนแท็บสาขาไปทางขวา">›</button>
+  <div class="stw-track" id="stwTrack" aria-hidden="true"><div class="stw-thumb" id="stwThumb"></div></div>
 </div>
 
 <!-- ALL SHOPS -->
@@ -1693,30 +1757,30 @@ label.req-doc-item input{flex-shrink:0;}
 
   <div class="setup-card" id="ownerCard">
     <div class="card-label">📝 รบกวนกรอกข้อมูล</div>
-    <p class="owner-intro">ข้อมูลผู้ติดต่อหลักของร้าน — ใช้สำหรับออกเอกสาร ภาษี และลงทะเบียนระบบต่าง ๆ</p>
+    <p class="owner-intro">ข้อมูลผู้ติดต่อหลักของร้าน — ใช้สำหรับออกเอกสาร ติดต่อธุรกรรม และลงทะเบียนระบบต่าง ๆ</p>
     <div class="owner-grid">
       <div class="of">
-        <label>ชื่อ สกุล เจ้าของร้าน <span class="req">*</span></label>
+        <label for="ownName">ชื่อ สกุล เจ้าของร้าน <span class="req">*</span></label>
         <input class="of-input" id="ownName" placeholder="ชื่อ-นามสกุล" oninput="setOwner('name',this.value)">
         <span class="of-hint">ชื่อผู้ติดต่อหลัก</span>
       </div>
       <div class="of">
-        <label>Email สำหรับเอกสาร ภาษี <span class="req">*</span></label>
-        <input class="of-input" type="email" id="ownTaxEmail" placeholder="tax@example.com" oninput="setOwner('taxEmail',this.value)">
-        <span class="of-hint">ใช้รับเอกสารและใบกำกับภาษี</span>
+        <label for="ownTaxEmail">Email สำหรับธุรกรรมทั่วไป <span class="req">*</span></label>
+        <input class="of-input" type="email" id="ownTaxEmail" placeholder="name@example.com" oninput="setOwner('taxEmail',this.value)">
+        <span class="of-hint">ใช้รับเอกสารและติดต่อเรื่องธุรกรรมทั่วไป</span>
       </div>
       <div class="of">
-        <label>Email สำหรับ Grab <span class="req">*</span> <span class="of-tag">บังคับสมัครสำหรับ Grab เท่านั้น</span></label>
+        <label for="ownGrabEmail">Email สำหรับ Grab <span class="req">*</span> <span class="of-tag">บังคับสมัครสำหรับ Grab เท่านั้น</span></label>
         <input class="of-input" type="email" id="ownGrabEmail" placeholder="yourname@gmail.com" oninput="setOwner('grabEmail',this.value)">
-        <span class="of-hint">Gmail เท่านั้น</span>
+        <span class="of-hint">Gmail เท่านั้น และต้องไม่ซ้ำกับอีเมลด้านบน</span>
       </div>
       <div class="of">
-        <label>เบอร์ส่วนตัว <span class="req">*</span></label>
+        <label for="ownPhone">เบอร์ติดต่อส่วนตัว <span class="req">*</span></label>
         <input class="of-input" type="tel" id="ownPhone" placeholder="08x-xxx-xxxx" oninput="setOwner('phone',this.value)">
         <span class="of-hint">เบอร์เจ้าของร้าน</span>
       </div>
       <div class="of">
-        <label>เบอร์ร้าน <span class="req">*</span></label>
+        <label for="ownShopPhone">เบอร์ติดต่อหน้าร้าน <span class="req">*</span></label>
         <input class="of-input" type="tel" id="ownShopPhone" placeholder="0x-xxx-xxxx" oninput="setOwner('shopPhone',this.value)">
         <span class="of-hint">เบอร์สำหรับติดต่อหน้าร้าน — หากไม่มีกรุณาเปิดเบอร์ใหม่</span>
       </div>
@@ -1725,27 +1789,38 @@ label.req-doc-item input{flex-shrink:0;}
   </div>
 
   <div class="setup-card" id="storeCard">
-    <div class="card-label">📍 ที่ตั้งร้าน และรูปร้านจริง</div>
-    <p class="owner-intro">ตำแหน่งหน้าร้านบน Google Maps และรูปหน้าร้านจริง — ใช้ให้ทีมงานและระบบเดลิเวอรี่ตรวจสอบสถานที่</p>
-    <div class="owner-grid">
-      <div class="of">
-        <label for="ownMapUrl">ลิงก์ Google Maps ของร้าน</label>
-        <input class="of-input" type="url" inputmode="url" id="ownMapUrl" maxlength="500" placeholder="https://maps.app.goo.gl/…" oninput="setStoreInfo('mapUrl',this.value)" autocomplete="off">
-        <span class="of-hint">เปิด Google Maps → ค้นหาร้าน/ปักหมุด → กด “แชร์” → คัดลอกลิงก์ มาวางที่นี่</span>
-        <a class="btn btn-ghost2 btn-sm store-map-open" id="ownMapOpen" target="_blank" rel="noopener noreferrer" style="display:none">🗺 เปิดดูบน Google Maps</a>
-      </div>
-      <div class="of">
-        <label for="ownAddress">ที่ตั้งร้าน (ที่อยู่)</label>
-        <textarea class="of-input" id="ownAddress" rows="3" maxlength="500" placeholder="เลขที่ ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์ หรือชื่อห้าง/ชั้น/ยูนิต" oninput="setStoreInfo('address',this.value)"></textarea>
-        <span class="of-hint">เขียนให้คนที่ไม่เคยมาร้านหาเจอ</span>
+    <div class="card-label">📍 ข้อมูลที่ตั้งร้าน</div>
+    <p class="owner-intro">ตำแหน่งและที่อยู่หน้าร้าน — ใช้ให้ทีมงานและระบบเดลิเวอรี่ตรวจสอบสถานที่</p>
+    <div class="of-sub">
+      <div class="of-sub-h" role="heading" aria-level="3">1. 🗺 ตำแหน่งบนแผนที่</div>
+      <div class="owner-grid">
+        <div class="of">
+          <label for="ownMapUrl">ลิงก์ Google Maps ของร้าน</label>
+          <input class="of-input" type="url" inputmode="url" id="ownMapUrl" maxlength="500" placeholder="https://maps.app.goo.gl/…" oninput="setStoreInfo('mapUrl',this.value)" autocomplete="off">
+          <span class="of-hint">เปิด Google Maps → ค้นหาร้าน/ปักหมุด → กด “แชร์” → คัดลอกลิงก์ มาวางที่นี่</span>
+          <a class="btn btn-ghost2 btn-sm store-map-open" id="ownMapOpen" target="_blank" rel="noopener noreferrer" style="display:none">🗺 เปิดดูบน Google Maps</a>
+        </div>
       </div>
     </div>
-    <div class="store-photos">
+    <div class="of-sub">
+      <div class="of-sub-h" role="heading" aria-level="3">2. 🏠 ที่อยู่ร้าน</div>
+      <div class="owner-grid">
+        <div class="of"><label for="ownAddrNo">เลขที่ / ห้อง / ชั้น / ยูนิต <span class="req">*</span></label><input class="of-input" id="ownAddrNo" maxlength="80" placeholder="เช่น 99/9 ชั้น 1 ยูนิต A12" oninput="setStoreInfo('addrNo',this.value)" autocomplete="off"></div>
+        <div class="of"><label for="ownAddrBuilding">ชื่อห้าง / อาคาร / โครงการ</label><input class="of-input" id="ownAddrBuilding" maxlength="120" placeholder="เช่น สยามพารากอน (ถ้ามี)" oninput="setStoreInfo('addrBuilding',this.value)" autocomplete="off"></div>
+        <div class="of"><label for="ownAddrSoi">หมู่ / ซอย</label><input class="of-input" id="ownAddrSoi" maxlength="80" placeholder="เช่น หมู่ 3 / ซอยสุขุมวิท 21" oninput="setStoreInfo('addrSoi',this.value)" autocomplete="off"></div>
+        <div class="of"><label for="ownAddrRoad">ถนน</label><input class="of-input" id="ownAddrRoad" maxlength="80" placeholder="เช่น ถนนพระราม 1" oninput="setStoreInfo('addrRoad',this.value)" autocomplete="off"></div>
+        <div class="of"><label for="ownAddrSub">แขวง / ตำบล <span class="req">*</span></label><input class="of-input" id="ownAddrSub" maxlength="80" oninput="setStoreInfo('addrSub',this.value)" autocomplete="off"></div>
+        <div class="of"><label for="ownAddrDistrict">เขต / อำเภอ <span class="req">*</span></label><input class="of-input" id="ownAddrDistrict" maxlength="80" oninput="setStoreInfo('addrDistrict',this.value)" autocomplete="off"></div>
+        <div class="of"><label for="ownAddrProvince">จังหวัด <span class="req">*</span></label><input class="of-input" id="ownAddrProvince" maxlength="60" list="thProvinces" placeholder="พิมพ์เพื่อค้นหาจังหวัด" oninput="setStoreInfo('addrProvince',this.value)" autocomplete="off"><datalist id="thProvinces"></datalist></div>
+        <div class="of"><label for="ownAddrZip">รหัสไปรษณีย์ <span class="req">*</span></label><input class="of-input" id="ownAddrZip" inputmode="numeric" maxlength="5" placeholder="5 หลัก" oninput="setStoreInfo('addrZip',this.value.replace(/[^0-9]/g,''))" autocomplete="postal-code"></div>
+      </div>
+    </div>
+    <div class="of-sub">
+      <div class="of-sub-h" role="heading" aria-level="3">3. 📷 รูปร้านจริง <span class="notes-count" id="storePhotoCount">0</span></div>
       <div class="store-photos-head">
-        <strong>📷 รูปร้านจริง <span class="notes-count" id="storePhotoCount">0</span></strong>
+        <span class="of-hint">รูปหน้าร้านจริง / ภายใน / ป้ายร้าน — สูงสุด 6 รูป ระบบย่อรูปให้อัตโนมัติ และแชร์ให้ทุกคนที่เปิดลิงก์เห็น</span>
         <label class="btn btn-gold btn-sm edit-only file-btn" id="storePhotoBtn">⬆️ อัปโหลดรูปร้าน<input type="file" accept="image/*" multiple class="sr-file" id="storePhotoInput" onchange="addStorePhotos(this.files);this.value=''"></label>
       </div>
-      <span class="of-hint">รูปหน้าร้านจริง / ภายใน / ป้ายร้าน — สูงสุด 6 รูป ระบบย่อรูปให้อัตโนมัติ และแชร์ให้ทุกคนที่เปิดลิงก์เห็น</span>
       <div id="storePhotoList" class="store-photo-list"></div>
     </div>
     <div id="storeStatus" class="owner-status"></div>
@@ -1762,16 +1837,9 @@ label.req-doc-item input{flex-shrink:0;}
   </div>
 
   <div class="stats-grid" id="ovStats"></div>
-  <div class="section-title">🏢 สรุปงานแต่ละแผนก</div>
+  <div class="section-title">🏢 รายละเอียดของแต่ละหน่วยงาน</div>
   <div class="dept-grid" id="ovDeptGrid"></div>
 
-  <div class="setup-card edit-only" id="activityCard">
-    <div class="card-label" style="justify-content:space-between;">
-      <span>🕘 ประวัติการแก้ไข</span>
-      <button class="btn btn-ghost2 btn-sm" id="clearActivityBtn" onclick="clearActivityLog()" style="text-transform:none;letter-spacing:0;">🗑 ล้างประวัติ</button>
-    </div>
-    <div id="activityList"></div>
-  </div>
 </div>
 </section>
 
@@ -1780,12 +1848,12 @@ label.req-doc-item input{flex-shrink:0;}
   <div class="tl-toolbar">
     <span class="tl-toolbar-label">Timeline</span>
     <div class="tb-sep"></div>
-    <button class="btn btn-gold btn-sm" onclick="openMonthPicker()">📅 เดือน</button>
-    <button class="btn btn-ghost btn-sm tl-today-btn" onclick="scrollToToday(true)">📍 วันนี้</button>
-    <button class="btn btn-ghost btn-sm tl-dep-btn" id="depToggle" onclick="toggleDepLines()" title="แสดง/ซ่อนเส้นเชื่อมระหว่างงานที่ต้องรอกัน">⛓ เส้นเชื่อม</button>
-    <button class="btn btn-ghost btn-sm" onclick="openByEditor()">🎨 By</button>
-    <button class="btn btn-ghost btn-sm" onclick="openDeptEditor()">🏢 แผนก</button>
-    <button class="btn btn-ghost btn-sm edit-only" onclick="addGroup()">＋ กลุ่ม</button>
+    <button class="btn btn-gold btn-sm tl-hide" onclick="openMonthPicker()">📅 เดือน</button>
+    <button class="btn btn-ghost btn-sm tl-today-btn tl-hide" onclick="scrollToToday(true)">📍 วันนี้</button>
+    <button class="btn btn-ghost btn-sm tl-dep-btn tl-hide" id="depToggle" onclick="toggleDepLines()" title="แสดง/ซ่อนเส้นเชื่อมระหว่างงานที่ต้องรอกัน">⛓ เส้นเชื่อม</button>
+    <button class="btn btn-ghost btn-sm tl-hide" onclick="openByEditor()">🎨 By</button>
+    <button class="btn btn-ghost btn-sm tl-hide" onclick="openDeptEditor()">🏢 แผนก</button>
+    <button class="btn btn-ghost btn-sm edit-only tl-hide" onclick="addGroup()">＋ กลุ่ม</button>
 
     <div class="tb-right">
       <select class="dept-select" id="deptSelect" onchange="setDeptFilter(this.value)"></select>
@@ -1800,6 +1868,7 @@ label.req-doc-item input{flex-shrink:0;}
     <span class="dur-badge" id="durBadge">—</span>
     <span id="deptBadge" style="display:none;" class="dept-active-badge"></span>
     <div class="task-filter" id="taskFilter"></div>
+    <span class="tl-hint">↔ ลากแถบเพื่อเลื่อนวัน · ลากพื้นที่ว่างเพื่อเลื่อนดูไทม์ไลน์</span>
     <button class="legend-toggle" id="legendToggle" onclick="toggleLegend()" title="คำอธิบายสี">🎨</button>
     <div class="legend-wrap" id="legendWrap"></div>
   </div>
@@ -1812,6 +1881,11 @@ label.req-doc-item input{flex-shrink:0;}
        hides #tableOuter only under 820px, so desktop is untouched. -->
   <div id="mobileTimeline"></div>
   <div id="noMonthHint"></div>
+  <div id="doneSection" class="done-section" style="display:none">
+    <div class="done-head"><span class="done-title">✅ งานที่เสร็จแล้ว <span class="tf-n" id="doneCount">0</span></span>
+      <button type="button" class="btn btn-ghost2 btn-sm" id="doneToggle" aria-expanded="false" aria-controls="doneList" onclick="toggleDoneSection()">แสดงงานที่เสร็จแล้ว ▾</button></div>
+    <div id="doneList" hidden></div>
+  </div>
 </section>
 
 
@@ -1986,7 +2060,7 @@ label.req-doc-item input{flex-shrink:0;}
 
 <div class="overlay" id="popGroup"><div class="pbox">
   <div class="phead">✏️ แก้ไขกลุ่ม<button class="pclose" onclick="closeP('popGroup')">✕</button></div>
-  <div class="pbody"><div class="fgrp"><label>ชื่อกลุ่ม</label><input class="finput" id="egName"></div><div class="fgrp"><label>🔗 Link</label><input class="finput" id="egLink" placeholder="https://..."></div><div class="pfoot"><button class="btn btn-danger btn-sm pfoot-left" onclick="deleteGroup()">ลบกลุ่ม</button><button class="btn btn-gold" onclick="applyGroup()">บันทึก</button></div></div>
+  <div class="pbody"><div class="fgrp"><label>ชื่อกลุ่ม</label><input class="finput" id="egName"></div><div class="fgrp"><label>🔗 Link</label><input class="finput" id="egLink" placeholder="https://..."></div><label class="eg-head"><input type="checkbox" id="egHeading"><span><strong>แสดงเป็นหัวข้อเดียว</strong> — ตั้งวันที่ให้ทั้งกลุ่มในบรรทัดเดียว งานย่อยจะกลายเป็น checklist ของหัวข้อ (ปิดเพื่อแสดงงานย่อยกลับมา)</span></label><div class="pfoot"><button class="btn btn-danger btn-sm pfoot-left" onclick="deleteGroup()">ลบกลุ่ม</button><button class="btn btn-gold" onclick="applyGroup()">บันทึก</button></div></div>
 </div></div>
 
 <div class="overlay" id="popBy"><div class="pbox">
@@ -2026,15 +2100,31 @@ label.req-doc-item input{flex-shrink:0;}
     </div>
     <div class="pfoot">
       <button class="btn btn-danger btn-sm pfoot-left" id="spDeleteBtn" onclick="deleteShop()" style="display:none">ลบสาขา</button>
+      <button class="btn btn-ghost2 btn-sm edit-only" id="spShareBtn" type="button" onclick="closeP('popShop');openShareLink(_editShopId)" style="display:none">🔗 ลิงก์สำหรับลูกค้า</button>
       <button class="btn btn-ghost2 btn-sm pfoot-left" id="spDupeBtn" onclick="duplicateShopAsTemplate()" style="display:none" title="สร้างสาขาใหม่โดยคัดลอกกลุ่มงาน/รายการ task ทั้งหมด (ไม่รวมวันที่และไฟล์)">📋 ใช้เป็นแม่แบบ</button>
       <button class="btn btn-gold" onclick="applyShop()">บันทึก</button>
     </div>
   </div>
 </div></div>
 
+<div class="overlay" id="popDocReq"><div class="pbox pbox-wide">
+  <div class="phead"><span id="drTitle">📋 เอกสารและข้อมูลที่ต้องใช้</span><button class="pclose" onclick="closeP('popDocReq')" aria-label="ปิด">✕</button></div>
+  <div class="pbody" id="drBody"></div>
+</div></div>
+
 <div class="overlay" id="popPhoto"><div class="pbox pbox-wide">
   <div class="phead">🖼 รูปร้านจริง<button class="pclose" onclick="closeP('popPhoto')" aria-label="ปิด">✕</button></div>
   <div class="pbody"><img id="photoBig" alt="" style="display:block;width:100%;height:auto;border-radius:8px;background:var(--surface-2)"><div class="sp-hint" id="photoCap" style="margin:10px 0 0"></div></div>
+</div></div>
+
+<div class="overlay" id="popShare"><div class="pbox">
+  <div class="phead">🔗 ลิงก์สำหรับลูกค้า<button class="pclose" onclick="closeP('popShare')" aria-label="ปิด">✕</button></div>
+  <div class="pbody" id="shareBody"></div>
+</div></div>
+
+<div class="overlay" id="popAccess"><div class="pbox">
+  <div class="phead">🔐 สิทธิ์การเข้าใช้งาน<button class="pclose" onclick="closeP('popAccess')" aria-label="ปิด">✕</button></div>
+  <div class="pbody" id="accessBody"></div>
 </div></div>
 
 <div class="overlay" id="popBackup"><div class="pbox">
@@ -2073,7 +2163,7 @@ label.req-doc-item input{flex-shrink:0;}
 </div><!-- /jc-root -->
 
 <div id="bootCover" role="status" aria-live="polite" hidden><div class="boot-card"><div class="boot-spin" aria-hidden="true"></div><div class="boot-t">กำลังโหลดข้อมูลสาขา…</div><div class="boot-s" id="bootSlow" hidden>ใช้เวลานานกว่าปกติ — ตรวจสอบอินเทอร์เน็ตของคุณ<div class="boot-actions"><button type="button" class="btn btn-navy btn-sm" onclick="location.reload()">ลองใหม่</button><button type="button" class="btn btn-ghost2 btn-sm" onclick="bootCoverHide()">ใช้ข้อมูลในเครื่องนี้ต่อ</button></div></div></div></div>
-<footer id="appFooter"><span>JIAN CHA Franchise Ops</span> · <span id="buildStamp" title="เวอร์ชันของไฟล์นี้">v2026.10.15-a</span></footer>
+<footer id="appFooter"><span>JIAN CHA Franchise Ops</span> · <span id="buildStamp" title="เวอร์ชันของไฟล์นี้">v2026.10.20-d</span></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
 <script id="jc-app">
 'use strict';
@@ -2081,7 +2171,19 @@ label.req-doc-item input{flex-shrink:0;}
    it. Used to rebuild the document when syncing by artifact republish. */
 const JC_ROOT_HTML=document.getElementById('jc-root').innerHTML;
 /* ── MULTI-SHOP DB ─────────────────────────────────────────────── */
-const DB_KEY='jiancha_v2';
+/* The local copy is kept per access: a device opened through a branch link stores only that branch,
+   under its own key, so other branches cached by an admin on the same device can never show up. */
+const DB_KEY=(function(){
+  try{
+    const q=new URLSearchParams(location.search);
+    let b=(q.get('b')&&q.get('k'))?q.get('b'):'';
+    if(!b&&!q.get('admin')&&!localStorage.getItem('jc_admin_link')){
+      const st=JSON.parse(localStorage.getItem('jc_branch_link')||'null');
+      if(st&&st.b&&st.k)b=st.b;
+    }
+    return b?'jiancha_v2::branch::'+String(b).replace(/[^A-Za-z0-9_.:~@+\-]/g,'_'):'jiancha_v2';
+  }catch(e){return'jiancha_v2';}
+})();
 const FILE_DB_NAME='jiancha_files_v1';
 const FILE_STORE='files';
 const STORAGE_LIMIT_BYTES=10*1024*1024*1024; // 10 GB
@@ -2510,10 +2612,102 @@ function _reviseTaskList(sh){
   });
   sh._taskRev2=true;
 }
+/* ── HEADING-ONLY GROUPS ─────────────────────────────────────────────
+   A group can be shown as one line with its own dates ("1. Project Preparation", "2. Pre-construction",
+   "4. Construction"). Its former tasks are not deleted: they are kept on the group (subStash) and appear
+   as the heading's checklist, so switching back restores them. The heading's id comes from the group id,
+   so every device that converts the same group produces the same task. */
+const HEADING_GROUPS=[[/^1\.\s*project preparation$/i,null],[/^2\.\s*(design|pre-?construction)$/i,'2. Pre-construction'],[/^4\.\s*construction$/i,null]];
+function _remapDeps(groups,map){
+  (groups||[]).forEach(g=>(g.tasks||[]).forEach(t=>{
+    if(!Array.isArray(t.deps)||!t.deps.length)return;
+    t.deps=[...new Set(t.deps.map(id=>map[id]||id))].filter(id=>id!==t.id);
+  }));
+}
+function _groupToHeading(g,map){
+  if(g.headingOnly)return false;
+  const subs=(g.tasks||[]).slice();
+  const dated=subs.filter(t=>t.startDate&&t.endDate);
+  const start=dated.length?dated.reduce((a,t)=>t.startDate<a?t.startDate:a,dated[0].startDate):null;
+  const end=dated.length?dated.reduce((a,t)=>t.endDate>a?t.endDate:a,dated[0].endDate):null;
+  const bys=subs.map(t=>t.by).filter(Boolean);
+  const by=bys.length?bys.sort((a,b)=>bys.filter(x=>x===b).length-bys.filter(x=>x===a).length)[0]:'JC';
+  const depts=[...new Set(subs.flatMap(t=>t.depts||[]))];
+  const days=start?daysBetween(start,end):Math.max(1,subs.reduce((a,t)=>a+(+t.days||1),0));
+  const ht=mkTask(g.name,by,days,depts.includes('ALL')?['ALL']:depts);
+  ht.id=_safeId('h_'+g.id);ht.isHeading=true;ht.startDate=start;ht.endDate=end;
+  ht.done=subs.length>0&&subs.every(t=>t.done);
+  if(ht.done)ht.doneAt=subs.map(t=>t.doneAt||'').sort().pop()||new Date().toISOString();
+  ht.checklist=subs.map(t=>({id:t.id,text:t.name,done:!!t.done}));
+  ht.files=subs.flatMap(t=>t.files||[]);
+  ht.comments=subs.flatMap(t=>t.comments||[]).sort((a,b)=>String(a.at).localeCompare(String(b.at)));
+  const ids=new Set(subs.map(t=>t.id));
+  ht.deps=[...new Set(subs.flatMap(t=>depIds(t)).filter(id=>!ids.has(id)))];
+  subs.forEach(t=>{map[t.id]=ht.id;});
+  g.subStash=subs;g.tasks=[ht];g.headingOnly=true;g._headRev=1;
+  return true;
+}
+function _headingToGroup(g,groups){
+  if(!g.headingOnly)return false;
+  const ht=(g.tasks||[]).find(t=>t.isHeading);
+  const subs=g.subStash||[];
+  g.headingOnly=false;g._headRev=1;delete g.subStash;
+  if(!ht)return true;
+  if(!subs.length){ht.isHeading=false;return true;}           /* nothing to restore: the heading stays as a normal task */
+  /* ticks, files and comments made on the heading go back to the steps */
+  subs.forEach(s=>{const c=(ht.checklist||[]).find(x=>x.id===s.id);if(c){s.done=!!c.done;if(c.text)s.name=c.text;}});
+  const last=subs.slice().sort((a,b)=>String(a.endDate||'').localeCompare(String(b.endDate||''))).pop();
+  const known=new Set(subs.flatMap(s=>(s.files||[]).map(f=>f.id)));
+  (ht.files||[]).filter(f=>!known.has(f.id)).forEach(f=>{(last.files=last.files||[]).push(f);});
+  const knownC=new Set(subs.flatMap(s=>(s.comments||[]).map(c=>c.id)));
+  (ht.comments||[]).filter(c=>!knownC.has(c.id)).forEach(c=>{(last.comments=last.comments||[]).push(c);});
+  (ht.checklist||[]).filter(c=>!subs.some(s=>s.id===c.id)).forEach(c=>{(last.checklist=last.checklist||[]).push(c);});
+  const others=g.tasks.filter(t=>t!==ht);
+  g.tasks=subs.concat(others);
+  _remapDeps(groups,{[ht.id]:last.id});
+  return true;
+}
+/* once per group: the three planning groups become headings, "2. Design" is renamed */
+function _reviseHeadings(groups){
+  const map={};let changed=false;
+  (groups||[]).forEach(g=>{
+    if(g._headRev)return;
+    const nm=String(g.name||'').trim();
+    const hit=HEADING_GROUPS.find(([re])=>re.test(nm));
+    if(!hit)return;
+    if(hit[1])g.name=hit[1];
+    if(_groupToHeading(g,map))changed=true;
+    g._headRev=1;
+  });
+  if(changed)_remapDeps(groups,map);
+  return changed;
+}
+/* a copied branch keeps which groups are headings, with fresh copies of the kept steps (no ticks, no files) */
+function _carryHeadingGroups(srcGroups,newGroups,shift){
+  srcGroups.forEach((g,i)=>{
+    const ng=newGroups[i];if(!ng)return;
+    if(g._headRev)ng._headRev=1;
+    if(!g.headingOnly)return;
+    ng.headingOnly=true;
+    const stash=(g.subStash||[]).map(t=>Object.assign(JSON.parse(JSON.stringify(t)),{id:nid(),done:false,doneAt:'',files:[],comments:[],deps:[],
+      startDate:shift(t.startDate),endDate:shift(t.endDate),checklist:(t.checklist||[]).map(c=>({id:nid(),text:c.text,done:false}))}));
+    ng.subStash=stash;
+    const sht=(g.tasks||[]).find(t=>t.isHeading),ht=(ng.tasks||[]).find(t=>t.isHeading);
+    if(ht&&sht){
+      const stepIds=new Set((g.subStash||[]).map(t=>t.id));
+      ht.checklist=stash.map((s,k)=>({id:s.id,text:(((sht.checklist||[]).find(c=>c.id===(g.subStash[k]||{}).id))||{}).text||s.name,done:false})).concat((sht.checklist||[]).filter(c=>!stepIds.has(c.id)).map(c=>({id:nid(),text:c.text,done:false})));
+    }
+  });
+}
+function setGroupHeading(g,on){
+  if(on){const map={};if(_groupToHeading(g,map))_remapDeps(S.groups,map);}
+  else _headingToGroup(g,S.groups);
+}
 function _migrateShops(){
     (DB.shops||[]).forEach(_sanitizeShop);
     _dedupeIds();
     (DB.shops||[]).forEach(sh=>_reviseTaskList(sh));
+    (DB.shops||[]).forEach(sh=>_reviseHeadings(sh.groups));
     DB.shops.forEach(sh=>{
       _repairMonths(sh);
       /* The enable/disable toggle was removed from the row UI in favour of
@@ -2624,6 +2818,9 @@ function renderShopTabs(){
   });
   h+=`<button class="shop-tab-all${_viewMode==='all'?' active':''}" onclick="switchToAll()">📊 ทุกสาขา</button>`;
   document.getElementById('shopTabsBar').innerHTML=h;
+  {const bar=document.getElementById('shopTabsBar'),a=bar&&bar.querySelector('.shop-tab-wrap.active');
+   const first=renderShopTabs._last===undefined,changed=renderShopTabs._last!==_activeId;renderShopTabs._last=_activeId;
+   if(a&&changed&&!first&&bar.clientWidth>50){const l=a.offsetLeft-bar.offsetLeft,r=l+a.offsetWidth;/* prefer the very start (so "ทุกสาขา" stays in sight) whenever the open branch fits there */if(l<=bar.clientWidth-80)bar.scrollLeft=0;else if(r<=bar.scrollLeft||l>=bar.scrollLeft+bar.clientWidth-40)bar.scrollLeft=Math.max(0,Math.min(l-12,r-bar.clientWidth+12));}}
   updateShopTabsScrollUI();
 }
 /* Arrow + fade affordance for the branch tab bar. Recomputed on render,
@@ -2644,7 +2841,41 @@ function updateShopTabsScrollUI(){
   wrap.classList.toggle('has-overflow',overflow);
   wrap.classList.toggle('at-start',bar.scrollLeft<=2);
   wrap.classList.toggle('at-end',bar.scrollLeft+bar.clientWidth>=bar.scrollWidth-2);
+  const tr=document.getElementById('stwTrack'),th=document.getElementById('stwThumb');
+  if(tr&&th&&overflow){
+    const tw=tr.clientWidth,w=Math.max(40,Math.round(tw*bar.clientWidth/bar.scrollWidth));
+    const max=bar.scrollWidth-bar.clientWidth;
+    th.style.width=w+'px';th.style.left=Math.round((tw-w)*(max?bar.scrollLeft/max:0))+'px';
+  }
 }
+/* drag the thumb (mouse, touchpad or finger), tap the track to jump, or use the mouse wheel over the tabs */
+(function(){
+  const bar=()=>document.getElementById('shopTabsBar');
+  let d=null;
+  document.addEventListener('pointerdown',e=>{
+    const tr=document.getElementById('stwTrack'),th=document.getElementById('stwThumb'),b=bar();
+    if(!tr||!b||!tr.contains(e.target))return;
+    e.preventDefault();
+    const tw=tr.clientWidth,w=th.offsetWidth,max=b.scrollWidth-b.clientWidth;if(max<=0)return;
+    if(e.target!==th){                      /* tap on the track: centre the thumb there */
+      const x=e.clientX-tr.getBoundingClientRect().left-w/2;
+      b.scrollLeft=Math.max(0,Math.min(max,x/(tw-w)*max));updateShopTabsScrollUI();
+    }
+    d={x0:e.clientX,l0:b.scrollLeft,ratio:max/Math.max(1,tw-w),id:e.pointerId};
+    th.classList.add('dragging');try{tr.setPointerCapture(e.pointerId);}catch(x){}
+  });
+  document.addEventListener('pointermove',e=>{
+    if(!d)return;const b=bar();if(!b)return;
+    b.scrollLeft=d.l0+(e.clientX-d.x0)*d.ratio;updateShopTabsScrollUI();
+  });
+  const end=()=>{if(!d)return;d=null;const th=document.getElementById('stwThumb');if(th)th.classList.remove('dragging');};
+  document.addEventListener('pointerup',end);document.addEventListener('pointercancel',end);
+  document.addEventListener('wheel',e=>{
+    const b=bar();if(!b||!e.target.closest||!e.target.closest('#shopTabsWrap'))return;
+    if(b.scrollWidth<=b.clientWidth+2||Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;
+    b.scrollLeft+=e.deltaY;updateShopTabsScrollUI();e.preventDefault();
+  },{passive:false});
+})();
 window.addEventListener('resize',updateShopTabsScrollUI);
 /* ── MONEY HELPERS ── */
 function fmtTHB(n){n=+n||0;return'฿'+n.toLocaleString('en-US',{maximumFractionDigits:0});}
@@ -2713,6 +2944,7 @@ function renderAllShops(){
       <div class="prog-bar"><div class="prog-fill" style="width:${cPct}%;background:${f.overdue?'var(--red)':'var(--green)'}"></div></div>`:''}
       ${ownerName?`<div style="font-size:.6875rem;color:var(--text-3);margin-top:9px;">👤 BD: <strong style="color:var(--text-2)">${esc(ownerName)}</strong></div>`:''}
       <button class="btn btn-navy btn-sm" onclick="switchShop('${sh.id}')" style="width:100%;margin-top:11px;">📅 เปิด Timeline</button>
+      <button class="btn btn-ghost2 btn-sm edit-only" onclick="openShareLink('${sh.id}')" style="width:100%;margin-top:6px;">🔗 ลิงก์สำหรับลูกค้า</button>
     </div>`;
   }).join('')
     +(gridShops.length===0&&shops.length>0?`<div class="shop-card-empty-hint">🔎 ไม่มีสาขาที่ตรงกับตัวกรองตอนนี้ (ซ่อนอยู่ ${shops.length-gridShops.length} สาขา) — <a href="#" onclick="asResetFilters();return false;">ล้างตัวกรอง</a></div>`:'')
@@ -2989,7 +3221,7 @@ function applyRestore(){
   if(cur){_activeId=cur.id;applyShopToS(cur);}
   dbSave();renderShopTabs();closeP('popBackup');
   rerenderCurrent();renderAllShops();
-  logActivity('create','กู้คืนจาก Backup: เพิ่ม '+added+' · แทนที่ '+replaced+' สาขา');
+  
   _bkPending=null;
   _toast('กู้คืนแล้ว — เพิ่ม '+added+' สาขา'+(replaced?' · แทนที่ '+replaced+' สาขา':''));
 }
@@ -3021,6 +3253,7 @@ function openNewShop(){
   document.getElementById('spOwner').value='';
   document.getElementById('spGrand').value='';
   document.getElementById('spDeleteBtn').style.display='none';
+  document.getElementById('spShareBtn').style.display='none';
   document.getElementById('spDupeBtn').style.display='none';
   document.getElementById('popShopHead').textContent='🏪 เพิ่มสาขาใหม่';
   /* offer to carry an existing branch's timeline/files into the new one */
@@ -3038,6 +3271,7 @@ function openEditShop(id){
   document.getElementById('spGrand').value=sh.grandOpening||'';
   document.getElementById('spCopyWrap').style.display='none';
   document.getElementById('spDeleteBtn').style.display='';
+  document.getElementById('spShareBtn').style.display=_customerMode?'none':'';
   document.getElementById('spDupeBtn').style.display='';
   document.getElementById('popShopHead').textContent='✏️ แก้ไขสาขา';
   renderSwatches();openP('popShop');
@@ -3064,7 +3298,7 @@ function applyShop(){if(!requireEdit())return;
          never reached the server. Mark it explicitly. */
       _dirtyShops.add(sh.id);
       if(sh.id===_activeId){S.branchName=name;document.getElementById('branchInput').value=name;}
-      logActivity('edit','แก้ไขข้อมูลสาขา "'+name+'"',sh.id);
+      
     }
   }else{
     const sh=mkNewShopObj(name);sh.color=_spColor;sh.status=status;sh.finance.owner=owner;sh.grandOpening=grand;
@@ -3077,7 +3311,7 @@ function applyShop(){if(!requireEdit())return;
     if(!(plan&&plan.timeline))initData();               /* copied timeline replaces the stock template */
     if(plan&&plan.dates){autoExtendMonths();enforceDeps();}   /* shifted plans can outgrow the copied window */
     syncSToShop();
-    logActivity('create','สร้างสาขาใหม่ "'+name+'"'+(plan?' (คัดลอกจาก "'+plan.src.name+'")':''),sh.id);
+    
     copyJobs.forEach(j=>{j.shopId=sh.id;});
   }
   dbSave();renderShopTabs();closeP('popShop');
@@ -3216,7 +3450,7 @@ function _applyCopyPlan(sh,plan){
           startDate:plan.dates?(t.startDate?(delta?addDaysF(t.startDate,delta):t.startDate):null):null,
           endDate:plan.dates?(t.endDate?(delta?addDaysF(t.endDate,delta):t.endDate):null):null,
           link:t.link||'',email:t.email||'',lineId:t.lineId||'',notifyMsg:t.notifyMsg||'',
-          deps:[],
+          deps:[],isHeading:!!t.isHeading,docSeeded:!!t.docSeeded,docReq:!!t.docReq,
           checklist:(t.checklist||[]).map(c=>({id:nid(),text:c.text,done:false})),   /* steps carry over, ticks don't */
           files:[]};
         idMap.set(t.id,nt);
@@ -3229,6 +3463,7 @@ function _applyCopyPlan(sh,plan){
       const nt=idMap.get(t.id);
       nt.deps=depIds(t).map(id=>(idMap.get(id)||{}).id).filter(Boolean);
     }));
+    _carryHeadingGroups(src.groups||[],sh.groups,s=>plan.dates?(s?(delta?addDaysF(s,delta):s):null):null);
   }
   Object.entries(src.deptFiles||{}).forEach(([code,arr])=>(arr||[]).forEach(f=>{
     if(plan.files.has(f.id))jobs.push({f,code});
@@ -3281,7 +3516,7 @@ async function _copyFileJobs(jobs,srcId){
   }
   _uploading--;
   await flushNow();
-  logActivity('upload','คัดลอก '+ok+' ไฟล์'+(src?' จากสาขา "'+src.name+'"':''),shopId);
+  
   rerenderCurrent();
   _toast(failed.length
     ?'คัดลอกไฟล์สำเร็จ '+ok+' · ไม่สำเร็จ '+failed.length+' ('+failed.slice(0,3).join(', ')+(failed.length>3?'…':'')+')'
@@ -3324,7 +3559,7 @@ async function deleteShop(){if(!requireEdit())return;
     for(const p of((sh.finance||{}).payments||[])){for(const f of(p.files||[]))allFileIds.push(f.id);}
     await Promise.allSettled(allFileIds.map(id=>_idbDel(id)));
   }
-  logActivity('delete','ลบสาขา "'+(sh?sh.name:'')+'"',_editShopId);
+  
   dbDeleteShop(_editShopId);sbDeleteShop(_editShopId);
   DB.shops=DB.shops.filter(x=>x.id!==_editShopId);
   if(_activeId===_editShopId){_activeId=DB.shops[0].id;applyShopToS(DB.shops[0]);}
@@ -3407,7 +3642,7 @@ function duplicateShopAsTemplate(){if(!requireEdit())return;
           enabled:t.enabled,done:false,doneAt:'',
           startDate:null,endDate:null,               /* dates are branch-specific */
           link:t.link||'',email:t.email||'',lineId:t.lineId||'',notifyMsg:t.notifyMsg||'',
-          deps:[],
+          deps:[],isHeading:!!t.isHeading,docSeeded:!!t.docSeeded,docReq:!!t.docReq,
           checklist:(t.checklist||[]).map(c=>({id:nid(),text:c.text,done:false})),
           files:[]                                    /* files never carry over */
         };
@@ -3417,12 +3652,13 @@ function duplicateShopAsTemplate(){if(!requireEdit())return;
     (src.groups||[]).forEach(g=>(g.tasks||[]).forEach(t=>{
       _tIdMap.get(t.id).deps=depIds(t).map(id=>(_tIdMap.get(id)||{}).id).filter(Boolean);
     }));
+    _carryHeadingGroups(src.groups||[],sh.groups,()=>null);
     while(DB.shops.find(x=>x.id===sh.id))sh.id=nid();
     DB.shops.push(sh);
     dbSave();_activeId=sh.id;applyShopToS(sh);
     document.getElementById('branchInput').value=name;document.getElementById('qsBranch').value=name;
     initData();syncSToShop();dbSave();
-    logActivity('create','สร้างสาขา "'+name+'" จากแม่แบบ "'+src.name+'"',sh.id);
+    
     renderShopTabs();closeP('popShop');
     if(_viewMode==='all')renderAllShops();else renderOverview();
     _toast('สร้างสาขา "'+name+'" จากแม่แบบแล้ว — '+sh.groups.reduce((n,g)=>n+g.tasks.length,0)+' tasks');
@@ -3492,7 +3728,7 @@ function mkTask(n,b,d,depts=[]){return{id:nid(),name:n,by:b,days:d,startDate:nul
 function initData(){
   S.groups=[
     {id:nid(),name:'1. Project Preparation',link:'',tasks:[mkTask('First Meeting','JC&FC',1,['ALL'])]},
-    {id:nid(),name:'2. Design',link:'',tasks:[
+    {id:nid(),name:'2. Pre-construction',link:'',tasks:[
       mkTask('วัดพื้นที่','JC',1,['BD']),mkTask('Layout','JC',3,['BD']),mkTask('Layout Approval','JC',2,['BD']),
       mkTask('3D Design','JC',3,['BD']),mkTask('3D Approval','JC',4,['BD']),mkTask('Constr. Drawing','JC',6,['BD']),
       mkTask('M&E Design','JC',3,['BD']),mkTask('BOQ','JC',3,['BD']),mkTask('BOQ Approval','JC',2,['BD']),
@@ -3523,6 +3759,7 @@ function initData(){
       mkTask('Grand Opening','JC&FC',1,['MKT','OPR']),
     ]},
   ];
+  _reviseHeadings(S.groups);
 }
 
 /* CUSTOM DIALOGS — replaces confirm()/alert() blocked by iframe sandbox */
@@ -3570,11 +3807,11 @@ function restoreLastDeleted(){if(!requireEdit())return;
   if(kind==='task'){
     const g=findGroup(payload.groupId);
     if(g){g.tasks.splice(Math.min(payload.index,g.tasks.length),0,payload.task);
-      dbSave();render();logActivity('restore','เรียกคืนงาน "'+payload.task.name+'"');
+      dbSave();render();
       _toast('เรียกคืนงานแล้ว'+(payload.task.files&&payload.task.files.length?' (ไฟล์แนบเดิมกู้คืนไม่ได้)':''));}
   }else if(kind==='group'){
     S.groups.splice(Math.min(payload.index,S.groups.length),0,payload.group);
-    dbSave();render();logActivity('restore','เรียกคืนกลุ่ม "'+payload.group.name+'"');
+    dbSave();render();
     _toast('เรียกคืนกลุ่มแล้ว');
   }
 }
@@ -3838,6 +4075,7 @@ function _sanitizeShop(sh){
       (t.checklist||[]).forEach(c=>{if(c)c.id=_safeId(c.id);});
       (t.comments||[]).forEach(c=>{if(c)c.id=_safeId(c.id);});
     });
+    if(Array.isArray(g.subStash))g.subStash.forEach(t=>{if(!t)return;t.id=_safeId(t.id);if(t.by)t.by=_cleanCode(t.by);if(Array.isArray(t.depts))t.depts=t.depts.map(d=>d==='ALL'?'ALL':_cleanCode(d));if(Array.isArray(t.deps))t.deps=t.deps.map(sid);fixFiles(t.files);});
   });
   ['deptFiles','deptNotes','deptSign'].forEach(k=>{
     const src=sh[k];if(!src||typeof src!=='object')return;
@@ -4264,11 +4502,19 @@ function autoSchedule(silent){if(!requireEdit())return;
 /* Shop-owner contact details, filled in by the customer */
 const OWNER_FIELDS=[
   {k:'name',el:'ownName',label:'ชื่อ สกุล เจ้าของร้าน'},
-  {k:'taxEmail',el:'ownTaxEmail',label:'Email เอกสาร ภาษี'},
-  {k:'grabEmail',el:'ownGrabEmail',label:'Email Grab'},
-  {k:'phone',el:'ownPhone',label:'เบอร์ส่วนตัว'},
-  {k:'shopPhone',el:'ownShopPhone',label:'เบอร์ร้าน'},
+  {k:'taxEmail',el:'ownTaxEmail',label:'Email สำหรับธุรกรรมทั่วไป'},
+  {k:'grabEmail',el:'ownGrabEmail',label:'Email สำหรับ Grab'},
+  {k:'phone',el:'ownPhone',label:'เบอร์ติดต่อส่วนตัว'},
+  {k:'shopPhone',el:'ownShopPhone',label:'เบอร์ติดต่อหน้าร้าน'},
 ];
+/* Grab email: Gmail only, and never the same address as the general-transactions email. '' = fine */
+function _grabProblem(o){
+  const g=String((o||{}).grabEmail||'').trim().toLowerCase(),t=String((o||{}).taxEmail||'').trim().toLowerCase();
+  if(!g)return'';
+  if(!/^[^\s@]+@gmail\.com$/.test(g))return'gmail';
+  if(t&&g===t)return'dup';
+  return'';
+}
 function setOwner(k,v){
   if(!requireEdit())return;
   if(!S.owner)S.owner={};
@@ -4284,13 +4530,19 @@ function renderOwnerForm(){
   });
   renderOwnerStatus();
 }
-/* ── STORE LOCATION + REAL STORE PHOTOS ───────────────────────────────
-   Map link and address live on the shop's owner record. Photos are shrunk in the browser to a JPEG
-   (long side 1280px) and kept with the shop like signatures, so everyone with the link sees them.
-   "Deleting" voids an entry (and drops its pixels) so a stale tab cannot bring it back. */
-const STORE_PHOTO_MAX=6;
-function _storePhotos(){return(S.storePhotos||[]).filter(p=>p&&!p.void);}
-function _safePhotoImg(s){return typeof s==='string'&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s)?s:'';}
+/* ── STORE LOCATION ───────────────────────────────────────────────────
+   Map link, a structured address and free-text landmarks live on the shop's owner record. */
+const TH_PROVINCES='กรุงเทพมหานคร,กระบี่,กาญจนบุรี,กาฬสินธุ์,กำแพงเพชร,ขอนแก่น,จันทบุรี,ฉะเชิงเทรา,ชลบุรี,ชัยนาท,ชัยภูมิ,ชุมพร,เชียงราย,เชียงใหม่,ตรัง,ตราด,ตาก,นครนายก,นครปฐม,นครพนม,นครราชสีมา,นครศรีธรรมราช,นครสวรรค์,นนทบุรี,นราธิวาส,น่าน,บึงกาฬ,บุรีรัมย์,ปทุมธานี,ประจวบคีรีขันธ์,ปราจีนบุรี,ปัตตานี,พระนครศรีอยุธยา,พังงา,พัทลุง,พิจิตร,พิษณุโลก,เพชรบุรี,เพชรบูรณ์,แพร่,พะเยา,ภูเก็ต,มหาสารคาม,มุกดาหาร,แม่ฮ่องสอน,ยโสธร,ยะลา,ร้อยเอ็ด,ระนอง,ระยอง,ราชบุรี,ลพบุรี,ลำปาง,ลำพูน,เลย,ศรีสะเกษ,สกลนคร,สงขลา,สตูล,สมุทรปราการ,สมุทรสงคราม,สมุทรสาคร,สระแก้ว,สระบุรี,สิงห์บุรี,สุโขทัย,สุพรรณบุรี,สุราษฎร์ธานี,สุรินทร์,หนองคาย,หนองบัวลำภู,อ่างทอง,อำนาจเจริญ,อุดรธานี,อุตรดิตถ์,อุทัยธานี,อุบลราชธานี'.split(',');
+const STORE_ADDR_FIELDS=[
+  {k:'addrNo',el:'ownAddrNo',label:'เลขที่ / ห้อง / ชั้น / ยูนิต',req:1},
+  {k:'addrBuilding',el:'ownAddrBuilding',label:'ชื่อห้าง / อาคาร / โครงการ'},
+  {k:'addrSoi',el:'ownAddrSoi',label:'หมู่ / ซอย'},
+  {k:'addrRoad',el:'ownAddrRoad',label:'ถนน'},
+  {k:'addrSub',el:'ownAddrSub',label:'แขวง / ตำบล',req:1},
+  {k:'addrDistrict',el:'ownAddrDistrict',label:'เขต / อำเภอ',req:1},
+  {k:'addrProvince',el:'ownAddrProvince',label:'จังหวัด',req:1},
+  {k:'addrZip',el:'ownAddrZip',label:'รหัสไปรษณีย์',req:1},
+];
 function _mapUrlState(v){
   v=String(v||'').trim();if(!v)return{state:'empty'};
   const href=safeHref(v);let u=null;
@@ -4308,22 +4560,33 @@ function setStoreInfo(k,v){
 }
 function renderStoreCard(){
   if(!S.owner)S.owner={};
-  [['ownMapUrl','mapUrl'],['ownAddress','address']].forEach(([id,k])=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=S.owner[k]||'';});
+  const dl=document.getElementById('thProvinces');if(dl&&!dl.children.length)dl.innerHTML=TH_PROVINCES.map(p=>'<option value="'+p+'"></option>').join('');
+  [['ownMapUrl','mapUrl']].concat(STORE_ADDR_FIELDS.map(f=>[f.el,f.k])).forEach(([id,k])=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=S.owner[k]||'';});
   renderStorePhotos();renderStoreStatus();
 }
 function renderStoreStatus(){
   const box=document.getElementById('storeStatus');if(!box)return;
   box.removeAttribute('role');
-  const o=S.owner||{},m=_mapUrlState(o.mapUrl),addr=String(o.address||'').trim(),n=_storePhotos().length;
+  const o=S.owner||{},m=_mapUrlState(o.mapUrl);
   const mEl=document.getElementById('ownMapUrl');if(mEl)mEl.classList.toggle('bad',m.state==='bad');
+  const zip=String(o.addrZip||'').trim(),zipBad=!!zip&&!/^\d{5}$/.test(zip);
+  const zEl=document.getElementById('ownAddrZip');if(zEl)zEl.classList.toggle('bad',zipBad);
   const open=document.getElementById('ownMapOpen');
   if(open){const ok=m.state==='ok'||m.state==='other';open.style.display=ok?'':'none';if(ok)open.href=m.href;else open.removeAttribute('href');}
   if(m.state==='bad'){box.className='owner-status warn';box.setAttribute('role','alert');box.textContent='⚠️ ลิงก์แผนที่ไม่ถูกต้อง — กรุณาวางลิงก์ที่คัดลอกจากปุ่ม “แชร์” ใน Google Maps';return;}
   if(m.state==='other'){box.className='owner-status warn';box.textContent='⚠️ ลิงก์นี้ไม่ใช่ลิงก์ของ Google Maps — ตรวจสอบอีกครั้งว่าวางลิงก์ถูกต้อง';return;}
-  const miss=[];if(m.state==='empty')miss.push('ลิงก์ Google Maps');if(!addr)miss.push('ที่ตั้งร้าน');if(!n)miss.push('รูปร้านจริง');
+  if(zipBad){box.className='owner-status warn';box.setAttribute('role','alert');box.textContent='⚠️ รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก';return;}
+  const miss=[];if(m.state==='empty')miss.push('ลิงก์ Google Maps');
+  STORE_ADDR_FIELDS.filter(f=>f.req&&!String(o[f.k]||'').trim()).forEach(f=>miss.push(f.label));
+  if(!_storePhotos().length)miss.push('รูปร้านจริง');
   if(!miss.length){box.className='owner-status done';box.textContent='✅ ข้อมูลที่ตั้งร้านครบแล้ว ขอบคุณครับ';return;}
-  box.className='owner-status';box.textContent='ℹ️ ยังไม่มี: '+miss.join(' · ');
+  box.className='owner-status';box.textContent='ℹ️ ยังไม่ได้กรอก: '+miss.join(' · ');
 }
+/* Store pictures are shrunk in the browser to a JPEG (long side 1280px) and kept with the shop like
+   signatures, so everyone with the link sees them. Deleting voids the entry and drops its pixels. */
+const STORE_PHOTO_MAX=6;
+function _storePhotos(){return(S.storePhotos||[]).filter(p=>p&&!p.void);}
+function _safePhotoImg(s){return typeof s==='string'&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s)?s:'';}
 function renderStorePhotos(){
   const box=document.getElementById('storePhotoList');if(!box)return;
   const list=_storePhotos().slice().sort((a,b)=>String(a.at).localeCompare(String(b.at)));
@@ -4334,15 +4597,15 @@ function renderStorePhotos(){
       +'<button type="button" class="note-del edit-only" title="ลบรูปนี้" aria-label="ลบรูปร้านรูปที่ '+(i+1)+'" onclick="removeStorePhoto(&#39;'+esc(p.id)+'&#39;)">🗑</button>'
       +'<div class="store-photo-meta">'+esc(p.name||'รูปร้าน')+'<span>'+esc(new Date(p.at).toLocaleDateString('th-TH',{dateStyle:'medium'}))+'</span></div></div>';}).join('')
     :'<div class="note-empty">ยังไม่มีรูปร้านจริง</div>';
+  lockUI();
 }
 function viewStorePhoto(id){
   const p=_storePhotos().find(x=>x.id===id);const img=p&&_safePhotoImg(p.img);if(!img)return;
   document.getElementById('photoBig').src=img;
   document.getElementById('photoBig').alt='รูปร้านจริง'+(p.name?' '+p.name:'');
-  document.getElementById('photoCap').textContent=(p.name||'')+(p.at?' · '+new Date(p.at).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'}):'')+(p.by?' · โดย '+p.by:'');
+  document.getElementById('photoCap').textContent=(p.name||'')+(p.at?' · '+new Date(p.at).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'}):'');
   openP('popPhoto');
 }
-/* read a picture, scale its long side to 1280px, return a JPEG data URL under ~450 KB */
 function _shrinkPhoto(file){
   return new Promise((res,rej)=>{
     const fr=new FileReader();
@@ -4374,12 +4637,11 @@ async function addStorePhotos(files){
     if(!/^image\/(jpeg|png|webp|gif|bmp)$/i.test(f.type||'')){skipped++;continue;}
     try{
       const img=await _shrinkPhoto(f);
-      S.storePhotos.push({id:nid(),name:String(f.name||'รูปร้าน').replace(/\.[^.]*$/,'').slice(0,60),at:new Date().toISOString(),by:getActorName()||'',img});
+      S.storePhotos.push({id:nid(),name:String(f.name||'รูปร้าน').replace(/\.[^.]*$/,'').slice(0,60),at:new Date().toISOString(),img});
       added++;
     }catch(e){skipped++;}
   }
-  if(added){dbSave();renderStorePhotos();renderStoreStatus();logActivity('edit','📷 เพิ่มรูปร้านจริง '+added+' รูป');}
-  if(added)_toast('เพิ่มรูปร้านแล้ว '+added+' รูป');
+  if(added){dbSave();renderStorePhotos();renderStoreStatus();_toast('เพิ่มรูปร้านแล้ว '+added+' รูป');}
   if(full)_toast('รูปร้านเต็ม '+STORE_PHOTO_MAX+' รูปแล้ว — ลบรูปเดิมก่อนจึงเพิ่มได้','warn');
   if(skipped)_toast('ข้ามไฟล์ที่ใช้ไม่ได้ '+skipped+' ไฟล์ (รองรับ JPG, PNG, WebP เท่านั้น — รูปจาก iPhone แบบ HEIC ให้ถ่ายใหม่หรือบันทึกเป็น JPG ก่อน)','warn');
 }
@@ -4389,7 +4651,6 @@ function removeStorePhoto(id){
   _confirm('ลบรูปร้านรูปนี้?',()=>{
     p.void=true;p.voidAt=new Date().toISOString();p.img='';
     dbSave();renderStorePhotos();renderStoreStatus();
-    logActivity('delete','ลบรูปร้านจริง');
   });
 }
 /* Union by id; once a photo is voided on either side it stays voided */
@@ -4405,7 +4666,7 @@ function renderOwnerStatus(){
   const o=S.owner||{};
   const missing=OWNER_FIELDS.filter(f=>!String(o[f.k]||'').trim());
   const grab=String(o.grabEmail||'').trim();
-  const grabBad=grab&&!/@gmail\.com$/i.test(grab);
+  const gp=_grabProblem(o),grabBad=!!gp;
   OWNER_FIELDS.forEach(f=>{
     const el=document.getElementById(f.el);if(!el)return;
     el.classList.toggle('missing',el.dataset.touched==='1'&&!String(o[f.k]||'').trim());
@@ -4415,11 +4676,11 @@ function renderOwnerStatus(){
   const _emailBad=k=>{const v=String(o[k]||'').trim();return!!v&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);};
   const _phoneBad=k=>{const v=String(o[k]||'').replace(/[\s\-().+]/g,'');return!!v&&!/^\d{8,12}$/.test(v);};
   const fmt=[];
-  [['ownTaxEmail','taxEmail',_emailBad,'Email เอกสาร/ภาษี ไม่ถูกต้อง (ตัวอย่าง name@company.com)'],['ownPhone','phone',_phoneBad,'เบอร์ส่วนตัวไม่ถูกต้อง (ตัวเลข 8–12 หลัก)'],['ownShopPhone','shopPhone',_phoneBad,'เบอร์ร้านไม่ถูกต้อง (ตัวเลข 8–12 หลัก)']].forEach(([id,k,bad,msg])=>{
+  [['ownTaxEmail','taxEmail',_emailBad,'Email สำหรับธุรกรรมทั่วไป ไม่ถูกต้อง (ตัวอย่าง name@company.com)'],['ownPhone','phone',_phoneBad,'เบอร์ติดต่อส่วนตัวไม่ถูกต้อง (ตัวเลข 8–12 หลัก)'],['ownShopPhone','shopPhone',_phoneBad,'เบอร์ติดต่อหน้าร้านไม่ถูกต้อง (ตัวเลข 8–12 หลัก)']].forEach(([id,k,bad,msg])=>{
     const e=document.getElementById(id),b=bad(k);if(e)e.classList.toggle('bad',b);if(b)fmt.push(msg);
   });
   if(fmt.length&&!grabBad){box.className='owner-status warn';box.setAttribute('role','alert');box.innerHTML='⚠️ '+fmt.map(esc).join(' · ');return;}
-  if(grabBad){box.className='owner-status warn';box.setAttribute('role','alert');box.innerHTML='⚠️ Email สำหรับ Grab ต้องเป็น Gmail เท่านั้น (ลงท้ายด้วย @gmail.com)';return;}
+  if(grabBad){box.className='owner-status warn';box.setAttribute('role','alert');box.textContent=gp==='dup'?'⚠️ Email สำหรับ Grab ต้องไม่ซ้ำกับ Email สำหรับธุรกรรมทั่วไป — กรุณาใช้ Gmail อีกบัญชีหนึ่ง':'⚠️ Email สำหรับ Grab ต้องเป็น Gmail เท่านั้น (ลงท้ายด้วย @gmail.com)';return;}
   if(!missing.length){box.className='owner-status done';box.innerHTML='✅ กรอกข้อมูลครบแล้ว ขอบคุณครับ';return;}
   const anyTouched=OWNER_FIELDS.some(f=>{const e=document.getElementById(f.el);return e&&e.dataset.touched==='1';});
   box.className=anyTouched?'owner-status warn':'owner-status';
@@ -4433,7 +4694,7 @@ function renderFirstSteps(){
   const sh=DB.shops.find(x=>x.id===_activeId);
   if(!sh){card.style.display='none';return;}
   const o=S.owner||{};
-  const ownerOk=OWNER_FIELDS.every(f=>String(o[f.k]||'').trim());
+  const ownerOk=OWNER_FIELDS.every(f=>String(o[f.k]||'').trim())&&!_grabProblem(o);
   const hasDocs=allTasks().some(t=>(t.files||[]).length)||Object.values(S.deptFiles||{}).some(a=>(a||[]).length);
   const steps=[
     {ok:!!(S.branchName&&S.projectStart),ico:'📅',t:'ตั้งชื่อสาขาและวันเริ่มโครงการ',go:"stepGo('setup','qsStart')"},
@@ -4461,8 +4722,8 @@ function renderRecentComments(){
   if(!all.length){card.style.display='none';return;}
   card.style.display='';
   all.sort((a,b)=>String(b.c.at).localeCompare(String(a.c.at)));
-  box.innerHTML=all.slice(0,6).map(({t,c})=>`<div class="due-row${commentMentionsMe(c)?' overdue':''}" onclick="openTaskEdit('${t.id}')" style="align-items:flex-start;height:auto;padding:9px 4px">
-      <span class="due-name" style="white-space:normal"><strong>${esc(c.by||'ไม่ระบุชื่อ')}</strong> · ${esc(t.name)}${commentMentionsMe(c)?' <em style="font-style:normal;color:var(--orange-text);font-weight:800">🔔 ถึงคุณ</em>':''}<br><span style="font-weight:500;color:var(--text-2)">${fmtMentions(String(c.text).slice(0,140))}</span></span>
+  box.innerHTML=all.slice(0,6).map(({t,c})=>`<div class="due-row" onclick="openTaskEdit('${t.id}')" style="align-items:flex-start;height:auto;padding:9px 4px">
+      <span class="due-name" style="white-space:normal"><strong>${esc(c.by||'ไม่ระบุชื่อ')}</strong> · ${esc(t.name)}<br><span style="font-weight:500;color:var(--text-2)">${fmtMentions(String(c.text).slice(0,140))}</span></span>
       <span class="due-when" style="color:var(--text-3)">${fmtCmtTime(c.at)}</span></div>`).join('');
 }
 function stepGo(kind,id){
@@ -4496,7 +4757,7 @@ function renderOverview(){
     const dt=allTasks().filter(t=>(t.depts||[]).includes(d.code)),ds2=dt.filter(t=>t.startDate&&t.enabled),pct=dt.length?Math.round(ds2.length/dt.length*100):0;
     return`<div class="dept-card" onclick="setDeptFilter('${d.code}');showSection('sec-timeline')"><div class="dept-dot" style="background:${readableBg(d.color)};color:${inkFor(readableBg(d.color))}">${S.departments.filter(x=>x.code.slice(0,2)===d.code.slice(0,2)).length>1?d.code.slice(0,3):d.code.slice(0,2)}</div><div class="dept-card-info"><div class="dept-card-name">${esc(d.name)}</div><div class="dept-card-count">${dt.length} tasks · ${ds2.length} กำหนดแล้ว</div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${d.color}"></div></div></div></div>`;
   }).join('');
-  renderDueList();renderActivityLog();
+  renderDueList();
 }
 /* ── DUE / OVERDUE PANEL ──────────────────────────────────────────────
    No delivery mechanism exists yet (LINE/email were removed earlier and
@@ -4523,49 +4784,6 @@ function renderDueList(){
     </div>`;
   }).join('');
 }
-/* ── ACTIVITY LOG ──────────────────────────────────────────────────── */
-async function renderActivityLog(){
-  const box=document.getElementById('activityList');
-  if(!box)return;
-  const card=document.getElementById('activityCard');
-  if(!_sb||!_canEdit){if(card)card.style.display='none';return;}
-  if(card)card.style.display='';                     /* undo an earlier hide from before Supabase was ready */
-  box.innerHTML='<div style="color:var(--text-3);font-size:.8125rem;padding:10px;">กำลังโหลด…</div>';
-  try{
-    let q=_sb.from('jc_ops_activity').select('*').order('id',{ascending:false}).limit(20);
-    if(!_adminMode&&_activeId)q=q.eq('branch_id',_activeId);
-    const{data,error}=await q;
-    if(error)throw error;
-    if(!data||!data.length){box.innerHTML='<div style="color:var(--text-3);font-size:.8125rem;padding:10px;">ยังไม่มีประวัติ</div>';return;}
-    const ICON={create:'🆕',edit:'✏️',delete:'🗑',done:'✅',reopen:'↩️',restore:'♻️',upload:'📎'};
-    box.innerHTML=data.map(a=>
-      `<div class="activity-row"><span class="activity-icon">${ICON[a.action]||'•'}</span>
-       <span class="activity-detail">${esc(a.detail||a.action)}</span>
-       <span class="activity-who">${esc(a.actor||'')}${a.branch_name?' · '+esc(a.branch_name):''}</span>
-       <span class="activity-at">${new Date(a.created_at).toLocaleString('th-TH',{dateStyle:'short',timeStyle:'short'})}</span></div>`
-    ).join('');
-  }catch(e){
-    box.innerHTML='<div style="color:var(--text-3);font-size:.8125rem;padding:10px;">อ่านประวัติไม่ได้</div>';
-  }
-}
-/* Clear the activity log. Admin wipes it all; a branch link wipes only its
-   own branch's rows — the RLS delete policy enforces that server-side, this
-   scope filter just avoids a pointless full-table DELETE attempt. */
-function clearActivityLog(){
-  if(!_sb||!_canEdit)return;
-  const scoped=!_adminMode&&_activeId;
-  _confirm(scoped?'ล้างประวัติการแก้ไขของสาขานี้ทั้งหมด?':'ล้างประวัติการแก้ไขทั้งหมด?\n(ทุกสาขา — กู้คืนไม่ได้)',async()=>{
-    try{
-      let q=_sb.from('jc_ops_activity').delete();
-      q=scoped?q.eq('branch_id',_activeId):q.gt('id',0);   /* PostgREST requires a filter on DELETE */
-      const{error}=await q;
-      if(error)throw error;
-      _toast('ล้างประวัติแล้ว');
-      renderActivityLog();
-    }catch(e){_toast('ล้างประวัติไม่สำเร็จ','err');}
-  });
-}
-
 /* RENDER */
 function render(){
   if(!S.months||!S.months.length)computeMonthsFromProject(S.projectStart,S.projectDuration);
@@ -4583,19 +4801,15 @@ function mtToggleGroup(id){_mtCollapsed.has(id)?_mtCollapsed.delete(id):_mtColla
 function renderMobileTimeline(){
   const box=document.getElementById('mobileTimeline');if(!box)return;
   const today=_todayKey();
-  const tf=S.taskFilter||'all';
   const df=S.deptFilter||'ALL';
   let html='';
   S.groups.forEach(g=>{
-    let list=g.tasks.slice();
-    if(tf==='open')list=list.filter(t=>!t.done);
-    else if(tf==='done')list=list.filter(t=>t.done);
+    let list=g.tasks.filter(t=>!t.done);        /* finished work waits in the list at the bottom */
     if(df!=='ALL')list=list.filter(t=>(t.depts||[]).includes(df)||(t.depts||[]).includes('ALL'));
     if(!list.length)return;
-    list.sort((a,b)=>(a.done?1:0)-(b.done?1:0));
     const doneN=g.tasks.filter(t=>t.done).length;
     const collapsed=_mtCollapsed.has(g.id);
-    html+=`<div class="mt-group${collapsed?' collapsed':''}">
+    html+=g.headingOnly?`<div class="mt-group mt-headonly"><div class="mt-tasks">`:`<div class="mt-group${collapsed?' collapsed':''}">
       <div class="mt-ghead" onclick="mtToggleGroup('${g.id}')">
         <span>${esc(g.name)}</span><span class="mt-gcount">${doneN}/${g.tasks.length}</span><span class="mt-caret">▾</span>
       </div><div class="mt-tasks">`;
@@ -4606,14 +4820,14 @@ function renderMobileTimeline(){
       else if(t.endDate&&t.endDate<today){pcls='overdue';ptxt='เกินกำหนด '+Math.round((new Date(today)-new Date(t.endDate))/86400000)+' วัน';}
       else if(t.startDate){pcls='soon';ptxt='กำลังดำเนินการ';}
       const dstr=t.startDate?`📅 ${fmtSD(t.startDate)} – ${fmtSD(t.endDate)} · ${t.days||1} วัน`:`⏳ ${t.days||1} วัน · ยังไม่กำหนดวัน`;
-      html+=`<div class="mt-task${t.done?' done':''}">
+      html+=`<div class="mt-task${t.done?' done':''}${t.isHeading?' mt-heading':''}">
         <div class="mt-check" onclick="toggleDone('${t.id}')">✓</div>
-        <div class="mt-body" onclick="openDP('${t.id}')">
+        <div class="mt-body" onclick="openTaskMain('${t.id}')">
           <div class="mt-name">${esc(t.name)}</div>
           <div class="mt-meta">${badges}<span class="mt-dates">${dstr}</span><span class="mt-pill ${pcls}">${ptxt}</span>${(()=>{
             const cl=checklistProgress(t),nc=(t.comments||[]).length,nd=depIds(t).filter(id=>findTask(id)).length;
             return(cl.total?`<span class="mt-pill ${cl.done===cl.total?'done':'none'}">☑ ${cl.done}/${cl.total}</span>`:'')
-              +(nc?`<span class="mt-pill ${t.comments.some(commentMentionsMe)?'overdue':'none'}">💬 ${nc}</span>`:'')
+              +(nc?`<span class="mt-pill none">💬 ${nc}</span>`:'')
               +(nd?`<span class="mt-pill none" title="เริ่มหลังงานอื่น">⛓ ${nd}</span>`:'');
           })()}</div>
         </div>
@@ -4684,7 +4898,7 @@ function renderTable(){
   const _todayStr=_todayKey();
   const SCS=_stickyColspan();
   const cols=getDateCols();
-  document.getElementById('noMonthHint').innerHTML=cols.length===0?`<div style="display:inline-block;border:2px dashed var(--border);border-radius:14px;padding:36px 52px;"><p style="font-size:.9375rem;font-weight:700;color:var(--text-2);margin-bottom:8px;">📅 ยังไม่มีเดือนในไทม์ไลน์</p><p style="font-size:.8125rem;color:var(--text-3);">กดปุ่ม <strong>"เดือน"</strong> ในแถบด้านบน หรือกลับไป Overview แล้วกด <strong>"สร้าง Timeline"</strong></p></div>`:'';
+  document.getElementById('noMonthHint').innerHTML=cols.length===0?`<div style="display:inline-block;border:2px dashed var(--border);border-radius:14px;padding:36px 52px;"><p style="font-size:.9375rem;font-weight:700;color:var(--text-2);margin-bottom:8px;">📅 ยังไม่มีเดือนในไทม์ไลน์</p><p style="font-size:.8125rem;color:var(--text-3);">กลับไปที่ Overview แล้วกด <strong>"สร้าง Timeline"</strong></p></div>`:'';
   const px=v=>parseFloat(getComputedStyle(document.documentElement).getPropertyValue(v))||0;
   const W={task:px('--c-task'),by:px('--c-by'),day:px('--c-day'),sort:px('--c-sort'),date:px('--c-date')};
   const colTag=(cls,w)=>w>0?'<col class="'+cls+'" style="width:'+w+'px">':'';
@@ -4701,26 +4915,18 @@ function renderTable(){
   document.getElementById('ganttHead').innerHTML=h1+'<tr>'+cols.map(c=>`<th class="th-dow${c.isWeekend?' th-wknd':''}${edge(c)}" data-k="${c.key}">${DOW[c.dow]}</th>`).join('')+'</tr><tr>'+cols.map(c=>`<th class="th-day${c.isWeekend?' th-wknd':''}${edge(c)}" data-k="${c.key}">${c.day}</th>`).join('')+'</tr>';
   let html='';
   S.groups.forEach(g=>{
-    if((S.taskFilter||'all')!=='all'){
-      const vis=g.tasks.filter(t=>(S.taskFilter==='done')?t.done:!t.done);
-      if(!vis.length)return;
-    }
+    const _list=g.tasks.filter(t=>!t.done);          /* finished work leaves the timeline (see renderDoneSection) */
     const _gl=safeHref(g.link),gN=_gl?`<a href="${esc(_gl)}" target="_blank" rel="noopener noreferrer">${esc(g.name)} 🔗</a>`:esc(g.name);
-    html+=`<tr class="tr-group"><td class="td-group-label" colspan="${SCS}" style="width:${GW}px;min-width:${GW}px"><div class="group-label-inner">${gN}<div class="group-actions"><button class="ga-btn" onclick="openGrpEdit('${g.id}')">✏️</button><button class="ga-btn edit-only" onclick="addTask('${g.id}')">＋</button><button class="ga-btn"${S.groups[0]===g?' disabled':''} onclick="mvGroup('${g.id}',-1)">▲</button><button class="ga-btn"${S.groups[S.groups.length-1]===g?' disabled':''} onclick="mvGroup('${g.id}',1)">▼</button><button class="ga-btn ga-del edit-only" title="ลบกลุ่ม" onclick="quickDeleteGroup('${g.id}')">🗑</button></div></div></td>${cols.length?`<td class="group-span-td" colspan="${cols.length}"></td>`:''}</tr>`;
-    let _list=g.tasks.slice();
-    const _tf=S.taskFilter||'all';
-    if(_tf==='open')_list=_list.filter(t=>!t.done);
-    else if(_tf==='done')_list=_list.filter(t=>t.done);
-    _list.sort((a,b)=>(a.done?1:0)-(b.done?1:0));   /* finished work drops below */
+    if(!(g.headingOnly&&_list.length))html+=`<tr class="tr-group"><td class="td-group-label" colspan="${SCS}" style="width:${GW}px;min-width:${GW}px"><div class="group-label-inner">${gN}${(!_list.length&&g.tasks.length)?'<span class="grp-alldone">✓ ครบแล้ว</span>':''}<div class="group-actions"><button class="ga-btn" onclick="openGrpEdit('${g.id}')">✏️</button><button class="ga-btn edit-only" onclick="addTask('${g.id}')">＋</button><button class="ga-btn"${S.groups[0]===g?' disabled':''} onclick="mvGroup('${g.id}',-1)">▲</button><button class="ga-btn"${S.groups[S.groups.length-1]===g?' disabled':''} onclick="mvGroup('${g.id}',1)">▼</button><button class="ga-btn ga-del edit-only" title="ลบกลุ่ม" onclick="quickDeleteGroup('${g.id}')">🗑</button></div></div></td>${cols.length?`<td class="group-span-td" colspan="${cols.length}"></td>`:''}</tr>`;
     _list.forEach(t=>{
-      const _ti=g.tasks.indexOf(t),_tl=g.tasks.length-1;const bc=byColor(t.by),dim2=taskMatchesDept(t)?'':' dept-dim',lkB=safeHref(t.link)?`<a class="act-btn" href="${esc(safeHref(t.link))}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;" aria-label="เปิดลิงก์ของงาน">🔗</a>`:'';
+      const _ti=_list.indexOf(t),_tl=_list.length-1;const bc=byColor(t.by),dim2=taskMatchesDept(t)?'':' dept-dim',lkB=safeHref(t.link)?`<a class="act-btn" href="${esc(safeHref(t.link))}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;" aria-label="เปิดลิงก์ของงาน">🔗</a>`:'';
       const dB=(t.depts||[]).filter(d=>d!=='ALL').map(d=>{const dep=S.departments.find(x=>x.code===d);return dep?`<span class="dept-badge" style="background:${readableBg(dep.color)};color:${inkFor(readableBg(dep.color))}">${esc(dep.code)}</span>`:''}).join('');
       const fcnt=(t.files||[]).length,fB=fcnt?`<button class="act-btn file-badge" onclick="openTaskEdit('${t.id}')" title="${fcnt} ไฟล์แนบ">📎${fcnt}</button>`:'';
       const _cl=checklistProgress(t),_nc=(t.comments||[]).length,_nd=depIds(t).filter(id=>findTask(id)).length;
       const xB=(_cl.total?`<button class="act-btn mini-badge${_cl.done===_cl.total?' ok':''}" onclick="openTaskEdit('${t.id}')" title="Checklist ${_cl.done}/${_cl.total}">☑${_cl.done}/${_cl.total}</button>`:'')
-        +(_nc?`<button class="act-btn mini-badge${t.comments.some(commentMentionsMe)?' hot':''}" onclick="openTaskEdit('${t.id}')" title="${_nc} ความคิดเห็น">💬${_nc}</button>`:'')
+        +(_nc?`<button class="act-btn mini-badge" onclick="openTaskEdit('${t.id}')" title="${_nc} ความคิดเห็น">💬${_nc}</button>`:'')
         +(_nd?`<button class="act-btn mini-badge" onclick="openTaskEdit('${t.id}')" title="เริ่มหลัง: ${esc(depIds(t).map(id=>(findTask(id)||{}).name).filter(Boolean).join(', '))}">⛓${_nd}</button>`:'');
-      html+=`<tr class="tr-task${t.done?' tr-done':''}${dim2}"><td class="s0 td-task col-task"><div class="task-inner"><button class="act-btn act-done" title="${t.done?'ทำเครื่องหมายว่ายังไม่เสร็จ':'ทำเครื่องหมายว่าเสร็จแล้ว'}" aria-pressed="${t.done?'true':'false'}" onclick="toggleDone('${t.id}')">${t.done?'✅':'⬜'}</button><button class="task-name-btn" onclick="openDP('${t.id}')">${esc(t.name)}</button>${dB}${lkB}${fB}${xB}<button class="act-btn edit-only" title="แก้ไข" onclick="openTaskEdit('${t.id}')">✏️</button><span class="act-more"><button class="act-btn" title="เพิ่มเติม" onclick="toggleActMenu(this,event)" aria-haspopup="true">⋯</button><span class="act-menu"><button class="m-done edit-only" onclick="toggleDone('${t.id}')">${t.done?'↩️ ยังไม่เสร็จ':'✅ ทำเครื่องหมายเสร็จ'}</button><button class="m-edit edit-only" onclick="openTaskEdit('${t.id}')">✏️ แก้ไขงาน</button><button onclick="openTaskDocs('${t.id}')">📋 เอกสารแผนก</button><button class="edit-only" onclick="quickDeleteTask('${g.id}','${t.id}')">🗑 ลบงานนี้</button></span></span></div></td><td class="s1 td-by col-by"><span class="by-pill" style="background:${bc};color:${inkFor(bc)}" onclick="cycleBy('${t.id}')">${esc(t.by)}</span></td><td class="s2 td-day col-day"><input class="day-inline-input" type="number" min="1" max="730" value="${t.days||1}" onchange="setTaskDays('${t.id}',+this.value)"></td><td class="s3 td-sort col-sort"><button class="srt-btn"${_ti===0?' disabled':''} onclick="mvTask('${g.id}','${t.id}',-1)">▲</button><button class="srt-btn"${_ti===_tl?' disabled':''} onclick="mvTask('${g.id}','${t.id}',1)">▼</button></td>`;
+      html+=`<tr class="tr-task${t.done?' tr-done':''}${t.isHeading?' tr-heading':''}${dim2}"><td class="s0 td-task col-task"><div class="task-inner"><button class="act-btn act-done" title="${t.done?'ทำเครื่องหมายว่ายังไม่เสร็จ':'ทำเครื่องหมายว่าเสร็จแล้ว'}" aria-pressed="${t.done?'true':'false'}" onclick="toggleDone('${t.id}')">${t.done?'✅':'⬜'}</button><button class="task-name-btn" onclick="openTaskMain('${t.id}')">${esc(t.isHeading?g.name:t.name)}</button>${dB}${lkB}${fB}${xB}<button class="act-btn edit-only" title="แก้ไข" onclick="openTaskEdit('${t.id}')">✏️</button><span class="act-more"><button class="act-btn" title="เพิ่มเติม" onclick="toggleActMenu(this,event)" aria-haspopup="true">⋯</button><span class="act-menu"><button class="m-done edit-only" onclick="toggleDone('${t.id}')">${t.done?'↩️ ยังไม่เสร็จ':'✅ ทำเครื่องหมายเสร็จ'}</button><button class="m-edit edit-only" onclick="openTaskEdit('${t.id}')">✏️ แก้ไขงาน</button><button onclick="openTaskDocs('${t.id}')">📋 เอกสารแผนก</button><button class="edit-only" onclick="${t.isHeading?`quickDeleteGroup('${g.id}')`:`quickDeleteTask('${g.id}','${t.id}')`}">🗑 ${t.isHeading?'ลบหัวข้อนี้':'ลบงานนี้'}</button>${t.isHeading?`<button class="edit-only" onclick="openGrpEdit('${g.id}')">🗂 ตั้งค่าหัวข้อ</button>`:''}</span></span></div></td><td class="s1 td-by col-by"><span class="by-pill" style="background:${bc};color:${inkFor(bc)}" onclick="cycleBy('${t.id}')">${esc(t.by)}</span></td><td class="s2 td-day col-day"><input class="day-inline-input" type="number" min="1" max="730" value="${t.days||1}" onchange="setTaskDays('${t.id}',+this.value)"></td><td class="s3 td-sort col-sort">${t.isHeading?`<button class="srt-btn"${S.groups[0]===g?' disabled':''} onclick="mvGroup('${g.id}',-1)">▲</button><button class="srt-btn"${S.groups[S.groups.length-1]===g?' disabled':''} onclick="mvGroup('${g.id}',1)">▼</button>`:`<button class="srt-btn"${_ti===0?' disabled':''} onclick="mvTask('${g.id}','${t.id}',-1)">▲</button><button class="srt-btn"${_ti===_tl?' disabled':''} onclick="mvTask('${g.id}','${t.id}',1)">▼</button>`}</td>`;
       /* Segment rendering: non-bar days as individual td, bar as single spanning td */
       {let ci=0;while(ci<cols.length){
         const col=cols[ci];
@@ -4738,7 +4944,7 @@ function renderTable(){
           const rEnd=cols[end-1];
           const borderR=rEnd&&rEnd.isMonthEnd?'border-right:3px solid rgba(255,255,255,.25)':rEnd&&rEnd.isWeekBorder?'border-right:2px solid rgba(255,255,255,.18)':'border-right:none';
           const _tip=esc(t.name)+' · '+dateLbl+(t.done?' · เสร็จแล้ว':(_late?' · เกินกำหนด':''))+(_pr&&!t.done?' · ความคืบหน้า '+_pr+'%':'');
-          html+=`<td colspan="${span}" class="td-bar-span${_late?' bar-late':''}${t.done?' bar-done':''}" data-tid="${t.id}" title="${_tip}" style="background:${bc};${borderR}" onclick="openDP('${t.id}')"><span class="bar-prog" style="width:${_pr}%"></span>${(_pl&&!t.done)?`<span class="bar-plan" style="width:${_pl}%"></span>`:''}<div class="bar-label-inner" style="color:${inkFor(bc)}${inkFor(bc)==='#fff'?'':';text-shadow:none'}">${lbl}</div><div class="bar-resize" onpointerdown="onBarResizeStart(event,'${t.id}')" onclick="event.stopPropagation()">⟺</div></td>`;
+          html+=`<td colspan="${span}" class="td-bar-span${_late?' bar-late':''}${t.done?' bar-done':''}" data-tid="${t.id}" title="${_tip}" style="background:${bc};${borderR}" onclick="barClick('${t.id}')" onpointerdown="onBarDragStart(event,'${t.id}')"><span class="bar-prog" style="width:${_pr}%"></span>${(_pl&&!t.done)?`<span class="bar-plan" style="width:${_pl}%"></span>`:''}<div class="bar-label-inner" style="color:${inkFor(bc)}${inkFor(bc)==='#fff'?'':';text-shadow:none'}">${lbl}</div><div class="bar-resize" onpointerdown="onBarResizeStart(event,'${t.id}')" onclick="event.stopPropagation()">⟺</div></td>`;
           ci=end;
         }else{
           let cls='td-date';
@@ -4771,7 +4977,7 @@ function taskPlanPct(t,today){
    One SVG laid over the table (pointer-events none, under the sticky
    columns). Positions are read back from the rendered bars, so it always
    matches the real layout; it is redrawn after every render and on resize. */
-let _showDeps=true;try{_showDeps=localStorage.getItem('jc_show_deps')!=='0';}catch(e){}
+let _showDeps=true;   /* the on/off button is hidden from the toolbar, so the lines always show */
 function toggleDepLines(){
   _showDeps=!_showDeps;
   try{localStorage.setItem('jc_show_deps',_showDeps?'1':'0');}catch(e){}
@@ -4902,19 +5108,47 @@ function toggleDone(id){
   t.done=!t.done;
   t.doneAt=t.done?new Date().toISOString():'';
   dbSave();render();
-  logActivity(t.done?'done':'reopen',(t.done?'ทำเสร็จ: ':'เปิดใหม่: ')+t.name);
-  _toast(t.done?'ทำเครื่องหมายว่าเสร็จแล้ว':'ย้ายกลับเป็นยังไม่เสร็จ');
+  
+  _toast(t.done?'ทำเครื่องหมายว่าเสร็จแล้ว — งานย้ายไปอยู่ด้านล่างของ Timeline':'ย้ายกลับเข้า Timeline แล้ว');
 }
-function setTaskFilter(v){S.taskFilter=v;render();}
+/* Count strip above the timeline, plus the finished-work list under it */
 function renderTaskFilter(){
   const el=document.getElementById('taskFilter');if(!el)return;
   const all=allTasks().filter(t=>t.enabled);
   const done=all.filter(t=>t.done).length;
-  const open=all.length-done;
-  const cur=S.taskFilter||'all';
-  const opt=(v,label,n)=>'<button class="tf-btn'+(cur===v?' on':'')+'" onclick="setTaskFilter(\''+v+'\')">'
-    +label+' <span class="tf-n">'+n+'</span></button>';
-  el.innerHTML=opt('all','ทั้งหมด',all.length)+opt('open','ค้างอยู่',open)+opt('done','เสร็จแล้ว',done);
+  el.innerHTML='<span class="tf-btn on" role="status">ค้างอยู่ <span class="tf-n">'+(all.length-done)+'</span></span>'
+    +'<button type="button" class="tf-btn" onclick="jumpToDone()" title="งานที่เสร็จแล้วอยู่ด้านล่างของ Timeline">เสร็จแล้ว <span class="tf-n">'+done+'</span> ↓</button>';
+  renderDoneSection();
+}
+function _showDone(){try{return localStorage.getItem('jc_show_done')==='1';}catch(e){return false;}}
+function toggleDoneSection(){try{localStorage.setItem('jc_show_done',_showDone()?'0':'1');}catch(e){}renderDoneSection();}
+function jumpToDone(){
+  try{localStorage.setItem('jc_show_done','1');}catch(e){}
+  renderDoneSection();
+  const s=document.getElementById('doneSection');if(s&&s.style.display!=='none')s.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderDoneSection(){
+  const sec=document.getElementById('doneSection');if(!sec)return;
+  const total=allTasks().filter(t=>t.done).length;
+  if(!total){sec.style.display='none';return;}
+  sec.style.display='';
+  const open=_showDone();
+  document.getElementById('doneCount').textContent=total;
+  const btn=document.getElementById('doneToggle');
+  btn.textContent=open?'ซ่อนงานที่เสร็จแล้ว ▴':'แสดงงานที่เสร็จแล้ว ▾';btn.setAttribute('aria-expanded',open?'true':'false');
+  const box=document.getElementById('doneList');box.hidden=!open;
+  if(!open){box.innerHTML='';return;}
+  const rows=[];
+  S.groups.forEach(g=>g.tasks.forEach(t=>{if(t.done&&taskMatchesDept(t))rows.push({g,t});}));
+  rows.sort((a,b)=>String(b.t.doneAt||'').localeCompare(String(a.t.doneAt||'')));
+  box.innerHTML=rows.length?rows.map(({g,t})=>{
+    const dB=(t.depts||[]).filter(d=>d!=='ALL').map(d=>{const dep=S.departments.find(x=>x.code===d);return dep?`<span class="dept-badge" style="background:${readableBg(dep.color)};color:${inkFor(readableBg(dep.color))}">${esc(dep.code)}</span>`:'';}).join('');
+    const when=t.doneAt?new Date(t.doneAt).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'}):'';
+    return`<div class="done-row"><span class="done-mark" aria-hidden="true">✅</span><button type="button" class="task-name-btn" onclick="openTaskMain('${t.id}')">${esc(t.name)}</button>${dB}
+      <span class="done-meta">${esc(g.name)}${t.startDate?' · '+fmtSD(t.startDate)+'–'+fmtSD(t.endDate):''}${when?' · เสร็จ '+when:''}</span>
+      <button type="button" class="btn btn-ghost2 btn-sm edit-only" onclick="toggleDone('${t.id}')">↩ คืนเข้า Timeline</button></div>`;
+  }).join(''):'<div class="note-empty">ไม่มีงานที่เสร็จแล้วของแผนกนี้</div>';
+  lockUI();
 }
 /* TASK DAYS INLINE */
 function setTaskDays(id,n){if(!requireEdit())return;
@@ -4957,7 +5191,7 @@ function addTaskDep(pid){
   if(!t.deps.includes(pid))t.deps.push(pid);
   const n=enforceDeps();
   dbSave();renderTaskDeps(t);render();
-  logActivity('edit','ตั้งให้ "'+t.name+'" เริ่มหลัง "'+p.name+'"');
+  
   if(n)_toast('ปรับวันที่ '+n+' งานตามลำดับที่เชื่อมโยงไว้','warn');
 }
 function removeTaskDep(pid){
@@ -4965,6 +5199,114 @@ function removeTaskDep(pid){
   const t=findTask(_etId);if(!t)return;
   t.deps=depIds(t).filter(x=>x!==pid);
   dbSave();renderTaskDeps(t);render();
+}
+/* ── REQUIRED DOCUMENTS ("จัดเตรียมเอกสาร") ───────────────────────────────
+   Clicking that task opens what the owner must send, with a tick per document. The ticks are the task's
+   own checklist (so the ☑ x/y badge and progress keep working) and the list can be edited per branch. */
+const DOC_TASK_NAMES=['จัดเตรียมเอกสาร'];
+const DOC_REQ_DEFAULT=[
+  'สำเนาหนังสือรับรองบริษัท',
+  'สำเนา บอจ.5',
+  'สำเนา ภ.พ.20 (ใช้ 01 แทนได้)',
+  'สำเนาบัตรประชาชน และทะเบียนบ้านของทุกท่านในนิติบุคคล',
+  'สำเนา Bookbank ธนาคารกสิกร (ในนามนิติบุคคล)',
+];
+const DOC_REQ_ADDR=['บริษัท เจี๊ยนชา จำกัด','419/1 ซอยลาดพร้าว 15 แขวงจอมพล เขตจตุจักร กรุงเทพมหานคร'],DOC_REQ_TAXID='0125567006976';
+let _drId=null,_drEdit=false;
+function isDocTask(t){return!!t&&(!!t.docReq||DOC_TASK_NAMES.includes(String(t.name||'').trim()));}
+function openTaskMain(id){const t=findTask(id);if(isDocTask(t))openDocReq(id);else openDP(id);}
+function _drCanWrite(){return _canEdit||!_sb||_customerMode;}
+function openDocReq(id){
+  const t=findTask(id);if(!t)return;
+  _drId=id;_drEdit=false;
+  /* first open: fill in the standard list (kept with the task from then on) */
+  if(!t.docSeeded&&_drCanWrite()){
+    if(!Array.isArray(t.checklist))t.checklist=[];
+    DOC_REQ_DEFAULT.forEach(x=>{if(!t.checklist.some(c=>c.text===x))t.checklist.push({id:nid(),text:x,done:false});});
+    t.docSeeded=true;t.docReq=true;
+    dbSave();render();
+  }
+  renderDocReq();openP('popDocReq');
+}
+function _drList(t){
+  if(t.docSeeded||(t.checklist||[]).length)return t.checklist||[];
+  return DOC_REQ_DEFAULT.map((x,i)=>({id:'d'+i,text:x,done:false}));      /* view-only before anyone opened it */
+}
+function renderDocReq(){
+  const t=findTask(_drId),box=document.getElementById('drBody');if(!t||!box)return;
+  const list=_drList(t),done=list.filter(x=>x.done).length,ro=!_drCanWrite()||!t.docSeeded;
+  document.getElementById('drTitle').textContent='📋 เอกสารและข้อมูลที่ต้องใช้ — '+t.name;
+  const items=_drEdit
+    ?list.map((x,i)=>`<div class="dr-edit-row"><input class="of-input" value="${esc(x.text)}" maxlength="200" aria-label="ชื่อเอกสารรายการที่ ${i+1}" onchange="drRename('${esc(x.id)}',this.value)">`
+      +`<button type="button" class="srt-btn" ${i===0?'disabled':''} aria-label="เลื่อนรายการขึ้น" onclick="drMove('${esc(x.id)}',-1)">▲</button>`
+      +`<button type="button" class="srt-btn" ${i===list.length-1?'disabled':''} aria-label="เลื่อนรายการลง" onclick="drMove('${esc(x.id)}',1)">▼</button>`
+      +`<button type="button" class="chk-del" aria-label="ลบรายการ ${esc(x.text)}" title="ลบรายการ" onclick="drRemove('${esc(x.id)}')">🗑</button></div>`).join('')
+      +`<div class="dr-add"><input class="of-input" id="drNew" maxlength="200" placeholder="ชื่อเอกสารที่ต้องการเพิ่ม" aria-label="ชื่อเอกสารที่ต้องการเพิ่ม" onkeydown="if(event.key==='Enter'){event.preventDefault();drAdd();}"><button type="button" class="btn btn-navy btn-sm" onclick="drAdd()">＋ เพิ่มเอกสาร</button></div>`
+      +`<div class="dr-edit-foot"><button type="button" class="btn btn-ghost2 btn-sm" onclick="drReset()">↺ ใช้รายการมาตรฐาน</button><button type="button" class="btn btn-gold btn-sm" onclick="drSetEdit(false)">✓ แก้ไขเสร็จแล้ว</button></div>`
+    :(list.length?list.map(x=>`<label class="chk-main dr-item${x.done?' done':''}"><input type="checkbox" ${x.done?'checked':''} ${ro?'disabled':''} onchange="drToggle('${esc(x.id)}',this.checked)"><span>${esc(x.text)}</span></label>`).join(''):'<div class="cp-empty">ยังไม่มีรายการเอกสาร — กด “แก้ไขรายการ” เพื่อเพิ่ม</div>');
+  box.innerHTML=`<p class="dr-intro">เอกสารจะถูกขอครั้งเดียวและนำไปใช้เพื่อธุรกรรมต่าง ๆ — รบกวนส่งกลับภายใน <strong>20 วัน</strong> นับจากได้รับข้อความนี้</p>
+    <div class="dr-sec"><div class="dr-h">เอกสารประกอบเพื่อทำธุรกรรม</div>
+      <ul class="dr-use"><li>📍 สัญญาแฟรนไชส์</li><li>📍 สมัครเครื่อง EDC กับธนาคารกสิกร</li><li>📍 สมัคร Grab Delivery</li></ul></div>
+    <div class="dr-sec"><div class="dr-h"><span>รายการเอกสารที่ต้องส่ง <span class="tf-n">${done}/${list.length}</span></span>
+      ${(!_drEdit&&!ro)?'<button type="button" class="btn btn-ghost2 btn-sm edit-only" onclick="drSetEdit(true)">✏️ แก้ไขรายการ</button>':''}</div>
+      <div class="dr-list">${items}</div>
+      ${(!_drEdit&&list.length&&done===list.length)?'<div class="owner-status done">✅ ได้รับเอกสารครบทุกรายการแล้ว</div>':''}</div>
+    <div class="dr-sec dr-note"><div class="dr-h">วิธีส่งเอกสาร</div>
+      <p><strong>จำนวน 4 ชุด</strong> — ลงนามเซ็นสดด้วยปากกาน้ำเงินเท่านั้น และประทับตราทุกหน้า (ไม่ต้องเซ็นรับรองสำเนา)</p>
+      <p>ก่อนส่งเอกสาร รบกวนรวมเป็นชุดเดียวแล้วสแกนสีส่งกลับมาให้ทีมงานช่วยตรวจสอบก่อนส่งฉบับจริง</p></div>
+    <div class="dr-sec dr-addr"><div class="dr-h"><span>ที่อยู่ส่งเอกสาร</span><button type="button" class="btn btn-ghost2 btn-sm" onclick="drCopyAddr()">📋 คัดลอกที่อยู่</button></div>
+      <div translate="no">${DOC_REQ_ADDR.map(esc).join('<br>')}</div><div><span>เลขผู้เสียภาษี</span> <span translate="no">${DOC_REQ_TAXID}</span></div></div>
+    <div class="dr-foot"><button type="button" class="btn btn-ghost2 btn-sm" onclick="closeP('popDocReq');openDP('${esc(t.id)}')">📅 ตั้งวันที่ของงาน</button>
+      <button type="button" class="btn btn-navy btn-sm" onclick="closeP('popDocReq')">ปิด</button></div>`;
+  lockUI();
+}
+function drSetEdit(on){if(on&&!requireEdit())return;_drEdit=!!on;renderDocReq();if(on){const f=document.querySelector('#drBody .dr-edit-row input')||document.getElementById('drNew');if(f)f.focus();}}
+function _drAfter(){dbSave();render();renderDocReq();}
+function drToggle(id,on){
+  const t=findTask(_drId);if(!t)return;
+  if(!requireEdit()){renderDocReq();return;}
+  const it=(t.checklist||[]).find(x=>x.id===id);if(!it)return;
+  it.done=!!on;_drAfter();
+  const pr=checklistProgress(t);
+  if(on&&pr.total&&pr.done===pr.total)_toast('ได้รับเอกสารครบทุกรายการแล้ว');
+}
+function drRename(id,v){
+  if(!requireEdit())return;const t=findTask(_drId);if(!t)return;
+  const it=(t.checklist||[]).find(x=>x.id===id);if(!it)return;
+  v=String(v||'').trim();if(!v){_toast('ชื่อเอกสารว่างไม่ได้ — ถ้าไม่ใช้รายการนี้ให้กด 🗑','warn');renderDocReq();return;}
+  it.text=v.slice(0,200);_drAfter();
+}
+function drMove(id,dir){
+  if(!requireEdit())return;const t=findTask(_drId);if(!t)return;
+  const c=t.checklist||[],i=c.findIndex(x=>x.id===id),j=i+dir;if(i<0||j<0||j>=c.length)return;
+  [c[i],c[j]]=[c[j],c[i]];_drAfter();
+  const b=document.querySelectorAll('#drBody .dr-edit-row')[j];if(b){const k=b.querySelector(dir<0?'.srt-btn':'.srt-btn+.srt-btn');if(k&&!k.disabled)k.focus();}
+}
+function drRemove(id){
+  if(!requireEdit())return;const t=findTask(_drId);if(!t)return;
+  const it=(t.checklist||[]).find(x=>x.id===id);if(!it)return;
+  _confirm('ลบ "'+it.text+'" ออกจากรายการเอกสาร?',()=>{t.checklist=t.checklist.filter(x=>x.id!==id);_drAfter();},{yes:'ลบรายการ',danger:true});
+}
+function drAdd(){
+  if(!requireEdit())return;const t=findTask(_drId);if(!t)return;
+  const inp=document.getElementById('drNew'),v=(inp&&inp.value||'').trim();
+  if(!v){if(inp)fieldError(inp,'พิมพ์ชื่อเอกสารก่อนกดเพิ่ม');return;}
+  if(!Array.isArray(t.checklist))t.checklist=[];
+  t.checklist.push({id:nid(),text:v.slice(0,200),done:false});_drAfter();
+  const n2=document.getElementById('drNew');if(n2)n2.focus();
+}
+function drReset(){
+  if(!requireEdit())return;const t=findTask(_drId);if(!t)return;
+  _confirm('ใช้รายการเอกสารมาตรฐาน '+DOC_REQ_DEFAULT.length+' รายการแทนรายการนี้?\nรายการที่ชื่อตรงกันจะยังคงเครื่องหมายที่ติ๊กไว้',()=>{
+    const old=t.checklist||[];
+    t.checklist=DOC_REQ_DEFAULT.map(x=>{const o=old.find(c=>c.text===x);return o||{id:nid(),text:x,done:false};});
+    _drAfter();
+  },{yes:'ใช้รายการมาตรฐาน'});
+}
+function drCopyAddr(){
+  const txt=DOC_REQ_ADDR.join(' ')+' เลขผู้เสียภาษี '+DOC_REQ_TAXID;
+  const ok=()=>_toast('คัดลอกที่อยู่แล้ว'),bad=()=>_toast('คัดลอกไม่ได้ — กรุณาเลือกข้อความแล้วคัดลอกเอง','warn');
+  try{navigator.clipboard.writeText(txt).then(ok,bad);}catch(e){bad();}
 }
 function checklistProgress(t){
   const c=t.checklist||[];
@@ -5011,7 +5353,6 @@ function mentionNames(){
   add((S.owner||{}).name);add((S.finance||{}).owner);
   (DB.bdTeam||[]).forEach(m=>add(m.name));
   allTasks().forEach(t=>(t.comments||[]).forEach(c=>add(c.by)));
-  add(getActorName());
   return[...set];
 }
 function fmtMentions(text){
@@ -5019,10 +5360,6 @@ function fmtMentions(text){
   const names=mentionNames().sort((a,b)=>b.length-a.length).map(n=>esc(n).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
   const re=new RegExp('@(?:'+(names.length?names.join('|')+'|':'')+'[^\\s@]+)','g');
   return h.replace(re,m=>`<span class="mention">${m}</span>`);
-}
-function commentMentionsMe(c){
-  const me=getActorName().trim().toLowerCase();
-  return!!me&&String(c.text||'').toLowerCase().includes('@'+me);
 }
 function fmtCmtTime(iso){
   const d=new Date(iso);if(isNaN(d))return'';
@@ -5032,8 +5369,8 @@ function renderComments(t){
   const c=t.comments||[];
   document.getElementById('etCmtCount').textContent=c.length?`(${c.length})`:'';
   document.getElementById('etComments').innerHTML=c.length?c.map(x=>`
-    <div class="cmt${commentMentionsMe(x)?' to-me':''}">
-      <div class="cmt-head"><strong>${esc(x.by||'ไม่ระบุชื่อ')}</strong><span>${fmtCmtTime(x.at)}</span>${commentMentionsMe(x)?'<em>🔔 ถึงคุณ</em>':''}</div>
+    <div class="cmt">
+      <div class="cmt-head"><strong>${esc(x.by||'ไม่ระบุชื่อ')}</strong><span>${fmtCmtTime(x.at)}</span></div>
       <div class="cmt-body">${fmtMentions(x.text)}</div>
     </div>`).join(''):'<div class="cp-empty">ยังไม่มีความคิดเห็น</div>';
   const box=document.getElementById('etComments');box.scrollTop=box.scrollHeight;
@@ -5049,19 +5386,10 @@ function postComment(){
   const t=findTask(_etId);if(!t)return;
   const ta=document.getElementById('etCmtNew'),txt=ta.value.trim();
   if(!txt){fieldError(ta,'พิมพ์ความคิดเห็นก่อนส่ง');return;}
-  const go=()=>{
-    if(!Array.isArray(t.comments))t.comments=[];
-    t.comments.push({id:nid(),by:getActorName()||(_customerMode?'สาขา':'ทีมงาน'),text:txt,at:new Date().toISOString()});
-    ta.value='';
-    _dirtyShops.add(_activeId);dbSave();renderComments(t);render();
-    logActivity('edit','💬 ความคิดเห็นในงาน "'+t.name+'": '+txt.slice(0,80));
-  };
-  if(getActorName())go();
-  else _prompt('ชื่อของคุณ (แสดงข้างความคิดเห็นและประวัติการแก้ไข)','',n=>{
-    n=(n||'').trim();if(!n)return;
-    try{localStorage.setItem(ACTOR_STORE,n);}catch(e){}
-    go();
-  });
+  if(!Array.isArray(t.comments))t.comments=[];
+  t.comments.push({id:nid(),by:(_customerMode?'สาขา':'ทีมงาน'),text:txt,at:new Date().toISOString()});
+  ta.value='';
+  _dirtyShops.add(_activeId);dbSave();renderComments(t);render();
 }
 function tDC(el,code){el.classList.toggle('active');if(el.classList.contains('active')){const d=S.departments.find(x=>x.code===code);el.style.background=d?readableBg(d.color):'';el.style.color=d?inkFor(readableBg(d.color)):'#fff';}else{el.style.background='';el.style.color='';}el.setAttribute('aria-pressed',el.classList.contains('active')?'true':'false');}
 function applyTask(){if(!requireEdit())return;const t=findTask(_etId);if(!t)return;
@@ -5069,17 +5397,21 @@ function applyTask(){if(!requireEdit())return;const t=findTask(_etId);if(!t)retu
   if(!nm){fieldError(nmEl,'กรุณาใส่ชื่องาน');return;}
   const lkEl=document.getElementById('etLink'),lkRaw=lkEl.value.trim();
   if(lkRaw&&!safeHref(lkRaw)){fieldError(lkEl,'ลิงก์ต้องเป็นเว็บ (เริ่มด้วย http:// หรือ https://)');return;}
-  t.name=nm;t.link=lkRaw?safeHref(lkRaw):'';t.email=document.getElementById('etEmail').value;t.lineId=document.getElementById('etLine').value;t.notifyMsg=document.getElementById('etMsg').value;t.depts=[...document.getElementById('etDeptChecks').querySelectorAll('.dept-chip-check.active')].map(el=>el.getAttribute('onclick').match(/'([^']+)'\)/)[1]);dbSave();closeP('popTask');render();logActivity('edit','แก้ไขงาน "'+t.name+'"');}
-function deleteTask(){if(!requireEdit())return;_confirm('ลบ task นี้?',()=>{let dead=null,deadIdx=-1,deadGid=null;for(const g of S.groups){const i=g.tasks.findIndex(t=>t.id===_etId);if(i>=0){dead=g.tasks[i];deadIdx=i;deadGid=g.id;g.tasks.splice(i,1);break;}}if(dead){deleteTaskFiles(dead).catch(()=>{});stashUndo('task',{task:dead,index:deadIdx,groupId:deadGid});logActivity('delete','ลบงาน "'+dead.name+'"');}dbSave();closeP('popTask');render();});}
+  t.name=nm;if(t.isHeading){const hg=findTaskGroup(t.id);if(hg)hg.name=nm;}t.link=lkRaw?safeHref(lkRaw):'';t.email=document.getElementById('etEmail').value;t.lineId=document.getElementById('etLine').value;t.notifyMsg=document.getElementById('etMsg').value;t.depts=[...document.getElementById('etDeptChecks').querySelectorAll('.dept-chip-check.active')].map(el=>el.getAttribute('onclick').match(/'([^']+)'\)/)[1]);dbSave();closeP('popTask');render();}
+function deleteTask(){if(!requireEdit())return;_confirm('ลบ task นี้?',()=>{let dead=null,deadIdx=-1,deadGid=null;for(const g of S.groups){const i=g.tasks.findIndex(t=>t.id===_etId);if(i>=0){dead=g.tasks[i];deadIdx=i;deadGid=g.id;g.tasks.splice(i,1);break;}}if(dead){deleteTaskFiles(dead).catch(()=>{});stashUndo('task',{task:dead,index:deadIdx,groupId:deadGid});}dbSave();closeP('popTask');render();});}
 let _egId=null;
-function openGrpEdit(id){_egId=id;const g=findGroup(id);if(!g)return;document.getElementById('egName').value=g.name;document.getElementById('egLink').value=g.link||'';openP('popGroup');}
+function openGrpEdit(id){_egId=id;const g=findGroup(id);if(!g)return;document.getElementById('egName').value=g.name;document.getElementById('egLink').value=g.link||'';document.getElementById('egHeading').checked=!!g.headingOnly;openP('popGroup');}
 function applyGroup(){if(!requireEdit())return;const g=findGroup(_egId);if(!g)return;
   const nmEl=document.getElementById('egName'),nm=nmEl.value.trim();
   if(!nm){fieldError(nmEl,'กรุณาใส่ชื่อกลุ่ม');return;}
   const lkEl=document.getElementById('egLink'),lkRaw=lkEl.value.trim();
   if(lkRaw&&!safeHref(lkRaw)){fieldError(lkEl,'ลิงก์ต้องเป็นเว็บ (เริ่มด้วย http:// หรือ https://)');return;}
-  g.name=nm;g.link=lkRaw?safeHref(lkRaw):'';dbSave();closeP('popGroup');render();logActivity('edit','แก้ไขกลุ่ม "'+g.name+'"');}
-function deleteGroup(){if(!requireEdit())return;_confirm('ลบกลุ่มนี้?',()=>{const i=S.groups.findIndex(g=>g.id===_egId);if(i>=0){const g=S.groups[i];S.groups.splice(i,1);stashUndo('group',{group:g,index:i});logActivity('delete','ลบกลุ่ม "'+g.name+'"');}dbSave();closeP('popGroup');render();});}
+  g.name=nm;g.link=lkRaw?safeHref(lkRaw):'';
+  const wantHead=document.getElementById('egHeading').checked;
+  if(wantHead!==!!g.headingOnly){setGroupHeading(g,wantHead);_toast(wantHead?'แสดงกลุ่มนี้เป็นหัวข้อเดียวแล้ว — ตั้งวันที่ได้ที่บรรทัดหัวข้อ':'แสดงงานย่อยของกลุ่มนี้กลับมาแล้ว');}
+  const ht=g.headingOnly&&g.tasks.find(t=>t.isHeading);if(ht)ht.name=g.name;
+  dbSave();closeP('popGroup');render();}
+function deleteGroup(){if(!requireEdit())return;_confirm('ลบกลุ่มนี้?',()=>{const i=S.groups.findIndex(g=>g.id===_egId);if(i>=0){const g=S.groups[i];S.groups.splice(i,1);stashUndo('group',{group:g,index:i});}dbSave();closeP('popGroup');render();});}
 
 /* QUICK DELETE (inline, no popup) */
 function quickDeleteTask(gid,tid){if(!requireEdit())return;
@@ -5091,7 +5423,7 @@ function quickDeleteTask(gid,tid){if(!requireEdit())return;
       deleteTaskFiles(dead).catch(()=>{});
       g.tasks.splice(i,1);
       stashUndo('task',{task:dead,index:i,groupId:gid});
-      logActivity('delete','ลบงาน "'+dead.name+'"');
+      
     }
     dbSave();render();
   });
@@ -5103,7 +5435,7 @@ function quickDeleteGroup(gid){if(!requireEdit())return;
     const i=S.groups.findIndex(x=>x.id===gid);
     S.groups=S.groups.filter(x=>x.id!==gid);
     stashUndo('group',{group:g,index:i<0?S.groups.length:i});
-    logActivity('delete','ลบกลุ่ม "'+g.name+'"');
+    
     dbSave();render();
   });
 }
@@ -5112,7 +5444,7 @@ function addGroup(){if(!requireEdit())return;S.groups.push({id:nid(),name:'ก�
 function addTask(gid){if(!requireEdit())return;const g=findGroup(gid);if(!g)return;g.tasks.push(mkTask('New Task',S.byOptions[0].code,1,[]));dbSave();render();}
 function toggleTask(id,on){if(!requireEdit())return;const t=findTask(id);if(t)t.enabled=on;dbSave();render();}
 function cycleBy(id){if(!requireEdit())return;const t=findTask(id);if(!t)return;const i=S.byOptions.findIndex(b=>b.code===t.by);t.by=S.byOptions[(i+1)%S.byOptions.length].code;dbSave();render();}
-function mvTask(gid,tid,dir){if(!requireEdit())return;const g=findGroup(gid);if(!g)return;const i=g.tasks.findIndex(t=>t.id===tid),j=i+dir;if(j<0||j>=g.tasks.length)return;[g.tasks[i],g.tasks[j]]=[g.tasks[j],g.tasks[i]];dbSave();render();}
+function mvTask(gid,tid,dir){if(!requireEdit())return;const g=findGroup(gid);if(!g)return;const i=g.tasks.findIndex(t=>t.id===tid);let j=i+dir;while(j>=0&&j<g.tasks.length&&g.tasks[j].done)j+=dir;   /* hidden finished tasks are skipped */if(j<0||j>=g.tasks.length)return;[g.tasks[i],g.tasks[j]]=[g.tasks[j],g.tasks[i]];dbSave();render();}
 function mvGroup(gid,dir){if(!requireEdit())return;const i=S.groups.findIndex(g=>g.id===gid),j=i+dir;if(j<0||j>=S.groups.length)return;[S.groups[i],S.groups[j]]=[S.groups[j],S.groups[i]];dbSave();render();}
 
 /* EDITORS */
@@ -5576,14 +5908,14 @@ function onBarResizeStart(e,taskId){if(!requireEdit())return;
 function _onBarMove(e){
   if(!_drag.active)return;
   const dx=e.clientX-_drag.startX;
-  const nd=Math.max(1,_drag.startDays+Math.round(dx/COL_W));
+  const nd=Math.max(1,_drag.startDays+Math.round(dx/_colW()));
   const lbl=_drag.previewEl&&_drag.previewEl.querySelector('.bar-label-inner');
   if(lbl)lbl.textContent=`⟺ ${nd} วัน`;
 }
 function _onBarUp(e){
   if(!_drag.active)return;
   const dx=e.clientX-_drag.startX;
-  const nd=Math.max(1,_drag.startDays+Math.round(dx/COL_W));
+  const nd=Math.max(1,_drag.startDays+Math.round(dx/_colW()));
   const t=findTask(_drag.taskId);
   if(t&&t.startDate&&nd!==_drag.startDays){
     t.days=nd;t.endDate=addDays(t.startDate,nd);
@@ -5595,6 +5927,108 @@ function _onBarUp(e){
   document.removeEventListener('pointerup',_onBarUp);
   document.body.classList.remove('dragging-bar');
 }
+/* ── MOVE A BAR BY DRAGGING ───────────────────────────────────────────
+   Press a bar and drag left/right: it moves by whole days, keeping its length, and tasks that wait for
+   it move with it (same rule as the date picker). A click without moving still opens the date picker.
+   With the keyboard: focus a bar and press ← / → (Shift = a week). Mouse and pen only — on a touch
+   screen a swipe keeps scrolling the timeline and a tap opens the date picker. */
+function _colW(){
+  const c=document.querySelector('#ganttHead th.th-day');
+  const w=c&&c.getBoundingClientRect().width;
+  return w>4?w:(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--c-date'))||COL_W);
+}
+let _mv=null,_barClickBlock=0;
+function _canWriteQuiet(){return _canEdit||!_sb||_customerMode;}
+function barClick(id){if(Date.now()<_barClickBlock)return;openDP(id);}
+function onBarDragStart(e,id){
+  if(e.button!==0||e.pointerType==='touch'||!_canWriteQuiet())return;
+  if(e.target.closest('.bar-resize'))return;
+  const t=findTask(id);if(!t||!t.startDate)return;
+  _mv={id,el:e.currentTarget,x0:e.clientX,shift:0,started:false,w:_colW(),pid:e.pointerId};
+  document.addEventListener('pointermove',_onMvMove);
+  document.addEventListener('pointerup',_onMvUp);
+  document.addEventListener('pointercancel',_onMvCancel);
+}
+function _mvLabel(t,shift){return'📅 '+fmtSD(addDaysF(t.startDate,shift))+'–'+fmtSD(addDaysF(t.endDate||t.startDate,shift))+(shift?(' ('+(shift>0?'+':'')+shift+' วัน)'):'');}
+function _onMvMove(e){
+  if(!_mv)return;
+  const dx=e.clientX-_mv.x0;
+  if(!_mv.started){
+    if(Math.abs(dx)<5)return;
+    _mv.started=true;_mv.el.classList.add('moving');document.body.classList.add('dragging-move');
+    try{_mv.el.setPointerCapture(_mv.pid);}catch(x){}
+    const lb=_mv.el.querySelector('.bar-label-inner');_mv.lbl=lb;_mv.lblOld=lb?lb.textContent:'';
+  }
+  const sh=Math.round(dx/_mv.w);
+  _mv.el.style.transform='translateX('+(sh*_mv.w)+'px)';
+  if(sh!==_mv.shift||!_mv.shown){_mv.shift=sh;_mv.shown=true;const t=findTask(_mv.id);if(t&&_mv.lbl)_mv.lbl.textContent=_mvLabel(t,sh);}
+}
+function _mvEnd(){
+  document.removeEventListener('pointermove',_onMvMove);
+  document.removeEventListener('pointerup',_onMvUp);
+  document.removeEventListener('pointercancel',_onMvCancel);
+  document.body.classList.remove('dragging-move');
+  if(_mv&&_mv.el){_mv.el.classList.remove('moving');_mv.el.style.transform='';if(_mv.lbl)_mv.lbl.textContent=_mv.lblOld;}
+}
+function _onMvCancel(){_mvEnd();_mv=null;}
+function _onMvUp(){
+  const m=_mv;_mvEnd();_mv=null;
+  if(!m||!m.started)return;              /* no movement: let the click open the date picker */
+  _barClickBlock=Date.now()+400;          /* the click that follows a drag must not open the picker */
+  if(m.shift)moveTaskBy(m.id,m.shift);
+}
+/* shift a task by n days (keeps its length); tasks waiting for it follow; one step of undo */
+function moveTaskBy(id,n,refocus){
+  if(!requireEdit())return;
+  const t=findTask(id);if(!t||!t.startDate||!n)return;
+  const before=allTasks().map(x=>[x.id,x.startDate,x.endDate,x.days]);
+  const span=Math.max(1,daysBetween(t.startDate,t.endDate||t.startDate));
+  let s=addDaysF(t.startDate,n);
+  if(S.projectStart&&s<S.projectStart){s=S.projectStart;_toast('เลื่อนก่อนวันเริ่มโครงการไม่ได้ — วางไว้ที่วันเริ่มโครงการ','warn');}
+  if(s===t.startDate)return;
+  t.startDate=s;t.endDate=addDays(s,span);t.days=span;
+  const pushed=enforceDeps();
+  autoExtendMonths();dbSave();render();
+  if(refocus){const b=document.querySelector('#ganttBody td.td-bar-span[data-tid="'+id+'"]');if(b){if(!b.hasAttribute('tabindex'))b.setAttribute('tabindex','0');b.focus();}}
+  _toastAction('ย้าย "'+t.name+'" เป็น '+fmtSD(t.startDate)+'–'+fmtSD(t.endDate)+(pushed?' · งานที่รอต่อเลื่อนตาม '+pushed+' งาน':''),'เลิกทำ',()=>{
+    before.forEach(([tid,a,b,d])=>{const x=findTask(tid);if(x){x.startDate=a;x.endDate=b;x.days=d;}});
+    dbSave();render();_toast('ย้อนกลับแล้ว');
+  });
+}
+/* a toast with one action button (e.g. undo) */
+function _toastAction(msg,label,fn){
+  const t=document.createElement('div');t.className='toast toast-ok toast-act';t.setAttribute('role','status');
+  const sp=document.createElement('span');sp.textContent=msg;t.appendChild(sp);
+  const b=document.createElement('button');b.type='button';b.className='toast-btn';b.textContent=label;
+  b.onclick=e=>{e.stopPropagation();t.remove();fn();};t.appendChild(b);
+  const host=_toastHost();host.appendChild(t);
+  while(host.children.length>4)host.firstElementChild.remove();
+  setTimeout(()=>t.remove(),7000);
+}
+document.addEventListener('keydown',e=>{
+  const b=e.target&&e.target.closest&&e.target.closest('#ganttBody td.td-bar-span[data-tid]');
+  if(!b||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')||e.altKey||e.ctrlKey||e.metaKey)return;
+  e.preventDefault();
+  moveTaskBy(b.dataset.tid,(e.key==='ArrowRight'?1:-1)*(e.shiftKey?7:1),true);
+});
+/* ── PAN THE TIMELINE ── drag an empty part of the chart (mouse) to slide the dates left/right */
+(function(){
+  let p=null;
+  document.addEventListener('pointerdown',e=>{
+    if(e.pointerType!=='mouse'||e.button!==0)return;
+    const box=document.getElementById('tableOuter');if(!box||!box.contains(e.target))return;
+    if(e.target.closest('.td-bar-span,button,input,select,a,.col-task,.col-by,.col-day,.col-sort,.td-group-label,label'))return;
+    p={box,x0:e.clientX,y0:e.clientY,l0:box.scrollLeft,moved:false};
+  });
+  document.addEventListener('pointermove',e=>{
+    if(!p)return;
+    const dx=e.clientX-p.x0;
+    if(!p.moved){if(Math.abs(dx)<4)return;p.moved=true;p.box.classList.add('panning');}
+    p.box.scrollLeft=p.l0-dx;
+  });
+  const end=()=>{if(p&&p.moved){p.box.classList.remove('panning');_barClickBlock=Date.now()+300;}p=null;};
+  document.addEventListener('pointerup',end);document.addEventListener('pointercancel',end);
+})();
 function cascadeAllFrom(fromId){
   const src=findTask(fromId);if(!src||!src.startDate)return;
   let pastFrom=false,lastEnd=src.endDate;
@@ -5739,11 +6173,9 @@ function renderDeptNotes(code,deptName){
         deptName:(S.departments.find(d=>d.code===dc)||{name:dc}).name})))
     : _notesFor(code).map(n=>({...n,deptCode:code}));
   notes.sort((a,b)=>new Date(b.at)-new Date(a.at));
-  let who='';try{who=localStorage.getItem('jiancha_author')||'';}catch(e){}
   const composer=code==='ALL'
     ? '<div class="note-hint">เลือกแผนกเพื่อเพิ่มบันทึกการประชุม</div>'
     : `<div class="note-compose edit-only">
-        <input class="note-who" id="noteWho" placeholder="ชื่อผู้บันทึก" value="${esc(who)}">
         <textarea class="note-text" id="noteText" rows="3" placeholder="บันทึกการประชุม — สิ่งที่ตกลง งานที่ต้องทำต่อ ผู้รับผิดชอบ…"></textarea>
         <div class="note-actions">
           <span class="note-hint">บันทึกจะแชร์ให้ทุกคนที่เปิดลิงก์เห็นทันที</span>
@@ -5756,7 +6188,7 @@ function renderDeptNotes(code,deptName){
     ${notes.length?`<div class="note-list">${notes.map(n=>`
       <div class="note-item">
         <div class="note-meta">
-          <span class="note-by">${esc(n.by||'ไม่ระบุชื่อ')}</span>
+          ${n.by?`<span class="note-by">${esc(n.by)}</span>`:''}
           ${code==='ALL'?`<span class="note-dept">${esc(n.deptName)}</span>`:''}
           <span class="note-at">${new Date(n.at).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'})}</span>
           <button class="note-del edit-only" title="ลบบันทึก" onclick="removeDeptNote('${n.deptCode}','${n.id}')">🗑</button>
@@ -5769,14 +6201,12 @@ function renderDeptNotes(code,deptName){
 function addDeptNote(code){
   if(!requireEdit())return;
   if(code==='ALL'){_toast('กรุณาเลือกแผนกก่อน','warn');return;}
-  const tEl=document.getElementById('noteText'),wEl=document.getElementById('noteWho');
+  const tEl=document.getElementById('noteText');
   const text=(tEl&&tEl.value||'').trim();
   if(!text){_toast('กรุณาพิมพ์บันทึกก่อน','warn');if(tEl)tEl.focus();return;}
-  const by=(wEl&&wEl.value||'').trim();
-  try{localStorage.setItem('jiancha_author',by);}catch(e){}
   if(!S.deptNotes)S.deptNotes={};
   if(!S.deptNotes[code])S.deptNotes[code]=[];
-  S.deptNotes[code].push({id:nid(),text,by,at:new Date().toISOString()});
+  S.deptNotes[code].push({id:nid(),text,at:new Date().toISOString()});
   dbSave();renderDeptFilesPanel();renderDeptListPanel();
   _toast('บันทึกแล้ว — ทุกคนเห็นทันที');
 }
@@ -5934,16 +6364,16 @@ function saveSignature(code){
   _sig={code,strokes:[],name:'',role:'',cur:null,typed:''};
   const dName=(S.departments.find(d=>d.code===code)||{name:code}).name;
   dbSave();renderDeptFilesPanel();renderDeptListPanel();
-  logActivity('edit','✍️ เซ็นรับทราบและเข้าใจ ('+dName+'): '+name);
+  
   _toast('บันทึกลายเซ็นของ '+name+' แล้ว');
 }
 function voidSignature(code,id){
   if(!requireEdit())return;
   const rec=((S.deptSign||{})[code]||[]).find(x=>x.id===id);if(!rec)return;
   _confirm('ยกเลิกลายเซ็นของ "'+rec.name+'"?\nรายการจะถูกซ่อนจากหน้านี้',()=>{
-    rec.void=true;rec.voidAt=new Date().toISOString();rec.voidBy=getActorName()||'';
+    rec.void=true;rec.voidAt=new Date().toISOString();
     dbSave();renderDeptFilesPanel();renderDeptListPanel();
-    logActivity('delete','ยกเลิกลายเซ็น: '+rec.name);
+    
   });
 }
 /* Union by id; once an entry is voided on either side it stays voided */
@@ -6164,7 +6594,6 @@ async function uploadDeptFiles(code,fileList){
   _uploading--;
   await flushNow();
   renderDeptFilesPanel();renderDeptListPanel();
-  if(okCount)logActivity('upload','อัปโหลด '+okCount+' ไฟล์ ('+code+')');
   if(_sb&&okCount)_toast('อัปโหลดแล้ว '+okCount+' ไฟล์ — ทุกคนดาวน์โหลดได้');
 }
 function downloadDeptFile(id){
@@ -6179,7 +6608,7 @@ function removeDeptFile(code,id){
     if(!String(id).startsWith('lk_'))await _idbDel(id).catch(()=>{});
     if(S.deptFiles[code])S.deptFiles[code]=S.deptFiles[code].filter(f=>f.id!==id);
     dbSave();renderDeptFilesPanel();renderDeptListPanel();
-    logActivity('delete','ลบไฟล์'+(rec?' "'+rec.name+'"':'')+' ('+code+')');
+    
   });
 }
 
@@ -6478,7 +6907,7 @@ function applyFinPayments(){if(!requireEdit())return;
   S.finance.owner=document.getElementById('fpOwner').value;
   dbSave();closeP('popFinPay');
   renderFinance();renderOverview();
-  logActivity('edit','แก้ไขงวดชำระเงิน');
+  
   _toast('บันทึกข้อมูลการเงินแล้ว');
 }
 
@@ -6680,38 +7109,6 @@ const SB_KEY='sb_publishable_8oCWT6yv53jsiYFuzB3YAg_76603tGS';
 const PASSKEY_STORE='jiancha_editkey'; /* legacy, no longer used */
 let _sb=null,_sbChan=null,_sbSuppress=0,_canEdit=false,_editKey='',_uploading=0;
 
-/* ── ACTIVITY LOG ──────────────────────────────────────────────────────
-   The edit key is shared across a whole department/team, so nothing
-   previously recorded *who* made a change. This asks once per browser for
-   a display name (kept in localStorage, never enforced — it's an audit
-   convenience, not authentication) and writes a row to jc_ops_activity on
-   every state-changing action. Never blocks the action itself: logging
-   failures are swallowed so a flaky network never stops real work. */
-const ACTOR_STORE='jc_actor_name';
-function getActorName(){
-  let n='';try{n=localStorage.getItem(ACTOR_STORE)||'';}catch(e){}
-  return n;
-}
-function ensureActorName(){
-  if(getActorName())return;
-  _prompt('ชื่อของคุณ (แสดงในประวัติการแก้ไข)','',n=>{
-    if(n&&n.trim()){try{localStorage.setItem(ACTOR_STORE,n.trim());}catch(e){}}
-  });
-}
-function logActivity(action,detail,branchId){
-  if(!_sb)return;
-  const bid=branchId!==undefined?branchId:_activeId;
-  const sh=DB.shops.find(x=>x.id===bid);
-  try{
-    _sb.from('jc_ops_activity').insert([{
-      branch_id:bid||null,
-      branch_name:(sh&&sh.name)||S.branchName||'',
-      actor:getActorName()||(_customerMode?'สาขา':'ทีมงาน'),
-      action,detail:detail||''
-    }]).then(()=>{},()=>{});
-  }catch(e){}
-}
-
 /* ── EDIT PASSKEY ────────────────────────────────────────────────────
    Anyone with the link reads. Writing needs the passkey, which is sent as a
    header and checked by a Postgres policy — so view-only really is read-only,
@@ -6746,16 +7143,25 @@ const _customerMode=!!(_custBranch&&_custKey);
 const _adminMode=!!_adminKey;
 /* Forget the stored link on this device (shared or public computers) */
 function forgetAccess(){
+  closeP('popAccess');
   _confirm('ออกจากระบบบนเครื่องนี้?\nจะต้องเปิดผ่านลิงก์อีกครั้ง',()=>{
     try{localStorage.removeItem(ADMIN_STORE);localStorage.removeItem(BRANCH_STORE);}catch(e){}
-    location.href=location.origin+location.pathname;
+    location.href=_appBase();
   },{yes:'ออกจากระบบ'});
 }
 /* Way back in from the gate screen, for a device that has never had a link */
+function _appBase(){return location.href.split('#')[0].split('?')[0];}
+/* customer mode: keep only the linked branch in memory (whatever an earlier visit cached) */
+function _scopeToBranch(){
+  if(!_customerMode)return;
+  const mine=(DB.shops||[]).filter(x=>x.id===_custBranch);
+  if(mine.length&&mine.length!==DB.shops.length){DB.shops=mine;_activeId=_custBranch;applyShopToS(mine[0]);}
+}
 function enterAdminKey(){
+  closeP('popAccess');
   _prompt('ใส่รหัสผู้ดูแล (Admin key)','',v=>{
     const k=(v||'').trim();if(!k)return;
-    location.href=location.origin+location.pathname+'?admin='+encodeURIComponent(k);
+    location.href=_appBase()+'?admin='+encodeURIComponent(k);
   });
 }
 
@@ -6768,15 +7174,84 @@ function sbMake(key){
     realtime:{params:{eventsPerSecond:8}}
   });
 }
-/* Copy a ready-made customer link for the branch on screen */
-function copyBranchLink(){
-  const sh=DB.shops.find(x=>x.id===_activeId);
+/* ── CUSTOMER LINK PER BRANCH ─────────────────────────────────────────
+   ?b=<branch id>&k=<branch key>. The database only returns the row whose branchKey matches the key
+   sent with the request, so the person holding the link receives that one branch and nothing else.
+   A new key makes every link sent before stop working. */
+let _shareId=null;
+function _newBranchKey(){
+  try{const a=new Uint8Array(12);crypto.getRandomValues(a);return'B'+[...a].map(x=>(x%36).toString(36)).join('').toUpperCase();}
+  catch(e){return'B'+Math.random().toString(36).slice(2,14).toUpperCase();}
+}
+function _branchLink(sh){return _appBase()+'?b='+encodeURIComponent(sh.id)+'&k='+encodeURIComponent(sh.branchKey);}
+function _saveShop(sh){
+  _dirtyShops.add(sh.id);
+  if(sh.id===_activeId){dbSave();return;}
+  DB.updatedAt=new Date().toISOString();
+  try{localStorage.setItem(DB_KEY,JSON.stringify(DB));}catch(e){}
+  queueSync();
+}
+function copyBranchLink(){openShareLink(_activeId);}
+function openShareLink(id){
+  if(_customerMode)return;
+  if(!requireEdit())return;
+  const sh=DB.shops.find(x=>x.id===(id||_activeId));
   if(!sh){_toast('ไม่พบสาขา','warn');return;}
-  if(!sh.branchKey){sh.branchKey='B'+Math.random().toString(36).slice(2,10).toUpperCase();dbSave();}
-  const url=location.origin+location.pathname+'?b='+encodeURIComponent(sh.id)+'&k='+encodeURIComponent(sh.branchKey);
-  const done=()=>_toast('คัดลอกลิงก์สำหรับลูกค้าแล้ว — เห็นเฉพาะสาขา '+(sh.name||''));
-  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,()=>_prompt('คัดลอกลิงก์นี้ส่งให้ลูกค้า',url,()=>{}));
-  else _prompt('คัดลอกลิงก์นี้ส่งให้ลูกค้า',url,()=>{});
+  if(!sh.branchKey){sh.branchKey=_newBranchKey();_saveShop(sh);}
+  _shareId=sh.id;closeP('popAccess');renderShare();openP('popShare');
+}
+function renderShare(){
+  const sh=DB.shops.find(x=>x.id===_shareId),box=document.getElementById('shareBody');if(!sh||!box)return;
+  const url=_branchLink(sh);
+  const line='https://line.me/R/share?text='+encodeURIComponent('ลิงก์สำหรับกรอกข้อมูลสาขา '+(sh.name||'')+' — JIAN CHA\n'+url);
+  box.innerHTML=`<p class="share-what">ลูกค้าที่เปิดลิงก์นี้จะเห็นและกรอกข้อมูลได้เฉพาะสาขานี้เท่านั้น — มองไม่เห็นสาขาอื่น ภาพรวมทุกสาขา หรือทีม BD</p>
+    <div class="share-branch"><span>สาขา</span> <strong>${esc(sh.name||'')}</strong></div>
+    ${_sb?'':'<div class="owner-status warn">⚠️ ยังไม่ได้เชื่อมต่อฐานข้อมูล — ลิงก์จะเปิดได้เมื่อระบบออนไลน์</div>'}
+    <label class="sr-only" for="shareUrl">ลิงก์สำหรับลูกค้า</label>
+    <input class="finput share-url" id="shareUrl" readonly translate="no" value="${esc(url)}" onfocus="this.select()">
+    <div class="share-actions">
+      <button type="button" class="btn btn-gold" onclick="copyShareLink()">📋 คัดลอกลิงก์</button>
+      <a class="btn btn-ghost2" href="${esc(line)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">💬 ส่งทาง LINE</a>
+    </div>
+    <p class="sp-hint">ส่งลิงก์นี้ให้เฉพาะเจ้าของสาขานี้ — ใครที่ได้ลิงก์ไปจะกรอกและแก้ไขข้อมูลของสาขานี้ได้</p>
+    <div class="share-reset"><button type="button" class="btn btn-ghost2 btn-sm" onclick="resetShareLink()">🔄 สร้างลิงก์ใหม่ (ลิงก์เดิมจะใช้ไม่ได้)</button></div>`;
+}
+function copyShareLink(){
+  const sh=DB.shops.find(x=>x.id===_shareId);if(!sh)return;
+  const url=_branchLink(sh),inp=document.getElementById('shareUrl');
+  const ok=()=>_toast('คัดลอกลิงก์สำหรับลูกค้าแล้ว');
+  const manual=()=>{if(inp){inp.focus();inp.select();}_toast('กด Ctrl+C (หรือกดค้างแล้วเลือก คัดลอก) เพื่อคัดลอกลิงก์','warn');};
+  try{navigator.clipboard.writeText(url).then(ok,manual);}catch(e){manual();}
+}
+function resetShareLink(){
+  if(!requireEdit())return;
+  const sh=DB.shops.find(x=>x.id===_shareId);if(!sh)return;
+  _confirm('สร้างลิงก์ใหม่ให้สาขานี้?\nลิงก์เดิมที่เคยส่งไปจะเปิดไม่ได้อีก',()=>{
+    sh.branchKey=_newBranchKey();_saveShop(sh);renderShare();
+    _toast('สร้างลิงก์ใหม่แล้ว — ส่งลิงก์ใหม่ให้ลูกค้า');
+  },{yes:'สร้างลิงก์ใหม่'});
+}
+/* ── ACCESS PANEL (👑 / 🏪 / 👁 in the top bar) ─────────────────────── */
+function openAccess(){
+  const box=document.getElementById('accessBody');if(!box)return;
+  const admin=_canEdit&&!_customerMode,sh=DB.shops.find(x=>x.id===_activeId);
+  box.innerHTML=admin
+    ?`<p class="share-what">👑 คุณเข้าใช้งานในฐานะ<strong>ผู้ดูแล</strong> — เห็นและแก้ไขได้ทุกสาขา</p>
+      <div class="access-list">
+        <button type="button" class="btn btn-gold" onclick="openShareLink(_activeId)">🔗 ลิงก์สำหรับลูกค้าของสาขานี้</button>
+        <button type="button" class="btn btn-ghost2" onclick="copyAdminLink()">📋 คัดลอกลิงก์ผู้ดูแล (เก็บเป็นความลับ)</button>
+        <button type="button" class="btn btn-ghost2" onclick="forgetAccess()">🚪 ออกจากระบบบนเครื่องนี้</button>
+      </div>`
+    :_customerMode
+    ?`<p class="share-what">🏪 เปิดผ่านลิงก์ของสาขา — เห็นและกรอกข้อมูลได้เฉพาะสาขานี้</p>
+      <div class="share-branch"><span>สาขา</span> <strong>${esc((sh&&sh.name)||'')}</strong></div>
+      <div class="access-list">
+        <button type="button" class="btn btn-ghost2" onclick="enterAdminKey()">👑 เข้าสู่ระบบผู้ดูแล</button>
+        <button type="button" class="btn btn-ghost2" onclick="forgetAccess()">🚪 ออกจากระบบบนเครื่องนี้</button>
+      </div>`
+    :`<p class="share-what">👁 ดูอย่างเดียว — เปิดผ่านลิงก์ที่ได้รับ หรือเข้าสู่ระบบผู้ดูแลเพื่อแก้ไข</p>
+      <div class="access-list"><button type="button" class="btn btn-gold" onclick="enterAdminKey()">👑 เข้าสู่ระบบผู้ดูแล</button></div>`;
+  openP('popAccess');
 }
 async function verifyKey(key){
   try{
@@ -6805,7 +7280,6 @@ function sbAnnounce(){
 }
 function setEditMode(on,key){
   _canEdit=!!on;_editKey=on?(key||''):'';
-  if(on)ensureActorName();
   if(on){try{localStorage.setItem(PASSKEY_STORE,_editKey);}catch(e){}}
   else{try{localStorage.removeItem(PASSKEY_STORE);}catch(e){}}
   if(_sb&&window.supabase){
@@ -6821,13 +7295,12 @@ function renderLockBtn(){
     b.style.display=_sb?'':'none';          /* a permissions button with nothing to manage is a dead button */
     const admin=_canEdit&&!_customerMode;
     b.textContent=admin?'👑':(_customerMode?'🏪':'👁');
-    b.title=admin?'ผู้ดูแล — เห็นและแก้ไขได้ทุกสาขา (คลิกเพื่อคัดลอกลิงก์ผู้ดูแล)'
+    b.title=admin?'ผู้ดูแล — เห็นและแก้ไขได้ทุกสาขา'
       :(_customerMode?'สาขาของคุณ — แก้ไขได้เฉพาะสาขานี้':'ดูอย่างเดียว — เปิดผ่านลิงก์ที่ได้รับเพื่อแก้ไข');
     b.classList.toggle('unlocked',_canEdit);
-    b.onclick=e=>{ if(e.shiftKey||!admin){forgetAccess();} else {copyAdminLink();} };
+    b.onclick=openAccess;
     b.style.cursor='pointer';
-    if(admin)b.title+=' · Shift+คลิก = ออกจากระบบเครื่องนี้';
-    else if(_customerMode)b.title+=' · คลิกเพื่อออกจากระบบเครื่องนี้';
+    b.setAttribute('aria-haspopup','dialog');
   }
   const ro=document.getElementById('roBanner');
   const rt=document.getElementById('roBannerText');
@@ -6839,7 +7312,7 @@ function renderLockBtn(){
 }
 /* Copy the admin link — this link IS the key, so keep it private */
 function copyAdminLink(){
-  const url=location.origin+location.pathname+'?admin='+encodeURIComponent(_editKey||_adminKey);
+  const url=_appBase()+'?admin='+encodeURIComponent(_editKey||_adminKey);
   const done=()=>_toast('คัดลอกลิงก์ผู้ดูแลแล้ว — เก็บเป็นความลับ');
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,()=>_prompt('ลิงก์ผู้ดูแล (เก็บเป็นความลับ)',url,()=>{}));
   else _prompt('ลิงก์ผู้ดูแล (เก็บเป็นความลับ)',url,()=>{});
@@ -6864,21 +7337,22 @@ function lockUI(){
 
 /* Fill in how a stranger can reach you; shown on the "need a link" page. Left empty on purpose. */
 const CONTACT_INFO={line:'',email:'',phone:''};
-function showNoAccess(){
+function showNoAccess(reason){
   setSync('readonly','ต้องใช้ลิงก์');
   document.title='ต้องเปิดผ่านลิงก์ — JIAN CHA Franchise Ops';
   const root=document.getElementById('jc-root');if(!root)return;
   const logo=((document.querySelector('.nav-logo-mark')||{}).src)||'';
   const hadKey=_customerMode||_adminMode;      /* a link WAS used, but it matched nothing */
+  const badAdmin=reason==='badAdmin';
   const contact=[CONTACT_INFO.line&&'LINE: '+CONTACT_INFO.line,CONTACT_INFO.email&&'อีเมล: '+CONTACT_INFO.email,CONTACT_INFO.phone&&'โทร: '+CONTACT_INFO.phone].filter(Boolean);
-  root.innerHTML='<main class="gate"><div class="gate-card">'
+  root.innerHTML='<main class="gate"><div class="gate-card"><button type="button" class="gate-lang" translate="no" data-lang-btn onclick="toggleLang()">EN</button>'
     +(/^data:image\/png;base64,[A-Za-z0-9+\/=]+$/.test(logo)?'<img class="gate-logo" src="'+logo+'" alt="">':'')
     +'<div class="gate-brand">JIAN CHA <span>Franchise Ops</span></div>'
     +'<p class="gate-what">ระบบติดตามการเปิดสาขาแฟรนไชส์ — ไทม์ไลน์ เอกสาร และข้อมูลของแต่ละสาขา รวมไว้ในที่เดียว</p>'
-    +'<h1 class="gate-h">'+(hadKey?'ลิงก์นี้ใช้ไม่ได้หรือหมดอายุแล้ว':'ต้องเปิดผ่านลิงก์ที่ได้รับ')+'</h1>'
-    +'<p class="gate-p">'+(hadKey?'ไม่พบข้อมูลสาขาที่ตรงกับลิงก์นี้ — ลิงก์อาจถูกเปลี่ยนหรือเพิ่งถูกยกเลิก<br>กรุณาขอลิงก์ใหม่จากทีมงาน JIAN CHA':'ลิงก์นี้ยังไม่ได้ระบุสาขา<br>กรุณาใช้ลิงก์ที่ทีมงาน JIAN CHA ส่งให้ ซึ่งจะเปิดเฉพาะสาขาของคุณ')+'</p>'
+    +'<h1 class="gate-h">'+(badAdmin?'รหัสผู้ดูแลไม่ถูกต้อง':hadKey?'ลิงก์นี้ใช้ไม่ได้หรือหมดอายุแล้ว':'ต้องเปิดผ่านลิงก์ที่ได้รับ')+'</h1>'
+    +'<p class="gate-p">'+(badAdmin?'กรุณาตรวจสอบรหัสแล้วลองใหม่อีกครั้ง':hadKey?'ไม่พบข้อมูลสาขาที่ตรงกับลิงก์นี้ — ลิงก์อาจถูกเปลี่ยนหรือเพิ่งถูกยกเลิก<br>กรุณาขอลิงก์ใหม่จากทีมงาน JIAN CHA':'ลิงก์นี้ยังไม่ได้ระบุสาขา<br>กรุณาใช้ลิงก์ที่ทีมงาน JIAN CHA ส่งให้ ซึ่งจะเปิดเฉพาะสาขาของคุณ')+'</p>'
     +'<p class="gate-contact">'+(contact.length?contact.map(esc).join(' · '):'ไม่มีลิงก์? ติดต่อผู้ดูแลโครงการ JIAN CHA ที่ส่งลิงก์ให้คุณ')+'</p>'
-    +'<button type="button" id="gateAdmin" class="gate-admin">👑 ฉันเป็นผู้ดูแล — ใส่รหัส</button>'
+    +'<button type="button" id="gateAdmin" class="gate-admin">'+(badAdmin?'👑 ใส่รหัสผู้ดูแลอีกครั้ง':'👑 ฉันเป็นผู้ดูแล — ใส่รหัส')+'</button>'
     +'</div></main>';
   const b=document.getElementById('gateAdmin');
   if(b)b.onclick=enterAdminKey;
@@ -6887,25 +7361,36 @@ async function initSupabase(){
   if(!window.supabase||!window.supabase.createClient){setTimeout(renderRescueBar,300);return false;}
   try{
     _sb=sbMake(_editKey);
+    if(_adminMode){
+      let chk=null;try{chk=await _sb.rpc('jc_ops_has_key');}catch(e){chk=null;}
+      if(chk&&!chk.error&&chk.data===false){
+        try{localStorage.removeItem(ADMIN_STORE);}catch(e){}
+        _sb=null;showNoAccess('badAdmin');return false;
+      }
+    }
     const{data:shopRows,error:e1}=await _sb.from('jc_ops_shops').select('id,ord,data').order('ord');
     if(e1)throw e1;
     if(shopRows&&shopRows.length){
       DB.shops=shopRows.map(r=>r.data);
-      if(_customerMode){DB.shops=DB.shops.filter(x=>x.id===_custBranch);if(!DB.shops.length){showNoAccess();return false;}}
-      const{data:metaRow}=await _sb.from('jc_ops_meta').select('data').eq('id','global').maybeSingle();
-      if(metaRow&&metaRow.data){DB.bdTeam=metaRow.data.bdTeam||[];if(metaRow.data.fiscalYear)DB.fiscalYear=metaRow.data.fiscalYear;}
+      if(_customerMode){DB.shops=DB.shops.filter(x=>x.id===_custBranch);if(!DB.shops.length){try{localStorage.removeItem(DB_KEY);localStorage.removeItem(BRANCH_STORE);}catch(e){}showNoAccess();return false;}}
+      if(!_customerMode){
+        const{data:metaRow}=await _sb.from('jc_ops_meta').select('data').eq('id','global').maybeSingle();
+        if(metaRow&&metaRow.data){DB.bdTeam=metaRow.data.bdTeam||[];if(metaRow.data.fiscalYear)DB.fiscalYear=metaRow.data.fiscalYear;}
+      }
       _migrateShops();
       if(!DB.shops.find(x=>x.id===_activeId))_activeId=DB.shops[0].id;
       applyShopToS(DB.shops.find(x=>x.id===_activeId));
-      _syncFormFromS();renderShopTabs();rerenderCurrent();
+      _syncFormFromS();renderShopTabs();rerenderCurrent();setPageTitle();
       try{localStorage.setItem(DB_KEY,JSON.stringify(DB));}catch(e){}
-    }else if(!_adminMode&&!_customerMode){
+    }else if(_customerMode){
+      try{localStorage.removeItem(DB_KEY);localStorage.removeItem(BRANCH_STORE);}catch(e){}
+      showNoAccess();return false;          /* the branch key matches nothing: link replaced or cancelled */
+    }else if(!_adminMode){
       showNoAccess();return false;          /* no link key: nothing to show */
     }else if(_adminMode){
       await sbPushAll();                    /* first ever visitor seeds the tables */
     }
     _canEdit=_adminMode||_customerMode;
-    if(_canEdit)ensureActorName();
     renderLockBtn();lockUI();renderRescueBar();
     _sbChan=sbLiveChannel();
     return true;
@@ -6923,7 +7408,7 @@ function sbPull(){
     if(!_sb)return;
     try{
       const{data:rows}=await _sb.from('jc_ops_shops').select('id,ord,data').order('ord');
-      const{data:metaRow}=await _sb.from('jc_ops_meta').select('data').eq('id','global').maybeSingle();
+      const{data:metaRow}=_customerMode?{data:null}:await _sb.from('jc_ops_meta').select('data').eq('id','global').maybeSingle();
       if(!rows)return;
       let next=rows.map(r=>r.data);
       if(_customerMode)next=next.filter(x=>x.id===_custBranch);
@@ -7300,7 +7785,7 @@ try{
 
 initFileDB().catch(e=>console.warn('FileDB init failed:',e));
 if(_customerMode)document.body.classList.add('cust-mode');
-dbLoad();renderShopTabs();_syncFormFromS();renderOverview();renderLockBtn();setPageTitle();
+dbLoad();_scopeToBranch();renderShopTabs();_syncFormFromS();renderOverview();renderLockBtn();setPageTitle();
 if(!restoreUIState())readURLParams();
 _booted=true;
 _editKey=_adminKey;
@@ -7318,5 +7803,196 @@ if(window.supabase&&window.supabase.createClient&&(_adminKey||_custKey))bootCove
 initSync().then(bootCoverHide,bootCoverHide);
 </script>
 
+<!-- JC-I18N:BEGIN -->
+<script id="jc-i18n">
+/* ── BILINGUAL (TH / EN) ───────────────────────────────────────────────
+   The app's screens are written in Thai. English is a display layer on top:
+   every Thai phrase in the dictionary below is swapped for its English text as soon as it reaches
+   the page (text, placeholders, tooltips, toasts, dialogs, page title), and swapped back on switching to
+   Thai. Nothing the person typed is touched: input values are never read, and names, notes and
+   comments only change when the whole text is a built-in phrase. The choice is remembered per browser. */
+(function(){
+'use strict';
+var DICT={"JIAN CHA Franchise Ops — ติดตามการเปิดสาขาแฟรนไชส์":"JIAN CHA Franchise Ops — Franchise opening tracker","ระบบติดตามไทม์ไลน์การเปิดสาขาแฟรนไชส์ JIAN CHA — กำหนดการ เอกสาร และข้อมูลของแต่ละสาขารวมไว้ในที่เดียว สำหรับทีมงานและเจ้าของสาขา":"JIAN CHA franchise opening timeline tracker — schedules, documents, and each branch's information in one place, for the team and branch owners","ไทม์ไลน์ เอกสาร และข้อมูลของแต่ละสาขา รวมไว้ในที่เดียว":"Timeline, documents, and each branch's information in one place","ทุกสาขา":"All branches","JIAN CHA Franchise Ops — ระบบติดตามการเปิดสาขา":"JIAN CHA Franchise Ops — Branch opening tracker","ข้ามไปยังเนื้อหาหลัก":"Skip to main content","ชื่อสาขา":"Branch name","สถานะการซิงก์ข้อมูล":"Data sync status","กำลังเชื่อมต่อ…":"Connecting…","ค้นหางานทุกสาขา":"Search tasks across all branches","คัดลอกลิงก์สำหรับลูกค้า (เห็นเฉพาะสาขานี้)":"Copy customer link (shows this branch only)","สิทธิ์การเข้าถึง":"Access permissions","โหมดดูอย่างเดียว — ดูข้อมูลได้ทั้งหมด แก้ไขต้องใส่รหัส (กดไอคอนกุญแจมุมขวาบน)":"View-only mode — you can view all data; a passcode is required to edit (tap the key icon at the top right)","เมนูหลัก":"Main menu","เลื่อนแท็บสาขาไปทางซ้าย":"Scroll branch tabs left","เลื่อนแท็บสาขาไปทางขวา":"Scroll branch tabs right","ทุกสาขา — JIAN CHA Franchise":"All branches — JIAN CHA Franchise","ภาพรวมการดำเนินงานของทุกสาขา":"Operations overview of all branches","เพิ่มสาขาใหม่":"Add new branch","ดาวน์โหลดข้อมูลทุกสาขาเป็นไฟล์ JSON":"Download all branches' data as a JSON file","กู้คืนข้อมูลจากไฟล์ Backup":"Restore data from a Backup file","สาขาทั้งหมด":"All branches","ซ่อนสาขาที่เสร็จแล้ว":"Hide completed branches","กรุณาตั้งค่าโปรเจกต์เพื่อเริ่มต้น":"Please set up the project to get started","เปิด Timeline":"Open Timeline","ยินดีต้อนรับ":"Welcome","นี่คือหน้าติดตามการเปิดสาขา":"This is the opening tracker page for","ของคุณ":"your branch","ดูกำหนดการที่แท็บ":"view the schedule on the","ดูและส่งเอกสารที่แท็บ":"view and submit documents on the","และเริ่มต้นด้วยการกรอกข้อมูลเจ้าของร้านด้านล่าง":"and start by filling in the store owner information below","กรอกข้อมูลเจ้าของร้าน":"Fill in store owner information","ตั้งค่าโปรเจกต์":"Project settings","ชื่อโปรเจกต์ / สาขา":"Project / branch name","เช่น สาขา Siam":"e.g. Siam branch","วันเริ่มต้น":"Start date","วันสิ้นสุด":"End date","สร้าง Timeline":"Create Timeline","รบกวนกรอกข้อมูล":"Please fill in your information","ข้อมูลผู้ติดต่อหลักของร้าน — ใช้สำหรับออกเอกสาร ติดต่อธุรกรรม และลงทะเบียนระบบต่าง ๆ":"Main contact details for the store — used for issuing documents, transactions, and registering with various systems","ชื่อ สกุล เจ้าของร้าน":"Store owner's full name","ชื่อ-นามสกุล":"Full name","ชื่อผู้ติดต่อหลัก":"Main contact name","Email สำหรับธุรกรรมทั่วไป":"Email for general transactions","ใช้รับเอกสารและติดต่อเรื่องธุรกรรมทั่วไป":"Used to receive documents and for general transaction contact","Email สำหรับ Grab":"Email for Grab","บังคับสมัครสำหรับ Grab เท่านั้น":"Required for Grab registration only","Gmail เท่านั้น และต้องไม่ซ้ำกับอีเมลด้านบน":"Gmail only, and must be different from the email above","เบอร์ติดต่อส่วนตัว":"Personal phone number","เบอร์เจ้าของร้าน":"Store owner's phone number","เบอร์ติดต่อหน้าร้าน":"Store phone number","เบอร์สำหรับติดต่อหน้าร้าน — หากไม่มีกรุณาเปิดเบอร์ใหม่":"Phone number for contacting the store — please get a new number if you don't have one","ข้อมูลที่ตั้งร้าน":"Store location information","ตำแหน่งและที่อยู่หน้าร้าน — ใช้ให้ทีมงานและระบบเดลิเวอรี่ตรวจสอบสถานที่":"Store location and address — used by the team and delivery platforms to verify the site","1. 🗺 ตำแหน่งบนแผนที่":"1. 🗺 Map location","ลิงก์ Google Maps ของร้าน":"Store Google Maps link","เปิด Google Maps → ค้นหาร้าน/ปักหมุด → กด “แชร์” → คัดลอกลิงก์ มาวางที่นี่":"Open Google Maps → search for the store/drop a pin → tap “Share” → copy the link and paste it here","เปิดดูบน Google Maps":"View on Google Maps","2. 🏠 ที่อยู่ร้าน":"2. 🏠 Store address","เลขที่ / ห้อง / ชั้น / ยูนิต":"House no. / room / floor / unit","เช่น 99/9 ชั้น 1 ยูนิต A12":"e.g. 99/9, 1st floor, unit A12","ชื่อห้าง / อาคาร / โครงการ":"Mall / building / project name","เช่น สยามพารากอน (ถ้ามี)":"e.g. Siam Paragon (if any)","หมู่ / ซอย":"Moo / Soi","เช่น หมู่ 3 / ซอยสุขุมวิท 21":"e.g. Moo 3 / Soi Sukhumvit 21","ถนน":"Road","เช่น ถนนพระราม 1":"e.g. Rama 1 Road","แขวง / ตำบล":"Subdistrict","เขต / อำเภอ":"District","จังหวัด":"Province","พิมพ์เพื่อค้นหาจังหวัด":"Type to search for a province","รหัสไปรษณีย์":"Postal code","5 หลัก":"5 digits","3. 📌 จุดสังเกตและรายละเอียดเพิ่มเติม":"3. 📌 Landmarks and additional details","จุดสังเกตและรายละเอียดเพิ่มเติม":"Landmarks and additional details","เช่น ตรงข้ามเซเว่น ติดทางขึ้นรถไฟฟ้า ประตูทางเข้าฝั่งถนน…":"e.g. opposite 7-Eleven, next to the BTS entrance, entrance on the road side…","เขียนให้คนที่ไม่เคยมาร้านหาเจอ":"Write it so someone who has never been to the store can find it","งานที่ครบกำหนด":"Tasks due","ความคิดเห็นล่าสุด":"Latest comments","รายละเอียดของแต่ละหน่วยงาน":"Details by department","เดือน":"Month","วันนี้":"Today","แสดง/ซ่อนเส้นเชื่อมระหว่างงานที่ต้องรอกัน":"Show/hide links between dependent tasks","เส้นเชื่อม":"Dependency lines","แผนก":"Departments","กลุ่ม":"Group","คำอธิบายสี":"Color legend","งานที่เสร็จแล้ว":"Completed tasks","แสดงงานที่เสร็จแล้ว":"Show completed tasks","แบบฟอร์มแจ้งไซส์เสื้อพนักงาน":"Staff uniform size form","พิมพ์/PDF":"Print/PDF","ประเภทเครื่องแบบ":"Uniform type","เสื้อเชิต":"Dress shirt","เสื้อโปโล":"Polo shirt","ตัวอย่างการวัด":"Measurement guide","ตารางอ้างอิงไซส์":"Size reference chart","รายชื่อพนักงาน (ทุกช่องต้องกรอก)":"Staff list (all fields required)","ชื่อ":"First name","นามสกุล":"Last name","ชื่อเล่น":"Nickname","ตำแหน่ง":"Position","ไซส์เสื้อ":"Shirt size","เพศ":"Gender","เบอร์โทรศัพท์":"Phone number","เพิ่มพนักงาน":"Add staff","เพิ่มหลายคน":"Add multiple","ไฟล์ตามแผนก":"Files by department","สาขา":"Branch","ไฟล์แยกตามสาขาและแผนก":"files organized by branch and department","รายชื่อไฟล์":"File list","ถูกแชร์ให้ทุกคนที่เปิดลิงก์เห็น แต่":"is shared with everyone who opens the link, but","ตัวไฟล์":"the files themselves","เก็บอยู่ในเครื่องที่อัปโหลด — ไฟล์ที่อัปโหลดจากอุปกรณ์อื่นจะมีป้าย “อุปกรณ์อื่น” และเปิดที่นี่ไม่ได้":"are stored on the device they were uploaded from — files uploaded from another device show an “Other device” tag and can't be opened here","เลือกแผนกเพื่อดูไฟล์":"Select a department to view files","ผลงานทีม BD และการเก็บเงิน":"BD team performance and collections","ติดตามการเก็บเงินแต่ละงวด · สถานะการชำระ · ผู้รับผิดชอบรายสาขา":"Track collections by installment · payment status · owner per branch","จัดการงวดชำระ":"Manage installments","ทีม BD &amp; เป้าหมาย":"BD team &amp; targets","บันทึกเป็น PNG":"Save as PNG","สถานะการเก็บเงิน":"Collection status","มูลค่าและการเก็บเงินรายสาขา":"Value and collections by branch","รายการชำระเงินทั้งหมด (Payment Tracking)":"All payments (Payment Tracking)","เลือกเดือน":"Select month","ยืนยัน":"Confirm","กำหนดวัน":"Set dates","เลือกวันเริ่ม–สิ้นสุด":"Select start–end dates","วันเริ่ม + จำนวนวัน":"Start date + duration","จำนวนวัน":"Duration","วัน":"days","ต่อเวลา Task ถัดไป (Cascade)":"Shift next tasks (Cascade)","เริ่ม":"Start","สิ้นสุด":"End","กดเลือกวันในปฏิทินด้านล่าง หรือพิมพ์/เลือกวันที่ในช่องนี้":"Tap a date on the calendar below, or type/select a date in this field","รวม":"Total","ล้าง":"Clear","แก้ไข Task":"Edit task","ชื่องาน":"Task name","Email แจ้งเตือน":"Notification email","ข้อความแจ้งเตือน":"Notification message","กรุณาดำเนินการ...":"Please take action...","เริ่มหลังจากงาน (Predecessor)":"Start after task (Predecessor)","ถ้างานที่เลือกเลื่อน งานนี้จะถูกเลื่อนตามอัตโนมัติ (เลื่อนไปข้างหน้าเท่านั้น ไม่ดึงกลับมาเร็วขึ้น)":"If the selected task is delayed, this task will be pushed back automatically (forward only — it is never pulled earlier)","เพิ่มขั้นตอน เช่น ยื่นขออนุญาตแล้ว…":"Add a step, e.g. permit submitted…","เพิ่ม":"Add","ความคิดเห็น":"Comments","เขียนความคิดเห็น — พิมพ์ @ชื่อ เพื่อกล่าวถึงผู้ที่เกี่ยวข้อง":"Write a comment — type @name to mention the people involved","ส่งความคิดเห็น":"Post comment","ไฟล์แนบ":"Attachments","คลิกหรือลากไฟล์มาวางที่นี่":"Click or drag files here","รองรับทุกประเภทไฟล์ · สูงสุด 500 MB ต่อไฟล์ · เก็บบนคลาวด์":"All file types supported · up to 500 MB per file · stored in the cloud","ลบ Task":"Delete task","บันทึก":"Save","แก้ไขกลุ่ม":"Edit group","ชื่อกลุ่ม":"Group name","ลบกลุ่ม":"Delete group","แก้ไขผู้รับผิดชอบ":"Edit owner","แก้ไขแผนก":"Edit departments","รหัสแผนก: ตัวอักษร/ตัวเลขสั้นๆ ไม่ซ้ำกัน · ใช้เปิดลิงก์เฉพาะแผนกได้โดยเติม":"Department code: short, unique letters/numbers · lets you open a department-only link by adding","dept=รหัส":"dept=code","ท้ายลิงก์":"to the end of the link","เพิ่มแผนก":"Add department","ค้นหางาน — ทุกสาขา":"Search tasks — all branches","พิมพ์ชื่องาน แผนก หรือผู้รับผิดชอบ…":"Type a task name, department, or owner…","สี":"Color","สถานะ":"Status","ผู้รับผิดชอบ (BD Sales)":"Owner (BD Sales)","ชื่อพนักงานขายที่ดูแลสาขานี้":"Name of the salesperson in charge of this branch","วันเปิดร้าน (Grand Opening)":"Grand Opening date","เว้นว่าง = ใช้วันที่ของ task":"Leave blank = use the date of the task","ในไทม์ไลน์โดยอัตโนมัติ":"in the Timeline automatically","คัดลอกจากสาขาที่มีอยู่ (ไม่บังคับ)":"Copy from an existing branch (optional)","ลบสาขา":"Delete branch","สร้างสาขาใหม่โดยคัดลอกกลุ่มงาน/รายการ task ทั้งหมด (ไม่รวมวันที่และไฟล์)":"Create a new branch by copying all task groups/task lists (excluding dates and files)","ใช้เป็นแม่แบบ":"Use as template","กู้คืนจากไฟล์ Backup":"Restore from Backup file","Backup เก็บ ข้อมูลทุกสาขา (ไทม์ไลน์ ไฟล์แนบที่เป็นลิงก์/คลาวด์ การเงิน ฯลฯ) — ไฟล์ที่เก็บเฉพาะในเครื่องใครเครื่องหนึ่งจะไม่ถูกรวมอยู่ในไฟล์":"Backup contains all branches' data (timeline, attachments that are links/cloud, finance, etc.) — files stored only on one person's device are not included in the file","งวดชำระเงิน":"Payment installments","เพิ่มงวด":"Add installment","กำหนดเป้าหมายยอดขายและจำนวนสาขาที่ต้องเปิดของแต่ละคน — ผลงานจริงคำนวณจากสาขาที่ผู้นั้นรับผิดชอบ":"Set each person's sales target and number of branches to open — actual performance is calculated from the branches they are responsible for","เพิ่มสมาชิก":"Add member","กำลังโหลดข้อมูลสาขา…":"Loading branch data…","ใช้เวลานานกว่าปกติ — ตรวจสอบอินเทอร์เน็ตของคุณ":"Taking longer than usual — check your internet connection","ลองใหม่":"Retry","ใช้ข้อมูลในเครื่องนี้ต่อ":"Keep using data on this device","เวอร์ชันของไฟล์นี้":"Version of this file","ไฟล์นี้ถูกอัปโหลดจากอุปกรณ์อื่น จึงเปิดที่นี่ไม่ได้ — ให้ผู้ที่อัปโหลดส่งไฟล์มาโดยตรง":"This file was uploaded from another device, so it can't be opened here — ask the person who uploaded it to send it to you directly","พื้นที่จัดเก็บไฟล์":"File storage","ยังไม่มีไฟล์แนบ":"No attachments yet","ดาวน์โหลด":"Download","ลบ":"Delete","กำลังอัพโหลด":"Uploading","อัพโหลดล้มเหลว":"Upload failed","ลบไฟล์นี้?":"Delete this file?","ทุกแผนก":"All departments","ลิงก์ / พิกัด Google Maps ของทำเล":"Google Maps link / coordinates of the location","รูปถ่ายทำเลและพื้นที่จริง (Site Photos)":"Location and site photos (Site Photos)","แบบฟอร์มสำรวจทำเล (Site Survey)":"Site survey form (Site Survey)","ผลนับคนเดินผ่าน (Traffic / Footfall Count)":"Foot traffic count results (Traffic / Footfall Count)","แผนที่คู่แข่งและร้านใกล้เคียง (Competitor Map)":"Competitor and nearby store map (Competitor Map)","ผังพื้นที่ / ขนาดพื้นที่เช่า (Floor Plan)":"Floor plan / leased area size (Floor Plan)","ข้อมูลเจ้าของพื้นที่ / ผู้ติดต่อ (Landlord Contact)":"Landlord / contact information (Landlord Contact)","ใบเสนอค่าเช่าและเงื่อนไขการเช่า (Rental Offer)":"Rental offer and lease terms (Rental Offer)","สรุปผลประเมิน / อนุมัติทำเล (Location Approval)":"Evaluation summary / location approval (Location Approval)","ใบสมัครแฟรนไชส์ (Application Form)":"Franchise application form (Application Form)","ข้อตกลงรักษาความลับ (NDA)":"Non-disclosure agreement (NDA)","ใบเสนอราคาค่าแฟรนไชส์ (Quotation)":"Franchise fee quotation (Quotation)","ประมาณการยอดขายและจุดคุ้มทุน (Feasibility)":"Sales forecast and break-even point (Feasibility)","สรุปการเจรจาและประชุมกับผู้สนใจ":"Summary of negotiations and meetings with prospects","ผลประเมินคุณสมบัติผู้สมัคร (Candidate Assessment)":"Candidate qualification assessment (Candidate Assessment)","ใบจอง / หลักฐานเงินจอง (Booking)":"Booking form / deposit evidence (Booking)","หลักฐานการโอน":"Proof of transfer","หนังสือรับรองนิติบุคคลของพาร์ทเนอร์":"Partner's company registration certificate","ภ.พ.20":"VAT registration (P.P.20)","สำเนาบัตรประชาชนของพาร์ทเนอร์":"Copy of partner's ID card","สำเนาทะเบียนบ้านของพาร์ทเนอร์":"Copy of partner's house registration","หน้าบุ๊คแบงค์ของพาร์ทเนอร์":"Partner's bank book front page","แบบ Layout ที่อนุมัติแล้ว (Layout Approved)":"Approved layout (Layout Approved)","แบบ 3D Design ที่อนุมัติแล้ว":"Approved 3D Design","Construction Drawing (แบบก่อสร้าง)":"Construction Drawing (construction plans)","แบบงานระบบ M&E":"M&E systems drawings","BOQ ที่อนุมัติแล้ว":"Approved BOQ","สัญญาก่อสร้างกับผู้รับเหมา":"Construction contract with contractor","รูปถ่ายความคืบหน้างานก่อสร้าง":"Construction progress photos","เอกสารส่งมอบพื้นที่ (Handover)":"Area handover documents (Handover)","แผนการตลาดเปิดร้าน (Marketing Plan)":"Store opening marketing plan (Marketing Plan)","ไฟล์ Branding / CI Guideline":"Branding / CI Guideline files","แบบป้ายร้าน (Signage Artwork)":"Store signage design (Signage Artwork)","แผน Campaign Grand Opening":"Grand Opening campaign plan","ภาพถ่ายร้านสำหรับสื่อประชาสัมพันธ์":"Store photos for PR materials","สื่อโฆษณา / Artwork โปรโมชั่น":"Advertising media / Promotion artwork","ใบเสนอราคาระบบ POS":"POS system quotation","แผนผังการติดตั้งระบบ Network":"Network installation diagram","สัญญาบริการอินเทอร์เน็ต":"Internet service contract","เอกสารติดตั้ง EDC / เครื่องรูดบัตร":"EDC / card terminal installation documents","คู่มือการใช้งานระบบ (User Manual)":"System user manual (User Manual)","รายงานผลการ Test Run ระบบ":"System Test Run report","FC Buy List (รายการสั่งซื้อ)":"FC Buy List (purchase list)","ใบสั่งซื้อ PR / PO":"Purchase order PR / PO","ใบเสนอราคาจากผู้ขาย":"Supplier quotation","เอกสารส่งมอบอุปกรณ์ (Delivery Note)":"Equipment delivery document (Delivery Note)","ใบรับประกันสินค้า / อุปกรณ์":"Product / equipment warranty","เอกสาร First Order":"First Order document","แผนการจัดส่งวัตถุดิบ (Supply Plan)":"Raw material supply plan (Supply Plan)","รายชื่อ Supplier ที่อนุมัติ":"Approved Supplier list","สัญญาแฟรนไชส์ที่ลงนามแล้ว":"Signed franchise agreement","หลักฐานการชำระเงินทุกงวด (Slip)":"Proof of payment for every installment (Slip)","ใบเสร็จรับเงิน / ใบกำกับภาษี":"Receipt / Tax invoice","งบประมาณโครงการ (Project Budget)":"Project Budget","เอกสารจดทะเบียนบริษัท":"Company registration documents","หนังสือรับรองบริษัท":"Company certificate","สำเนาบัตรประชาชนผู้มีอำนาจลงนาม":"Copy of authorized signatory's ID card","เอกสารเปิดบัญชีธนาคารร้าน":"Store bank account opening documents","ประกาศรับสมัครพนักงาน":"Job posting","รายชื่อพนักงาน (Staff List)":"Staff List","สัญญาจ้างพนักงาน":"Employment contract","เอกสารขึ้นทะเบียนประกันสังคม":"Social security registration documents","แบบฟอร์มขนาดชุดยูนิฟอร์ม":"Uniform size form","ข้อมูลติดต่อฉุกเฉินของพนักงาน":"Employee emergency contact information","ตารางการอบรม (Training Schedule)":"Training Schedule","หลักสูตรการอบรม (Training Curriculum)":"Training Curriculum","คู่มือมาตรฐานการชงเครื่องดื่ม":"Standard beverage preparation manual","คู่มือการใช้งานเครื่องมือและอุปกรณ์":"Tools and equipment user manual","ใบลงทะเบียนเข้าอบรม (Attendance Sheet)":"Training attendance sheet (Attendance Sheet)","แบบทดสอบและผลการประเมิน":"Tests and assessment results","ใบรับรองผ่านการอบรม (Certificate)":"Training completion certificate (Certificate)","รายงานสรุปผลการอบรม":"Training summary report","SOP การปฏิบัติงานประจำวัน":"Daily operations SOP","ตารางกะการทำงาน (Shift Schedule)":"Shift Schedule","Checklist เปิด-ปิดร้าน":"Open/close store checklist","รายงานผล Test Run":"Test Run report","เอกสารตรวจสอบคุณภาพ (QC Report)":"Quality inspection document (QC Report)","แผนบริหารจัดการหน้าร้าน":"Store management plan","ค่าแฟรนไชส์ (Franchise Fee)":"Franchise Fee","เงินมัดจำแบรนด์ (Brand Deposit)":"Brand Deposit","ค่าก่อสร้าง 50%":"Construction fee 50%","ค่าก่อสร้าง 40%":"Construction fee 40%","ค่าก่อสร้าง 10%":"Construction fee 10%","ค่าอุปกรณ์ / First Order":"Equipment cost / First Order","เปิดสาขาใหม่ (New Shop)":"New Shop","ขายต่อเนื่อง (Retro Selling)":"Retro Selling","สาขาใหม่":"New branch","สาขาแรก":"First branch","เพิ่มสาขา":"Add branch","แก้ไข / ลบสาขา":"Edit / delete branch","ดำเนินการ":"in progress","วางแผน":"planning","จากทั้งหมด":"Out of","เปิดร้านแล้ว":"Opened","มูลค่าที่ทีม BD สร้าง":"Value created by the BD team","มูลค่ารวมโครงการ":"Total project value","% ของมูลค่ารวม":"% of total value","เกินกำหนด":"Overdue","เก็บเงินแล้ว":"Collected","กำหนดแล้ว":"scheduled","ไฟล์":"files","งานเสร็จแล้ว":"Tasks done","เก็บเงิน":"Collection","ไม่มีสาขาที่ตรงกับตัวกรองตอนนี้ (ซ่อนอยู่":"No branches match the current filters (hiding","สาขา)":"branches)","ล้างตัวกรอง":"Clear filters","ทั้งหมด":"All","มุมมอง":"View","การ์ด":"Cards","ปฏิทินเปิดร้าน":"Opening calendar","เรียง":"Sort","เรียงสาขา":"Sort branches","วันเปิดร้านใกล้สุดก่อน":"Soonest opening first","ความคืบหน้า":"Progress","ลำดับเดิม":"Original order","กรองตามผู้ดูแล BD":"Filter by BD owner","ทุกคน":"Everyone","กรองเฉพาะ":"Filter only","สถานะสาขา (Pipeline)":"Branch status (Pipeline)","เปิดร้านภายใน 30 วัน":"Opening within 30 days","ยังไม่มีสาขาที่จะเปิดภายใน 30 วัน":"No branches opening within 30 days","7 วันข้างหน้า":"Next 7 days","งาน":"tasks","ไม่มีงานที่ครบกำหนดใน 7 วันนี้":"No tasks due in the next 7 days","และอีก":"And","การเก็บเงิน":"Payment collection","เก็บแล้ว":"Collected","รอเก็บ":"Pending","ยังไม่มีงวดชำระเงิน":"No payment installments yet","ยังไม่มีสาขาที่กำหนดวันในไทม์ไลน์ — สร้าง Timeline ให้สาขาก่อน แล้วภาพรวมจะแสดงที่นี่":"No branches with dates set in the timeline yet — create a Timeline for a branch first, then the overview will show here","เสร็จ":"Done","ยังไม่กำหนดวัน":"No dates set","เปิด Timeline ของ":"Open Timeline for","ช่วงงานของแต่ละกลุ่ม (แถบเข้ม = ทำเสร็จแล้ว)":"Task span of each group (dark bar = completed)","มีงานเกินกำหนด":"Has overdue tasks","วันเปิดร้าน":"Opening day","คลิกแถวสาขาเพื่อเปิด Timeline":"Click a branch row to open its Timeline","เริ่มโปรเจกต์":"Start project","เดือนก่อน":"Previous month","เดือนถัดไป":"Next month","เดือนนี้":"This month","ลำดับการเปิดร้าน":"Opening order","ยังไม่มีวันเปิดร้านที่กำหนด":"No opening dates set yet","ยังไม่กำหนดวันเปิดร้าน":"Opening date not set","ดาวน์โหลด Backup แล้ว":"Backup downloaded","เฉพาะผู้ดูแลเท่านั้นที่กู้คืนข้อมูลได้":"Only administrators can restore data","ไฟล์นี้ไม่ใช่ไฟล์ JSON ที่อ่านได้ — เลือกไฟล์ Backup ที่ดาวน์โหลดจากระบบนี้":"This file is not a readable JSON file — choose a Backup file downloaded from this system","ไม่ใช่ไฟล์ Backup ของระบบนี้":"Not a Backup file from this system","ไม่พบข้อมูลสาขาในไฟล์":"No branch data found in the file","ไฟล์ใหญ่เกินไป (เกิน 60 MB)":"File too large (over 60 MB)","สำรองเมื่อ":"Backed up on","ไม่ทราบ":"Unknown","ในไฟล์":"In file","สาขา → ใหม่":"branches → new","มีอยู่แล้ว":"existing","ข้ามที่ข้อมูลเสีย":"skipped corrupted data","เพิ่มเฉพาะสาขาที่ยังไม่มี":"Add only branches that don't exist yet","สาขาที่มีอยู่แล้วจะไม่ถูกแตะต้อง (ปลอดภัยที่สุด)":"Existing branches will not be touched (safest)","เพิ่ม + แทนที่สาขาที่ id ตรงกันด้วยข้อมูลในไฟล์":"Add + replace branches with a matching id using the data in the file","จะดาวน์โหลดสำเนาข้อมูลปัจจุบันให้ก่อนอัตโนมัติ · สาขาที่ไม่อยู่ในไฟล์จะไม่ถูกลบ":"A copy of the current data will be downloaded automatically first · branches not in the file will not be deleted","กู้คืน":"Restore","อ่านไฟล์ไม่ได้":"Could not read file","กู้คืนแล้ว — เพิ่ม":"Restored — added","แทนที่":"replaced","ไม่คัดลอก (เริ่มจากแม่แบบมาตรฐาน)":"Don't copy (start from the standard template)","แก้ไขสาขา":"Edit branch","กรุณาใส่ชื่อสาขา":"Please enter a branch name","วันที่ไม่ถูกต้อง — ตรวจปี ค.ศ. อีกครั้ง":"Invalid date — check the year (CE)","สร้างสาขา":"Created branch","โดยคัดลอกจากสาขาเดิมแล้ว":"by copying from the existing branch","ลิงก์":"Link","ไฟล์แนบของ Task":"Task attachments","ไฟล์ของแผนก":"Department files","โครงสร้างไทม์ไลน์ — กลุ่มงานและ tasks ทั้งหมด":"Timeline structure — all task groups and tasks","tasks (ทำเครื่องหมาย":"tasks (items marked","เสร็จแล้ว":"Done","จะถูกล้าง)":"will be cleared)","วันที่โปรเจกต์ และวันที่ของแต่ละ task":"Project dates and each task's dates","ไม่เลือก = เริ่มใหม่ แล้วตั้งวันเองที่หน้า Overview":"Unchecked = start fresh, then set the dates yourself on the Overview page","เริ่มโปรเจกต์ใหม่วันที่":"Start the new project on","เว้นว่าง = ใช้วันที่เดิมทุกประการ · ใส่วันเริ่มใหม่ = เลื่อนทุกงานตามจำนวนวันที่ต่างกัน โดยคงระยะเวลาและช่วงห่างระหว่างงานไว้":"Leave blank = keep the original dates exactly · enter a new start date = shift every task by the difference in days, keeping durations and gaps between tasks","ผู้รับผิดชอบ (By) · แผนก · รายชื่อผู้ติดต่อ":"Owners (By) · Departments · Contact list","ตั้งค่า Uniform (ประเภท)":"Uniform settings (types)","ไม่รวมรายชื่อพนักงาน":"Excludes staff list","ไฟล์ที่จะคัดลอก":"Files to copy","เลือกทั้งหมด":"Select all","ไม่เลือก":"Select none","สาขานี้ยังไม่มีไฟล์":"This branch has no files yet","ไฟล์แนบของ Task จะคัดลอกได้เมื่อเลือก":"Task attachments can be copied when you select","โครงสร้างไทม์ไลน์":"Timeline structure","ไฟล์ที่อัปโหลดจากอุปกรณ์อื่นและไม่ได้อยู่ในเครื่องนี้จะคัดลอกไม่ได้":"Files uploaded from other devices and not stored on this device cannot be copied","สาขาต้นทางยังไม่มีวันที่ — จะไม่มีอะไรให้เลื่อน":"Source branch has no dates yet — there is nothing to shift","ต้นทางเริ่ม":"Source starts","เลื่อน":"shift","วันในสัปดาห์จะเปลี่ยนไป — เลือกให้ต่างกันเป็นสัปดาห์เต็มถ้าต้องการให้ตรงวันเดิม)":"weekdays will change — pick a gap of whole weeks to keep the same weekdays)","ตรงวันในสัปดาห์เดิม)":"keep the same weekday)","กำลังคัดลอกไฟล์":"Copying","ไฟล์ …":"files …","คัดลอกไฟล์สำเร็จ":"Files copied","ไม่สำเร็จ":"Failed","คัดลอกไฟล์ครบ":"Copied all","ไฟล์แล้ว":"files","เปิดแล้ว":"Opened","อีก":"In","วันนี้!":"Today!","เลยกำหนด":"Overdue","ยังไม่กำหนด":"Not set","จาก Timeline":"From Timeline","ไม่สามารถลบสาขาสุดท้าย":"Cannot delete the last branch","nไฟล์ทั้งหมดของสาขานี้จะถูกลบด้วย":"nAll files of this branch will be deleted too","พิมพ์เพื่อค้นหา…":"Type to search…","ไม่พบผลลัพธ์":"No results found","รายการ — พิมพ์ให้เจาะจงขึ้น":"items — refine your search","ชื่อสาขาใหม่ (คัดลอกโครงสร้างงานจาก":"New branch name (copy task structure from","จากแม่แบบแล้ว":"from template","ม.ค.":"Jan","ก.พ.":"Feb","มี.ค.":"Mar","เม.ย.":"Apr","พ.ค.":"May","มิ.ย.":"Jun","ก.ค.":"Jul","ส.ค.":"Aug","ก.ย.":"Sep","ต.ค.":"Oct","พ.ย.":"Nov","ธ.ค.":"Dec","จ.":"Mon","อ.":"Tue","พ.":"Wed","พฤ.":"Thu","ศ.":"Fri","ส.":"Sat","อา.":"Sun","มกราคม":"January","กุมภาพันธ์":"February","มีนาคม":"March","เมษายน":"April","พฤษภาคม":"May","มิถุนายน":"June","กรกฎาคม":"July","สิงหาคม":"August","กันยายน":"September","ตุลาคม":"October","พฤศจิกายน":"November","ธันวาคม":"December","วัดพื้นที่":"Measure site area","Bidding ผรม.":"Bidding contractors","ทำสัญญาก่อสร้าง":"Sign construction contract","ชำระค่าก่อสร้าง 50%":"Construction payment 50%","ชำระค่าก่อสร้าง 40%":"Construction payment 40%","ชำระค่าก่อสร้าง 10%":"Construction payment 10%","ก่อสร้าง":"Construction","จัดเตรียมเอกสาร":"Prepare documents","ส่งเอกสาร":"Submit documents","ประกาศรับสมัคร Staff":"Post Staff job openings","ส่งรายชื่อ Staff":"Submit Staff list","สัญญาจ้าง / ประกันสังคม":"Employment contract / social security","เตรียมหลักสูตร & ตารางอบรม":"Prepare curriculum & training schedule","ทดสอบและประเมินผล":"Test and evaluate","ออกใบรับรองผ่านการอบรม":"Issue training certificates","จัดหา FC Buy List":"Source FC Buy List","ส่งมอบ FC Buy List":"Deliver FC Buy List","ลบงาน":"Task","แล้ว":"deleted","เรียกคืน":"Undo","เรียกคืนงานแล้ว":"Task restored","ไฟล์แนบเดิมกู้คืนไม่ได้)":"original attachments cannot be restored)","เรียกคืนกลุ่มแล้ว":"Group restored","ยกเลิก":"Cancel","ตกลง":"OK","วางลิงก์จาก SharePoint, OneDrive, Google Drive หรือที่เก็บไฟล์ของบริษัท — ทุกคนที่เปิดลิงก์นี้จะเห็นและเปิดไฟล์ได้":"Paste a link from SharePoint, OneDrive, Google Drive, or the company file storage — anyone who opens this link can see and open the file","ชื่อไฟล์":"File name","เช่น BOQ อนุมัติแล้ว.pdf":"e.g. BOQ approved.pdf","ลิงก์ (URL)":"Link (URL)","เพิ่มลิงก์":"Add link","กรุณาวางลิงก์ของไฟล์":"Please paste the file link","ลิงก์ไม่ถูกต้อง — ตัวอย่าง https://drive.google.com/…":"Invalid link — example: https://drive.google.com/…","ลิงก์ไฟล์":"File link","ยืนยัน ลบ":"Confirm delete","เพิ่มงานในกลุ่มนี้":"Add task to this group","ขึ้น":"up","ลง":"down","เลื่อนกลุ่ม":"Move group","เลื่อนงาน":"Move task","แก้ไข":"Edit","เปิดลิงก์":"Open link","ปิด":"Close","ก่อนหน้า":"Previous","ถัดไป":"Next","ปรับระยะเวลางาน":"Adjust task duration","เลื่อนไปทางขวาเพื่อดูคอลัมน์ที่เหลือ":"Scroll right to see the remaining columns","ภาพรวม":"Overview","ยูนิฟอร์ม":"Uniform","ไฟล์เอกสาร":"Files","การเงิน":"Finance","กรุณาเลือกวันเริ่มต้นก่อน":"Please select a start date first","วันสิ้นสุดต้องไม่ก่อนวันเริ่มต้น":"End date must not be before the start date","ปรับวันที่อีก":"Adjusted dates for another","งานตามลำดับที่เชื่อมโยงไว้":"tasks based on their linked order","กรุณาเลือกวันเริ่มต้น":"Please select a start date","สร้าง Timeline ใหม่จะจัดวันที่ของทุกงานใหม่ตามวันเริ่ม":"Creating a new Timeline will reschedule all tasks from the start date","nงานที่มีวันอยู่แล้ว":"nTasks that already have dates:","งาน (รวมที่คุณปรับเอง) จะถูกเปลี่ยน":"tasks (including ones you adjusted manually) will be changed","nต้องการดำเนินการต่อหรือไม่?":"nDo you want to continue?","สร้างใหม่ทั้งหมด":"Rebuild all","กรุณาสร้าง Timeline ก่อน":"Please create a Timeline first","ปรับแผนให้พอดี":"Plan adjusted to fit","วัน (จากเดิม":"days (previously","วัน)":"days)","ลิงก์แผนที่ไม่ถูกต้อง — กรุณาวางลิงก์ที่คัดลอกจากปุ่ม “แชร์” ใน Google Maps":"Invalid map link — please paste the link copied from the “Share” button in Google Maps","ลิงก์นี้ไม่ใช่ลิงก์ของ Google Maps — ตรวจสอบอีกครั้งว่าวางลิงก์ถูกต้อง":"This is not a Google Maps link — double-check that you pasted the correct link","รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก":"Postal code must be 5 digits","ลิงก์ Google Maps":"Google Maps link","ข้อมูลที่ตั้งร้านครบแล้ว ขอบคุณครับ":"Store location details are complete. Thank you","ยังไม่ได้กรอก":"Not yet filled in","Email สำหรับธุรกรรมทั่วไป ไม่ถูกต้อง (ตัวอย่าง name@company.com)":"General transaction Email is invalid (example: name@company.com)","เบอร์ติดต่อส่วนตัวไม่ถูกต้อง (ตัวเลข 8–12 หลัก)":"Personal contact number is invalid (8–12 digits)","เบอร์ติดต่อหน้าร้านไม่ถูกต้อง (ตัวเลข 8–12 หลัก)":"Store contact number is invalid (8–12 digits)","Email สำหรับ Grab ต้องไม่ซ้ำกับ Email สำหรับธุรกรรมทั่วไป — กรุณาใช้ Gmail อีกบัญชีหนึ่ง":"The Grab Email must not be the same as the general transaction Email — please use a different Gmail account","Email สำหรับ Grab ต้องเป็น Gmail เท่านั้น (ลงท้ายด้วย @gmail.com)":"The Grab Email must be a Gmail address (ending in @gmail.com)","กรอกข้อมูลครบแล้ว ขอบคุณครับ":"All information completed. Thank you","ช่อง":"fields","ตั้งชื่อสาขาและวันเริ่มโครงการ":"Set branch name and project start date","สร้าง Timeline (กด":"Create Timeline (click \"Create Timeline\"","ในกล่องตั้งค่า)":"in the setup box)","กำหนดวัน Grand Opening":"Set Grand Opening date","ระบุ BD ผู้รับผิดชอบสาขา":"Specify the BD in charge of the branch","กรอกข้อมูลเจ้าของร้านให้ครบ":"Complete the store owner information","เพิ่มเอกสาร/ไฟล์ของแผนกอย่างน้อย 1 รายการ":"Add at least 1 department document/file","เริ่มต้นใช้งานสาขานี้":"Get started with this branch","ทำเลย":"Do it now","ไม่ระบุชื่อ":"Unnamed","วัน · สิ้นสุด":"days · ends","Task ทั้งหมด":"Total tasks","ทุก Phase":"All phases","Task เปิดใช้":"Active tasks","ปิดอยู่":"off","กำหนดวันแล้ว":"Scheduled","ระยะเวลา (วัน)":"Duration (days)","จากเดือนที่เลือก":"From selected months","เป้าหมาย":"Target","ครบกำหนดวันนี้":"Due today","กำลังดำเนินการ":"In progress","วัน · ยังไม่กำหนดวัน":"days · no date set","เริ่มหลังงานอื่น":"Starts after other tasks","Checklist · ความคิดเห็น · แก้ไขงาน":"Checklist · Comments · Edit task","เปิดรายละเอียดงาน":"Open task details","ยังไม่มีงานในตัวกรองนี้":"No tasks match this filter","ยังไม่ได้เลือกเดือน":"No month selected","วัน · สิ้นสุดตามแผน":"days · planned end","วัน (ช่วงเวลา)":"days (period)","จริง":"Actual","ถึง":"to","ตรงแผน)":"on plan)","ยังไม่มีเดือนในไทม์ไลน์":"No months in the timeline yet","กดปุ่ม":"Click","ในแถบด้านบน หรือกลับไป Overview แล้วกด":"in the top bar, or go back to Overview and click","ครบแล้ว":"All done","เปิดลิงก์ของงาน":"Open task link","เริ่มหลัง":"Starts after","ทำเครื่องหมายว่ายังไม่เสร็จ":"Mark as not done","ทำเครื่องหมายว่าเสร็จแล้ว":"Mark as done","เพิ่มเติม":"More","ยังไม่เสร็จ":"Not done","ทำเครื่องหมายเสร็จ":"Mark done","แก้ไขงาน":"Edit task","เอกสารแผนก":"Department files","ลบงานนี้":"Delete this task","ยังไม่ได้กำหนดวันให้งานในสาขานี้":"No dates have been set for tasks in this branch","ไปที่":"Go to","แล้วกด":"and click","เพื่อจัดตารางทั้งหมดอัตโนมัติ":"to schedule everything automatically","ไปที่ Overview":"Go to Overview","วันสุดท้ายของแต่ละเดือน":"Last day of each month","กรุณาเพิ่มเดือนก่อน":"Please add a month first","ก่อนวันเริ่มโครงการ":"Before project start","เริ่มงานก่อนวันเริ่มโครงการไม่ได้":"Cannot start a task before the project start date","วันสิ้นสุดต้องไม่ก่อนวันเริ่ม":"End date must not be before the start date","ปรับวันเริ่มเป็นวันเริ่มโครงการ":"Start date adjusted to the project start date","ทำเครื่องหมายว่าเสร็จแล้ว — งานย้ายไปอยู่ด้านล่างของ Timeline":"Marked as done — task moved to the bottom of the Timeline","ย้ายกลับเข้า Timeline แล้ว":"Moved back into the Timeline","ค้างอยู่":"Pending","งานที่เสร็จแล้วอยู่ด้านล่างของ Timeline":"Done tasks are at the bottom of the Timeline","ซ่อนงานที่เสร็จแล้ว":"Hide done tasks","คืนเข้า Timeline":"Return to Timeline","ไม่มีงานที่เสร็จแล้วของแผนกนี้":"No completed tasks for this department","เอาออก":"Remove","เอางานนี้ออกจากรายการที่ต้องรอ":"Remove this task from the waiting list","ไม่มี — เริ่มได้ตามวันที่กำหนดเอง":"None — can start on a manually set date","เลือกงานที่ต้องเสร็จก่อน…":"Select a task that must finish first…","เชื่อมไม่ได้ — จะเกิดวงวน (งานนั้นรองานนี้อยู่แล้ว)":"Cannot link — it would create a loop (that task already waits for this one)","ปรับวันที่":"Adjusted dates for","ลบขั้นตอน":"Delete step","ยังไม่มีขั้นตอนย่อย":"No sub-steps yet","พิมพ์ชื่อขั้นตอนก่อนกดเพิ่ม":"Enter a step name before adding","ทำครบทุกขั้นตอนแล้ว — กด ✅ ที่งานเพื่อปิดงานได้เลย":"All steps completed — click ✅ on the task to close it","ยังไม่มีความคิดเห็น":"No comments yet","พิมพ์ความคิดเห็นก่อนส่ง":"Write a comment before sending","ทีมงาน":"Team","กรุณาใส่ชื่องาน":"Please enter a task name","ลิงก์ต้องเป็นเว็บ (เริ่มด้วย http:// หรือ https://)":"Link must be a web address (starting with http:// or https://)","ลบ task นี้?":"Delete this task?","กรุณาใส่ชื่อกลุ่ม":"Please enter a group name","ลบกลุ่มนี้?":"Delete this group?","ntasks ทั้งหมดในกลุ่มจะถูกลบด้วย":"nAll tasks in the group will be deleted too","กลุ่มใหม่":"New group","ใส่รหัสสั้นๆ (ตัวอักษร/ตัวเลข)":"Enter a short code (letters/numbers)","รหัสนี้ซ้ำกับรายการอื่น":"This code duplicates another item","วัน · แสดง":"days · showing","วัน  |  ส่งออก":"days  |  Exported","ส่งออก":"Exported","รอบอก":"Chest","ความยาวเสื้อ":"Shirt length","แขนสั้น":"Short sleeve","แขนยาว":"Long sleeve","ความยาว":"Length","ชาย":"Male","หญิง":"Female","อื่นๆ":"Other","หมวก คนละ 1 ใบ":"1 cap per person","และ":"and","เสื้อกั๊ก คนละ 1 ตัว":"1 vest per person","มอบให้ตามจำนวนพนักงาน":"issued according to the number of staff","เสื้อเชิ้ต":"Dress shirt","สำหรับ":"for","คนละ 3 ตัว":"3 per person","เท่านั้น — คนละ 3 ตัว":"only — 3 per person","จำนวนที่จัดให้":"Quantities provided","รวมจากรายชื่อปัจจุบัน: หมวก":"Total from current list: caps","ใบ · เสื้อกั๊ก":"pcs · vests","ตัว · เสื้อเชิ้ต":"pcs · dress shirts","ตัว (ผู้จัดการ":"pcs (managers","คน) · เสื้อโปโล":"people) · polo shirts","ตัว (Staff":"pcs (Staff","คน)":"people)","MAN แขนสั้น / แขนยาว":"MAN short sleeve / long sleeve","นิ้ว":"inches","การวัด":"Measurement","หน่วยวัดเป็น":"Measurements are in","nbsp; ** ในการผลิตอาจมีคลาดเคลื่อนประมาณ 0.5 – 1 นิ้ว":"nbsp; ** Production may vary by approx. 0.5 – 1 inch","คน":"people","ไซส์":"Size","ยังไม่มีพนักงาน — กด":"No staff yet — press","ยังไม่มีรายชื่อพนักงาน — กด “＋ เพิ่มพนักงาน":"No staff yet — press “＋ Add staff","กรอกข้อมูลครบทุกคนแล้ว":"Everyone's details are complete","ยังกรอกไม่ครบ":"Still incomplete for","คน จาก":"people out of","คน — ช่องที่ยังว่างจะมีกรอบสีส้ม (ทุกช่องต้องกรอก)":"people — empty fields have an orange border (all fields are required)","เพิ่มกี่คน?":"How many to add?","แถวที่":"Row","ออกจากรายชื่อพนักงาน?":"from the staff list?","แบบฟอร์มแจ้งไซส์เสื้อพนักงาน — JIAN CHA":"Staff uniform size form — JIAN CHA","ประเภท":"Type","ตารางไซส์":"Size chart","เอกสารของ":"Documents for","ไม่มีชื่อสาขา)":"(No branch name)","ผู้เซ็นรับทราบ":"Signed acknowledgements","เอกสารที่ต้องส่ง":"Required documents","ติ๊กเอง":"Checked manually","พบไฟล์แล้ว":"File found","ระบบติ๊กให้เมื่อชื่อไฟล์ตรงกับเอกสาร หรือติ๊กเองได้ถ้าส่งเอกสารด้วยวิธีอื่น":"The system ticks an item when a file name matches the document, or you can tick it yourself if the document was sent another way","ตรวจสอบไฟล์ที่อยู่บนคลาวด์แต่ไม่แสดงในรายการ":"Check for files stored in the cloud that are not shown in the list","ตรวจสอบไฟล์":"Check files","เพิ่มลิงก์ไฟล์ (แชร์ทุกคน)":"Add file link (shared with everyone)","อัปโหลดไฟล์ (แชร์ทุกคน)":"Upload file (shared with everyone)","อัปโหลด (เครื่องนี้)":"Upload (this device)","ลากไฟล์มาวางที่นี่ หรือใช้ปุ่มอัพโหลด":"Drag files here or use the upload button","รองรับทุกประเภทไฟล์ · สูงสุด 500 MB ต่อไฟล์ · เก็บบนคลาวด์ ทุกคนดาวน์โหลดได้":"All file types supported · up to 500 MB per file · stored in the cloud, downloadable by everyone","แชร์ทุกคน":"Shared with everyone","อุปกรณ์อื่น":"Other devices","เปิด":"Open","ยังไม่มีไฟล์ในแผนกนี้":"No files in this department yet","เลือกแผนกเพื่อเพิ่มบันทึกการประชุม":"Select a department to add meeting notes","บันทึกการประชุม — สิ่งที่ตกลง งานที่ต้องทำต่อ ผู้รับผิดชอบ…":"Meeting notes — decisions, follow-up tasks, owners…","บันทึกจะแชร์ให้ทุกคนที่เปิดลิงก์เห็นทันที":"Notes are shared instantly with everyone who opens the link","เพิ่มบันทึก":"Add note","ลบบันทึก":"Delete note","ยังไม่มีบันทึกการประชุมของแผนกนี้":"No meeting notes for this department yet","กรุณาเลือกแผนกก่อน":"Please select a department first","กรุณาพิมพ์บันทึกก่อน":"Please type a note first","บันทึกแล้ว — ทุกคนเห็นทันที":"Saved — visible to everyone immediately","ลบบันทึกนี้?":"Delete this note?","ข้าพเจ้าได้อ่านเอกสารและข้อกำหนดของแผนกนี้ และ":"I have read this department's documents and requirements and","รับทราบและเข้าใจ":"acknowledged and understood","ทุกข้อแล้ว":"all items","ชื่อ-นามสกุลผู้ลงนาม":"Signer's full name","ชื่อ-นามสกุล ผู้ลงนาม":"Signer's full name","ตำแหน่งหรือบริษัท":"Position or company","ตำแหน่ง / บริษัท (ไม่บังคับ)":"Position / company (optional)","พื้นที่เซ็นชื่อ ใช้นิ้ว ทัชแพด หรือเมาส์ — หรือกดปุ่ม พิมพ์ชื่อแทนการเซ็น":"Signature area. Use your finger, touchpad, or mouse — or press the Type name button instead of signing","เซ็นชื่อที่นี่":"Sign here","มือถือ/แท็บเล็ต: ใช้นิ้วลากในกรอบ · แล็ปท็อป: กดค้างที่ทัชแพดหรือเมาส์แล้วลาก":"Mobile/tablet: drag your finger in the box · Laptop: hold down on the touchpad or mouse and drag","↶ ย้อนกลับ":"↶ Undo","ล้างลายเซ็น":"Clear signature","ใช้เมื่อเซ็นด้วยมือไม่สะดวก หรือใช้คีย์บอร์ดอย่างเดียว":"Use when signing by hand is inconvenient, or when using the keyboard only","พิมพ์ชื่อแทนการเซ็น":"Type name instead of signing","ลายเซ็นจะแชร์ให้ทุกคนที่เปิดลิงก์เห็น":"The signature will be visible to everyone who opens the link","ยืนยันลายเซ็น":"Confirm signature","ลายเซ็นของ":"Signature of","ยกเลิกลายเซ็นนี้":"Void this signature","ยกเลิกลายเซ็นของ":"Void signature of","ยังไม่มีผู้เซ็นรับทราบของแผนกนี้":"No one has signed for this department yet","พิมพ์ชื่อ-นามสกุลก่อน ระบบจะแสดงชื่อนั้นเป็นลายเซ็นแบบพิมพ์":"Type your full name first; the system will display it as a typed signature","กรุณาใส่ชื่อ-นามสกุลผู้ลงนาม":"Please enter the signer's full name","กรุณาเซ็นชื่อในกรอบ หรือกด":"Please sign in the box or press","ก่อน":"first","บันทึกลายเซ็นของ":"Saved signature of","nรายการจะถูกซ่อนจากหน้านี้":"nThe entry will be hidden from this page","ยังไม่ได้เชื่อมต่อคลาวด์":"Not connected to the cloud yet","กู้คืนรายการไฟล์":"Restored file list","รายการไฟล์ครบถ้วนแล้ว":"File list is already complete","ไม่พบข้อมูลค้างในเครื่องนี้":"No pending data found on this device","ยังไม่ได้เชื่อมต่อคลาวด์ — ลองรีเฟรชหน้าอีกครั้ง":"Not connected to the cloud yet — try refreshing the page","พบข้อมูลที่ยังไม่ได้ซิงก์ในเครื่องนี้":"Found unsynced data on this device","nอัปโหลดขึ้นคลาวด์ให้ทุกคนเห็น?":"nUpload to the cloud so everyone can see it?","อัปโหลดแล้ว":"Uploaded","อัปโหลดเลย":"Upload now","เชื่อมต่อฐานข้อมูลไม่สำเร็จ หรือรหัสในลิงก์ไม่ถูกต้อง":"Database connection failed or the key in the link is invalid","ลองรีเฟรชหน้า หรือขอลิงก์ใหม่":"Try refreshing the page or request a new link","เครื่องนี้ยังไม่ได้เชื่อมต่อฐานข้อมูล":"This device is not connected to the database","สิ่งที่กรอกจะเก็บไว้ในเครื่องนี้เท่านั้น คนอื่นจะไม่เห็น กรุณาตรวจอินเทอร์เน็ตแล้วรีเฟรช":"What you enter is stored on this device only and others won't see it. Please check your internet connection and refresh","พบข้อมูลค้างในเครื่องนี้ที่ยังไม่ได้ซิงก์":"Found pending data on this device that hasn't been synced","อัปโหลดขึ้นคลาวด์":"Upload to cloud","ลิงก์ไม่ถูกต้อง เปิดไม่ได้":"Invalid link, cannot open","เปิดไฟล์ไม่สำเร็จ":"Could not open the file","เพิ่มลิงก์ไฟล์":"Add file link","เพิ่มลิงก์แล้ว — ทุกคนที่เปิดลิงก์นี้จะเห็น":"Link added — everyone who opens this link will see it","แนบลิงก์เอกสาร":"Attach document link","แนบลิงก์แล้ว — ทุกคนเห็นเหมือนกัน":"Link attached — everyone sees the same","กรุณาเลือกแผนกก่อนอัพโหลด":"Please select a department before uploading","ไฟล์ — ทุกคนดาวน์โหลดได้":"files — everyone can download","% ของยอดทั้งหมด":"% of total","ยังไม่ได้เก็บ":"Not yet collected","ยังไม่ถึงกำหนด":"Not yet due","รอเก็บ (ในกำหนด)":"Pending (not yet due)","เกินกำหนดชำระ":"Overdue","มูลค่ารวม":"Total value","เรียงตาม":"Sort by","คงค้าง":"Outstanding","รวมทุกสาขา":"Total, all branches","ดูไฟล์แนบ":"View attachments","รายการ":"Item","ประเภทรายได้":"Revenue type","จำนวนเงิน":"Amount","คงเหลือ":"Balance","กำหนดชำระ":"Due date","วันที่เก็บ":"Collected on","เอกสาร":"Documents","ยังไม่มีรายการชำระเงิน — เปิดสาขาแล้วกด":"No payment items yet — open a branch and press","บันทึกการรับชำระแล้ว":"Payment recorded","ยกเลิกสถานะรับชำระ":"Payment status cleared","สาขานี้":"This branch","ชื่อรายการ":"Item name","ลบรายการ":"Delete item","ลิงก์ (แชร์ทุกคน)":"Link (shared with everyone)","อัปโหลด":"Upload","สลิปโอนเงิน · ใบเสร็จ · ใบกำกับภาษี":"Transfer slip · receipt · tax invoice","ยังไม่มีงวดชำระ — กด":"No installments yet — press","พื้นที่จัดเก็บไฟล์รวม":"Total file storage","แนบไฟล์แล้ว — ทุกคนเปิดได้":"File attached — everyone can open it","แนบไฟล์แล้ว":"File attached","ลบไฟล์แนบนี้?":"Delete this attachment?","เปิดไฟล์":"Open file","งวดใหม่":"New installment","nไฟล์แนบ":"nAttached files","ไฟล์จะถูกลบด้วย":"will also be deleted","ใส่ชื่องวด เช่น":"Enter an installment name, e.g.","จำนวนเงินต้องเป็นตัวเลขและไม่ติดลบ":"Amount must be a number and not negative","บันทึกข้อมูลการเงินแล้ว":"Finance data saved","ชื่อสมาชิก":"Member name","เป้ายอดขาย (฿)":"Sales target (฿)","เป้าสาขา":"Branch target","ยังไม่มีสมาชิก — กด":"No members yet — press","สมาชิกนี้":"this member","ออกจากทีม?":"from the team?","บันทึกข้อมูลทีม BD แล้ว":"BD team data saved","โครงการ · ทีม BD":"projects · BD team","คน · ส่งออก":"people · exported","มูลค่ารวมที่ BD สร้าง":"Total value generated by BD","โครงการ":"projects","ในกำหนด":"Within terms","บรรลุเป้าหมาย":"Target achieved","JIAN CHA Franchise Operations · สร้างโดยระบบติดตามโครงการ":"JIAN CHA Franchise Operations · generated by the project tracking system","บันทึก PNG แล้ว":"PNG saved","ออนไลน์ · ซิงก์สด":"Online · live sync","กำลังบันทึก…":"Saving…","ดูอย่างเดียว":"View only","ซิงก์ขัดข้อง":"Sync error","เครื่องนี้เท่านั้น":"This device only","ไม่ได้เชื่อมต่อฐานข้อมูลกลาง — ข้อมูลเก็บในเบราว์เซอร์นี้เท่านั้น":"Not connected to the central database — data is stored in this browser only","คุณมีสิทธิ์ดูอย่างเดียว การแก้ไขจะไม่ถูกบันทึก":"You have view-only access; your edits will not be saved","บันทึกไม่สำเร็จ กำลังลองใหม่":"Save failed, retrying","ทุกคนที่เปิดลิงก์นี้เห็นข้อมูลชุดเดียวกันแบบเรียลไทม์":"Everyone who opens this link sees the same data in real time","ยังบันทึกไม่ได้":"Not yet saved","ระบบกำลังลองใหม่อัตโนมัติ อย่าเพิ่งปิดหน้านี้":"The system is retrying automatically. Don't close this page yet","ลองใหม่ตอนนี้":"Retry now","ออกจากระบบบนเครื่องนี้?":"Sign out on this device?","nจะต้องเปิดผ่านลิงก์อีกครั้ง":"nYou will need to open the link again","ออกจากระบบ":"Sign out","ใส่รหัสผู้ดูแล (Admin key)":"Enter the Admin key","ไม่พบสาขา":"Branch not found","คัดลอกลิงก์สำหรับลูกค้าแล้ว — เห็นเฉพาะสาขา":"Customer link copied — sees only branch","คัดลอกลิงก์นี้ส่งให้ลูกค้า":"Copy this link to send to the customer","ผู้ดูแล — เห็นและแก้ไขได้ทุกสาขา (คลิกเพื่อคัดลอกลิงก์ผู้ดูแล)":"Admin — can view and edit all branches (click to copy the admin link)","สาขาของคุณ — แก้ไขได้เฉพาะสาขานี้":"Your branch — you can edit this branch only","ดูอย่างเดียว — เปิดผ่านลิงก์ที่ได้รับเพื่อแก้ไข":"View only — open via the link you received to edit","Shift+คลิก = ออกจากระบบเครื่องนี้":"Shift+click = sign out on this device","คลิกเพื่อออกจากระบบเครื่องนี้":"Click to sign out on this device","โหมดดูอย่างเดียว — กรุณาเปิดผ่านลิงก์ที่ได้รับ จึงจะกรอกข้อมูลได้":"View-only mode — please open via the link you received to enter data","คัดลอกลิงก์ผู้ดูแลแล้ว — เก็บเป็นความลับ":"Admin link copied — keep it secret","ลิงก์ผู้ดูแล (เก็บเป็นความลับ)":"Admin link (keep it secret)","บัญชีนี้ดูได้อย่างเดียว — ต้องเปิดผ่านลิงก์ที่ได้รับจึงจะแก้ไขได้":"This account is view-only — open via the link you received to edit","ต้องใช้ลิงก์":"Link required","ต้องเปิดผ่านลิงก์ — JIAN CHA Franchise Ops":"Link required — JIAN CHA Franchise Ops","อีเมล":"Email","โทร":"Phone","ระบบติดตามการเปิดสาขาแฟรนไชส์ — ไทม์ไลน์ เอกสาร และข้อมูลของแต่ละสาขา รวมไว้ในที่เดียว":"Franchise branch opening tracker — timelines, documents, and each branch's information, all in one place","ลิงก์นี้ใช้ไม่ได้หรือหมดอายุแล้ว":"This link is invalid or has expired","ต้องเปิดผ่านลิงก์ที่ได้รับ":"Please open via the link you received","ไม่พบข้อมูลสาขาที่ตรงกับลิงก์นี้ — ลิงก์อาจถูกเปลี่ยนหรือเพิ่งถูกยกเลิก":"No branch matches this link — the link may have been changed or just revoked","กรุณาขอลิงก์ใหม่จากทีมงาน JIAN CHA":"Please request a new link from the JIAN CHA team","ลิงก์นี้ยังไม่ได้ระบุสาขา":"This link doesn't specify a branch","กรุณาใช้ลิงก์ที่ทีมงาน JIAN CHA ส่งให้ ซึ่งจะเปิดเฉพาะสาขาของคุณ":"Please use the link sent by the JIAN CHA team, which opens only your branch","ไม่มีลิงก์? ติดต่อผู้ดูแลโครงการ JIAN CHA ที่ส่งลิงก์ให้คุณ":"No link? Contact the JIAN CHA project administrator who sent you the link","ฉันเป็นผู้ดูแล — ใส่รหัส":"I'm an admin — enter key","ออนไลน์ · บันทึกร่วมกัน":"Online · shared saving","มีการอัปเดตใหม่…":"New update available…","ข้อมูลใหญ่เกินไป":"Data too large","ข้อมูลไม่ถูกต้อง":"Invalid data","พื้นที่ฐานข้อมูลเต็ม":"Database storage full","บันทึกการประชุม":"Meeting notes","กรุณาเลือกเดือนก่อน":"Please select a month first","เซ็นรับทราบและเข้าใจ":"Acknowledged and understood","สัญญาแฟรนไชส์":"Franchise agreement","เลื่อนกลุ่มขึ้น":"Move group up","เลื่อนกลุ่มลง":"Move group down","เลื่อนงานขึ้น":"Move task up","เลื่อนงานลง":"Move task down","งวด":"Installment","เปิดสาขาใหม่":"New branch opening","เงินมัดจำแบรนด์":"Brand deposit","ทีม BD & Target":"BD team & targets","หน่วยวัดเป็นนิ้ว":"Measurements are in inches","ในการผลิตอาจมีคลาดเคลื่อนประมาณ":"production tolerance is about","เรียงตามมูลค่ารวม":"Sort by total value","เรียงตามเก็บแล้ว":"Sort by collected","เรียงตามคงค้าง":"Sort by outstanding","สร้าง Timeline (กด \"สร้าง Timeline\" ในกล่องตั้งค่า)":"Create the Timeline (press \"Create Timeline\" in the settings box)","เอกสารและข้อมูลที่ต้องใช้":"Required documents and information","เอกสารจะถูกขอครั้งเดียวและนำไปใช้เพื่อธุรกรรมต่าง ๆ":"These documents are requested only once and used for the transactions below","รบกวนส่งกลับภายใน":"please send them back within","นับจากได้รับข้อความนี้":"of receiving this message","20 วัน":"20 days","เอกสารประกอบเพื่อทำธุรกรรม":"The documents are used for","สมัครเครื่อง EDC กับธนาคารกสิกร":"EDC card machine application with Kasikornbank","สมัคร Grab Delivery":"Grab Delivery registration","รายการเอกสารที่ต้องส่ง":"Documents to send","แก้ไขรายการ":"Edit list","ได้รับเอกสารครบทุกรายการแล้ว":"All documents received","วิธีส่งเอกสาร":"How to send the documents","จำนวน 4 ชุด":"4 sets","ลงนามเซ็นสดด้วยปากกาน้ำเงินเท่านั้น และประทับตราทุกหน้า (ไม่ต้องเซ็นรับรองสำเนา)":"signed by hand in blue ink only, with the company stamp on every page (no need to certify the copies)","ก่อนส่งเอกสาร รบกวนรวมเป็นชุดเดียวแล้วสแกนสีส่งกลับมาให้ทีมงานช่วยตรวจสอบก่อนส่งฉบับจริง":"Before sending, please put everything into one set and send a colour scan to the team to check before you send the originals","ที่อยู่ส่งเอกสาร":"Send the documents to","คัดลอกที่อยู่":"Copy address","เลขผู้เสียภาษี":"Tax ID","ตั้งวันที่ของงาน":"Set task dates","สำเนาหนังสือรับรองบริษัท":"Copy of the company certificate","สำเนา บอจ.5":"Copy of BOJ.5 (shareholder list)","สำเนา ภ.พ.20 (ใช้ 01 แทนได้)":"Copy of P.P.20 (form 01 is also accepted)","สำเนาบัตรประชาชน และทะเบียนบ้านของทุกท่านในนิติบุคคล":"Copies of the ID card and house registration of every person in the company","สำเนา Bookbank ธนาคารกสิกร (ในนามนิติบุคคล)":"Copy of the Kasikornbank bank book (in the company's name)","เลื่อนรายการขึ้น":"Move item up","เลื่อนรายการลง":"Move item down","ชื่อเอกสารที่ต้องการเพิ่ม":"Name of the document to add","เพิ่มเอกสาร":"Add document","ใช้รายการมาตรฐาน":"Use the standard list","แก้ไขเสร็จแล้ว":"Done editing","ยังไม่มีรายการเอกสาร — กด “แก้ไขรายการ” เพื่อเพิ่ม":"No documents listed yet — press “Edit list” to add some","ชื่อเอกสารว่างไม่ได้ — ถ้าไม่ใช้รายการนี้ให้กด":"A document name can't be empty — to drop this item press","พิมพ์ชื่อเอกสารก่อนกดเพิ่ม":"Type a document name before pressing add","คัดลอกที่อยู่แล้ว":"Address copied","คัดลอกไม่ได้ — กรุณาเลือกข้อความแล้วคัดลอกเอง":"Couldn't copy — please select the text and copy it yourself","รูปร้านจริง":"Store photos","รูปหน้าร้านจริง / ภายใน / ป้ายร้าน — สูงสุด 6 รูป ระบบย่อรูปให้อัตโนมัติ และแชร์ให้ทุกคนที่เปิดลิงก์เห็น":"Storefront / interior / shop sign — up to 6 photos, resized automatically and shared with everyone who opens the link","อัปโหลดรูปร้าน":"Upload store photos","ยังไม่มีรูปร้านจริง":"No store photos yet","ลบรูปนี้":"Delete this photo","รูปร้าน":"Store photo","ลบรูปร้านรูปนี้?":"Delete this store photo?","กลับไปที่ Overview แล้วกด":"Go back to Overview and press","ลิงก์สำหรับลูกค้า":"Customer link","ลูกค้าที่เปิดลิงก์นี้จะเห็นและกรอกข้อมูลได้เฉพาะสาขานี้เท่านั้น — มองไม่เห็นสาขาอื่น ภาพรวมทุกสาขา หรือทีม BD":"Whoever opens this link can see and fill in this branch only — not other branches, the all-branches overview or the BD team","ยังไม่ได้เชื่อมต่อฐานข้อมูล — ลิงก์จะเปิดได้เมื่อระบบออนไลน์":"Not connected to the database — the link will open once the system is online","คัดลอกลิงก์":"Copy link","ส่งทาง LINE":"Send via LINE","ส่งลิงก์นี้ให้เฉพาะเจ้าของสาขานี้ — ใครที่ได้ลิงก์ไปจะกรอกและแก้ไขข้อมูลของสาขานี้ได้":"Send this link only to this branch's owner — anyone who has it can fill in and change this branch's information","สร้างลิงก์ใหม่ (ลิงก์เดิมจะใช้ไม่ได้)":"Create a new link (the old one stops working)","คัดลอกลิงก์สำหรับลูกค้าแล้ว":"Customer link copied","กด Ctrl+C (หรือกดค้างแล้วเลือก คัดลอก) เพื่อคัดลอกลิงก์":"Press Ctrl+C (or long-press and choose Copy) to copy the link","สร้างลิงก์ใหม่ให้สาขานี้":"Create a new link for this branch","ลิงก์เดิมที่เคยส่งไปจะเปิดไม่ได้อีก":"Links sent before will stop working","สร้างลิงก์ใหม่":"Create new link","สร้างลิงก์ใหม่แล้ว — ส่งลิงก์ใหม่ให้ลูกค้า":"New link created — send the new link to the customer","สิทธิ์การเข้าใช้งาน":"Access","คุณเข้าใช้งานในฐานะ":"You are signed in as","ผู้ดูแล":"admin","เห็นและแก้ไขได้ทุกสาขา":"can see and edit every branch","ลิงก์สำหรับลูกค้าของสาขานี้":"Customer link for this branch","คัดลอกลิงก์ผู้ดูแล (เก็บเป็นความลับ)":"Copy admin link (keep it secret)","ออกจากระบบบนเครื่องนี้":"Log out on this device","เปิดผ่านลิงก์ของสาขา — เห็นและกรอกข้อมูลได้เฉพาะสาขานี้":"Opened with a branch link — you can see and fill in this branch only","เข้าสู่ระบบผู้ดูแล":"Admin sign-in","ดูอย่างเดียว — เปิดผ่านลิงก์ที่ได้รับ หรือเข้าสู่ระบบผู้ดูแลเพื่อแก้ไข":"View only — open the link you received, or sign in as admin to edit","รหัสผู้ดูแลไม่ถูกต้อง":"Incorrect admin key","กรุณาตรวจสอบรหัสแล้วลองใหม่อีกครั้ง":"Please check the key and try again","ใส่รหัสผู้ดูแลอีกครั้ง":"Enter the admin key again","ผู้ดูแล — เห็นและแก้ไขได้ทุกสาขา":"Admin — can see and edit every branch","แสดงเป็นหัวข้อเดียว":"Show as a single heading","ตั้งวันที่ให้ทั้งกลุ่มในบรรทัดเดียว งานย่อยจะกลายเป็น checklist ของหัวข้อ (ปิดเพื่อแสดงงานย่อยกลับมา)":"set the dates for the whole group on one line; its tasks become the heading's checklist (turn off to show the tasks again)","ลบหัวข้อนี้":"Delete this heading","ตั้งค่าหัวข้อ":"Heading settings","แสดงกลุ่มนี้เป็นหัวข้อเดียวแล้ว — ตั้งวันที่ได้ที่บรรทัดหัวข้อ":"This group is now a single heading — set its dates on the heading line","แสดงงานย่อยของกลุ่มนี้กลับมาแล้ว":"This group's tasks are shown again","ลากแถบเพื่อเลื่อนวัน · ลากพื้นที่ว่างเพื่อเลื่อนดูไทม์ไลน์":"Drag a bar to move its dates · drag an empty area to scroll the timeline","เลิกทำ":"Undo","ย้อนกลับแล้ว":"Undone","เลื่อนก่อนวันเริ่มโครงการไม่ได้ — วางไว้ที่วันเริ่มโครงการ":"Can't move before the project start — placed on the start date","ไฟล์ทั้งหมดของสาขานี้จะถูกลบด้วย":"All files of this branch will be deleted too","งานที่มีวันอยู่แล้ว":"Tasks that already have dates:","ต้องการดำเนินการต่อหรือไม่?":"Do you want to continue?","รายการจะถูกซ่อนจากหน้านี้":"The entry will be hidden from this page","อัปโหลดขึ้นคลาวด์ให้ทุกคนเห็น?":"Upload to the cloud so everyone can see it?","จะต้องเปิดผ่านลิงก์อีกครั้ง":"You will need to open the link again","ทีม BD & เป้าหมาย":"BD team & targets"};
+var PATTERNS=(function(){var T=function(x){return tr(x,true);};return [
+ [/^สร้างสาขา "([\s\S]*)" โดยคัดลอกจากสาขาเดิมแล้ว$/, 'Created branch "$1" copied from the original branch'],
+ [/^สร้างสาขา "([\s\S]*)" จากแม่แบบแล้ว — (\d+) tasks$/, 'Created branch "$1" from the template — $2 tasks'],
+ [/^ดาวน์โหลด Backup แล้ว — (\d+) สาขา$/, 'Backup downloaded — $1 branches'],
+ [/^กู้คืนแล้ว — เพิ่ม (\d+) สาขา(?: · แทนที่ (\d+) สาขา)?$/, function(m,a,b){return 'Restored — added '+a+' branches'+(b?' · replaced '+b+' branches':'');}],
+ [/^กำลังคัดลอกไฟล์ (\d+) ไฟล์ …$/, 'Copying $1 files …'],
+ [/^เรียกคืนงานแล้ว(?: \(ไฟล์แนบเดิมกู้คืนไม่ได้\))?$/, function(m){return /ไฟล์แนบ/.test(m)?'Task restored (the original attachments cannot be restored)':'Task restored';}],
+ [/^ปรับวันที่อีก (\d+) งานตามลำดับที่เชื่อมโยงไว้$/, 'Rescheduled $1 more linked tasks'],
+ [/^ปรับวันที่ (\d+) งานตามลำดับที่เชื่อมโยงไว้$/, 'Rescheduled $1 linked tasks'],
+ [/^เอกสารของ ([\s\S]*) — งาน: ([\s\S]*)$/, function(m,a,b){return 'Documents of '+T(a)+' — task: '+b;}],
+ [/^บันทึกลายเซ็นของ ([\s\S]*) แล้ว$/, 'Signature of $1 saved'],
+ [/^กู้คืนรายการไฟล์ (\d+) ไฟล์$/, 'Restored $1 files to the list'],
+ [/^อัปโหลดแล้ว (\d+) ไฟล์ · (\d+) บันทึก$/, 'Uploaded $1 files · $2 notes'],
+ [/^อัปโหลดแล้ว (\d+) ไฟล์ — ทุกคนดาวน์โหลดได้$/, 'Uploaded $1 files — everyone can download them'],
+ [/^อัพโหลดล้มเหลว: ([\s\S]*)$/, 'Upload failed: $1'],
+ [/^คัดลอกลิงก์สำหรับลูกค้าแล้ว — เห็นเฉพาะสาขา ([\s\S]*)$/, 'Customer link copied — shows only branch $1'],
+ [/^ลบ "([\s\S]*)" ออกจากรายชื่อพนักงาน\?$/, 'Remove "$1" from the staff list?'],
+ [/^ยกเลิกลายเซ็นของ "([\s\S]*)"\?\s*รายการจะถูกซ่อนจากหน้านี้$/, 'Cancel the signature of "$1"?\nThe entry will be hidden from this page'],
+ [/^ปรับแผนให้พอดี (\d+) วัน \(จากเดิม (\d+) วัน\)$/, 'Plan fitted to $1 days (was $2 days)'],
+ [/^ลบงาน "([\s\S]*)" แล้ว$/, 'Deleted task "$1"'],
+ [/^ลบกลุ่ม "([\s\S]*)" แล้ว$/, 'Deleted group "$1"'],
+ [/^จากทั้งหมด (\d+) สาขา$/, 'Out of $1 branches'],
+ [/^ลบ "([\s\S]*)" ออกจากรายการเอกสาร\?$/, function(m,a){return 'Remove "'+T(a)+'" from the document list?';}],
+ [/^ใช้รายการเอกสารมาตรฐาน (\d+) รายการแทนรายการนี้\?\s*รายการที่ชื่อตรงกันจะยังคงเครื่องหมายที่ติ๊กไว้$/, 'Replace this list with the $1 standard documents?\nItems with the same name keep their ticks'],
+ [/^ชื่อเอกสารรายการที่ (\d+)$/, 'Document name, item $1'],
+ [/^ลบรายการ ([\s\S]+)$/, function(m,a){return 'Delete item '+T(a);}],
+ [/^ดูรูปร้านรูปที่ (\d+) ขนาดใหญ่$/, 'View store photo $1 full size'],
+ [/^รูปร้านจริงรูปที่ (\d+)$/, 'Store photo $1'],
+ [/^ลบรูปร้านรูปที่ (\d+)$/, 'Delete store photo $1'],
+ [/^รูปร้านจริง (.+)$/, 'Store photo $1'],
+ [/^เพิ่มรูปร้านแล้ว (\d+) รูป$/, 'Added $1 store photo(s)'],
+ [/^รูปร้านเต็ม (\d+) รูปแล้ว — ลบรูปเดิมก่อนจึงเพิ่มได้$/, 'Store photos are full ($1) — delete one before adding more'],
+ [/^ข้ามไฟล์ที่ใช้ไม่ได้ (\d+) ไฟล์ \([\s\S]*\)$/, 'Skipped $1 unusable file(s) (JPG, PNG and WebP only — save iPhone HEIC photos as JPG first)'],
+ [/^ย้าย "([\s\S]*)" เป็น (\S+)(?: · งานที่รอต่อเลื่อนตาม (\d+) งาน)?$/, function(m,a,b,c){return 'Moved "'+T(a)+'" to '+b+(c?' · '+c+' waiting task(s) moved too':'');}],
+];})();
+var KEY='jc_lang',lang='th';
+try{lang=localStorage.getItem(KEY)==='en'?'en':'th';}catch(e){}
+var THAI=/[฀-๿]/;
+var keys=Object.keys(DICT).filter(function(k){return DICT[k];}).sort(function(a,b){return b.length-a.length;});
+var BIG=keys.length?new RegExp('(?<![\\u0E00-\\u0E7F])(?:'+keys.map(function(k){return k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}).join('|')+')(?![\\u0E00-\\u0E7F])','g'):null;
+/* places where people's own words are shown: translate only when the whole text is a built-in phrase */
+var EXACT_ONLY='.task-name-btn,.mt-name,.note-body,.cmt-body,.dept-file-name,.file-item-name,.sign-meta,.note-by,.shop-tab,.due-name,.activity-detail,.sp-name,.pf-name,.dept-card-name,.cmt-head,.leg-item,.contact-name,.pay-label,.fin-label,.hero-name,#ovTitle';
+var ATTRS=['placeholder','title','aria-label','alt'];
+var SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1,NOSCRIPT:1,CODE:1};
+var busy=false,obs=null;
+
+function exactCore(s){
+  var m=/^([\s\p{Extended_Pictographic}️‍·•—–\-:,;'’‘“”()\[\]*+=\/|!?.#&@→←↑↓▲▼✓✕✔▸▾▴›»«＋]*)([\s\S]*?)([\s\p{Extended_Pictographic}️‍·•—–\-:,;'’‘“”(\[*+=\/|→←↑↓▲▼✓✕✔▸▾▴›»«＋]*)$/u.exec(s);
+  return m||[s,'',s,''];
+}
+function tr(s,exactOnly){
+  if(!THAI.test(s))return s;
+  var p=exactCore(s),core=p[2];
+  for(var i=0;i<PATTERNS.length;i++){var r=PATTERNS[i];if(r[0].test(core)){return p[1]+core.replace(r[0],r[1])+p[3];}}
+  if(DICT[core])return p[1]+DICT[core]+p[3];
+  if(exactOnly||!BIG)return s;
+  return s.replace(BIG,function(m){return DICT[m]||m;});
+}
+function noTr(el){return !el||el.tagName==='SCRIPT'||el.tagName==='STYLE'||(el.closest&&el.closest('[translate="no"]'));}
+function skipEl(el){return noTr(el)||SKIP[el.tagName];}
+/* Thai runs words together, English needs a space where a phrase meets bold text or a link */
+function _edge(node,dir){
+  var s=dir<0?node.previousSibling:node.nextSibling;
+  while(s&&s.nodeType===8)s=dir<0?s.previousSibling:s.nextSibling;
+  if(!s)return'';
+  var t=s.textContent||'';
+  return dir<0?t.slice(-1):t.charAt(0);
+}
+function spaced(n,v,t){
+  if(!/^\s/.test(v)&&/^[A-Za-z0-9(“"]/.test(t)){var a=_edge(n,-1);if(a&&!/[\s(\[“"'\/—–\-#@]/.test(a))t=' '+t;}
+  if(!/\s$/.test(v)&&/[A-Za-z0-9)”".]$/.test(t)){var b=_edge(n,1);if(b&&!/[\s)\].,:;!?”"'\/—–\-…]/.test(b))t=t+' ';}
+  return t;
+}
+function textNode(n){
+  var v=n.nodeValue;
+  if(lang==='en'){
+    if(n._en!==undefined&&v===n._en)return;
+    if(!THAI.test(v))return;
+    var par=n.parentElement;if(skipEl(par))return;
+    var t=tr(v,!!(par&&par.closest&&par.closest(EXACT_ONLY)));
+    if(t!==v){t=spaced(n,v,t);n._th=v;n._en=t;n.nodeValue=t;}
+  }else if(n._en!==undefined&&v===n._en){n.nodeValue=n._th;n._en=undefined;}
+}
+function attr(el,name){
+  var v=el.getAttribute(name);if(v==null)return;
+  var st=el._i18n||(el._i18n={});
+  var rec=st[name];
+  if(lang==='en'){
+    if(rec&&v===rec.en)return;
+    if(!THAI.test(v)||noTr(el))return;
+    var t=tr(v,false);
+    if(t!==v){st[name]={th:v,en:t};el.setAttribute(name,t);}
+  }else if(rec&&v===rec.en){el.setAttribute(name,rec.th);delete st[name];}
+}
+function walk(root){
+  if(!root)return;
+  if(root.nodeType===3){textNode(root);return;}
+  if(root.nodeType!==1)return;
+  if(noTr(root))return;
+  var tw=document.createTreeWalker(root,5,{acceptNode:function(n){
+    if(n.nodeType===1)return noTr(n)?2:1;       /* skip script/style/translate=no subtrees; a textarea's placeholder still counts, its text never */
+    return 1;
+  }});
+  var n=root;
+  do{
+    if(n.nodeType===3)textNode(n);
+    else if(n.nodeType===1)for(var i=0;i<ATTRS.length;i++)attr(n,ATTRS[i]);
+  }while((n=tw.nextNode()));
+}
+function run(fn){
+  if(busy){fn();return;}
+  busy=true;if(obs)obs.disconnect();
+  try{fn();}finally{busy=false;start();}
+}
+function start(){
+  if(!obs)return;
+  obs.observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:ATTRS});
+}
+function titleSync(){
+  var t=document.title,st=titleSync._s||(titleSync._s={});
+  if(lang==='en'){if(st.en===t)return;if(THAI.test(t)){var e=tr(t,false);if(e!==t){st.th=t;st.en=e;document.title=e;}}}
+  else if(st.en!==undefined&&t===st.en){document.title=st.th;st.en=undefined;}
+}
+function onMut(recs){
+  run(function(){
+    if(document.querySelector('[data-lang-btn]:not([data-painted="'+lang+'"])')){paintButton();var bs=document.querySelectorAll('[data-lang-btn]');for(var q=0;q<bs.length;q++)bs[q].setAttribute('data-painted',lang);}
+    for(var i=0;i<recs.length;i++){
+      var r=recs[i];
+      if(r.type==='childList'){for(var j=0;j<r.addedNodes.length;j++)walk(r.addedNodes[j]);}
+      else if(r.type==='characterData'){
+        if(r.target.parentNode&&r.target.parentNode.nodeName==='TITLE')continue;
+        textNode(r.target);
+      }
+      else if(r.type==='attributes')attr(r.target,r.attributeName);
+    }
+    titleSync();
+  });
+}
+/* dates the app asks for in th-TH (Buddhist year) come out as normal Gregorian dates in English */
+['toLocaleDateString','toLocaleString','toLocaleTimeString'].forEach(function(fn){
+  var orig=Date.prototype[fn];
+  Date.prototype[fn]=function(l,o){return orig.call(this,(lang==='en'&&l==='th-TH')?'en-GB':l,o);};
+});
+function paintButton(){
+  var bs=document.querySelectorAll('[data-lang-btn]');
+  for(var i=0;i<bs.length;i++){
+    var b=bs[i];
+    b.textContent=lang==='en'?'ไทย':'EN';
+    b.setAttribute('aria-label',lang==='en'?'เปลี่ยนเป็นภาษาไทย (Switch to Thai)':'Switch to English (เปลี่ยนเป็นภาษาอังกฤษ)');
+    b.title=b.getAttribute('aria-label');
+    b.setAttribute('lang',lang==='en'?'th':'en');
+    b.setAttribute('data-painted',lang);
+  }
+}
+function setLang(l){
+  lang=l==='en'?'en':'th';
+  try{localStorage.setItem(KEY,lang);}catch(e){}
+  document.documentElement.lang=lang;
+  /* text produced by code (dates, counts, titles) is rebuilt in the new language first */
+  try{if(typeof rerenderCurrent==='function'){rerenderCurrent();if(typeof renderShopTabs==='function')renderShopTabs();}}catch(e){}
+  try{if(typeof setPageTitle==='function')setPageTitle();}catch(e){}
+  run(function(){walk(document.body);titleSync();paintButton();});
+}
+window.setLang=setLang;
+window.toggleLang=function(){setLang(lang==='en'?'th':'en');};
+window.jcLang=function(){return lang;};
+function boot(){
+  document.documentElement.lang=lang;
+  obs=new MutationObserver(onMut);
+  paintButton();
+  if(lang==='en')run(function(){walk(document.body);titleSync();});
+  else start();
+  var t=document.querySelector('title');
+  if(t)new MutationObserver(function(){run(titleSync);}).observe(t,{childList:true,characterData:true,subtree:true});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+
+</script>
+<!-- JC-I18N:END -->
 </body>
 </html>
